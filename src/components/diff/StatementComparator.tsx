@@ -1,297 +1,351 @@
 import React, { useState, useMemo } from 'react';
-import { MeetingData, Committee } from '../../types/monetary';
+import { Committee } from '../../types/monetary';
+import { RawStatement } from '../../data/allStatements';
 import { computeStatementDiff } from '../../utils/diffCalculator';
 import { TextAnnotatorWrapper } from '../annotations/TextAnnotatorWrapper';
-import { GitCompare, Columns, AlignLeft, Sparkles, CheckCircle2 } from 'lucide-react';
+import { ArrowLeft, ArrowRight, Eye, CheckCircle2 } from 'lucide-react';
 
 interface StatementComparatorProps {
-  meetings: MeetingData[];
+  statements: RawStatement[];
   committee: Committee;
 }
 
 export const StatementComparator: React.FC<StatementComparatorProps> = ({
-  meetings,
+  statements,
   committee,
 }) => {
-  const [meetingCurrentId, setMeetingCurrentId] = useState<string>(meetings[0]?.id || '');
-  const [meetingPreviousId, setMeetingPreviousId] = useState<string>(meetings[1]?.id || '');
-  const [viewMode, setViewMode] = useState<'inline' | 'split'>('inline');
+  // Statements are sorted from most recent (index 0) to oldest (index N)
+  const [currentIdx, setCurrentIdx] = useState<number>(0);
+  const [previousIdx, setPreviousIdx] = useState<number>(1);
+  const [highlightDiff, setHighlightDiff] = useState<boolean>(true);
 
-  const currentMeeting = useMemo(() => {
-    return meetings.find((m) => m.id === meetingCurrentId) || meetings[0];
-  }, [meetings, meetingCurrentId]);
+  // When current statement changes, default previous statement to the next older one (currentIdx + 1)
+  const handleSelectCurrent = (newIdx: number) => {
+    setCurrentIdx(newIdx);
+    const nextOlder = Math.min(newIdx + 1, statements.length - 1);
+    setPreviousIdx(nextOlder !== newIdx ? nextOlder : Math.max(0, newIdx - 1));
+  };
 
-  const previousMeeting = useMemo(() => {
-    return meetings.find((m) => m.id === meetingPreviousId) || meetings[1] || meetings[0];
-  }, [meetings, meetingPreviousId]);
+  const currentStmt = statements[currentIdx] || statements[0];
+  const previousStmt = statements[previousIdx] || statements[1] || statements[0];
 
+  // Group statements by Year for the select dropdown
+  const groupedStatements = useMemo(() => {
+    const groups: { year: string; items: { stmt: RawStatement; index: number }[] }[] = [];
+    const map = new Map<string, { stmt: RawStatement; index: number }[]>();
+
+    statements.forEach((stmt, idx) => {
+      const year = stmt.date ? stmt.date.substring(0, 4) : 'Outros';
+      if (!map.has(year)) {
+        map.set(year, []);
+      }
+      map.get(year)!.push({ stmt, index: idx });
+    });
+
+    map.forEach((items, year) => {
+      groups.push({ year, items });
+    });
+
+    return groups;
+  }, [statements]);
+
+  // Compute diff paragraph by paragraph without any theme division
   const diffResult = useMemo(() => {
-    if (!currentMeeting || !previousMeeting) return null;
-    return computeStatementDiff(
-      previousMeeting.statement.map((p) => ({ text: p.text, section: p.section })),
-      currentMeeting.statement.map((p) => ({ text: p.text, section: p.section }))
-    );
-  }, [currentMeeting, previousMeeting]);
+    if (!currentStmt || !previousStmt) return null;
+    return computeStatementDiff(previousStmt.paragraphs, currentStmt.paragraphs);
+  }, [currentStmt, previousStmt]);
 
-  if (!currentMeeting) {
-    return <div className="p-8 text-center text-[var(--ink-muted)]">Nenhuma reunião disponível.</div>;
+  if (!currentStmt || statements.length === 0) {
+    return <div className="p-8 text-center text-[var(--ink-muted)]">Nenhum comunicado disponível.</div>;
   }
+
+  const hasNextNewer = currentIdx > 0;
+  const hasNextOlder = currentIdx < statements.length - 1;
 
   return (
     <div className="space-y-6">
-      {/* Selection Bar & Controls */}
+      {/* Top Selection & Navigation Bar */}
       <div className="bg-[var(--surface)] p-4 rounded-xl border border-[var(--border)] shadow-xs flex flex-wrap items-center justify-between gap-4">
-        <div className="flex flex-wrap items-center gap-3">
-          {/* Reunião Base (Atual) */}
+        {/* Quick Stepper Buttons */}
+        <div className="flex items-center gap-1.5">
+          <button
+            onClick={() => hasNextOlder && handleSelectCurrent(currentIdx + 1)}
+            disabled={!hasNextOlder}
+            title="Ir para a reunião anterior no tempo"
+            className="flex items-center gap-1 px-2.5 py-1.5 rounded-lg text-xs font-mono font-semibold bg-[var(--page-bg)] text-[var(--ink)] hover:bg-[var(--border)] disabled:opacity-40 border border-[var(--border)] transition-colors"
+          >
+            <ArrowLeft className="w-3.5 h-3.5" />
+            <span className="hidden sm:inline">Anterior</span>
+          </button>
+          <button
+            onClick={() => hasNextNewer && handleSelectCurrent(currentIdx - 1)}
+            disabled={!hasNextNewer}
+            title="Ir para a reunião seguinte no tempo"
+            className="flex items-center gap-1 px-2.5 py-1.5 rounded-lg text-xs font-mono font-semibold bg-[var(--page-bg)] text-[var(--ink)] hover:bg-[var(--border)] disabled:opacity-40 border border-[var(--border)] transition-colors"
+          >
+            <span className="hidden sm:inline">Seguinte</span>
+            <ArrowRight className="w-3.5 h-3.5" />
+          </button>
+        </div>
+
+        {/* Dropdowns */}
+        <div className="flex flex-wrap items-center gap-3 flex-1 justify-center">
+          {/* Reunião Atual (T) */}
           <div className="flex items-center gap-2">
-            <span className="text-xs font-mono font-semibold text-[var(--ink-muted)] uppercase tracking-wider">
-              Reunião Recente (T):
+            <span className="text-xs font-mono font-semibold text-[var(--brand)] uppercase tracking-wider">
+              {committee === 'copom' ? 'Copom (T):' : 'FOMC (T):'}
             </span>
             <select
-              value={meetingCurrentId}
-              onChange={(e) => setMeetingCurrentId(e.target.value)}
-              className="bg-[var(--page-bg)] border border-[var(--border)] text-[var(--ink)] text-xs rounded-lg px-3 py-1.5 font-medium focus:outline-hidden focus:ring-1 focus:ring-[var(--brand)]"
+              value={currentIdx}
+              onChange={(e) => handleSelectCurrent(Number(e.target.value))}
+              className="bg-[var(--page-bg)] border border-[var(--border)] text-[var(--ink)] text-xs rounded-lg px-3 py-1.5 font-medium max-w-[280px] sm:max-w-[340px] truncate focus:outline-hidden focus:ring-1 focus:ring-[var(--brand)]"
             >
-              {meetings.map((m) => (
-                <option key={m.id} value={m.id}>
-                  {m.meetingNumber} ({m.date}) - Taxa: {m.rateDecision}
-                </option>
+              {groupedStatements.map((group) => (
+                <optgroup key={group.year} label={`Ano ${group.year}`}>
+                  {group.items.map(({ stmt, index }) => (
+                    <option key={stmt.id} value={index}>
+                      {stmt.meetingNumber} ({stmt.date}) — {stmt.title}
+                    </option>
+                  ))}
+                </optgroup>
               ))}
             </select>
           </div>
 
           <span className="text-[var(--ink-muted)] font-mono font-bold text-xs">vs</span>
 
-          {/* Reunião Anterior (T-1) */}
+          {/* Reunião de Comparação (T-1) */}
           <div className="flex items-center gap-2">
             <span className="text-xs font-mono font-semibold text-[var(--ink-muted)] uppercase tracking-wider">
-              Comparar Com (T-1):
+              Comparar Com:
             </span>
             <select
-              value={meetingPreviousId}
-              onChange={(e) => setMeetingPreviousId(e.target.value)}
-              className="bg-[var(--page-bg)] border border-[var(--border)] text-[var(--ink)] text-xs rounded-lg px-3 py-1.5 font-medium focus:outline-hidden focus:ring-1 focus:ring-[var(--brand)]"
+              value={previousIdx}
+              onChange={(e) => setPreviousIdx(Number(e.target.value))}
+              className="bg-[var(--page-bg)] border border-[var(--border)] text-[var(--ink)] text-xs rounded-lg px-3 py-1.5 font-medium max-w-[280px] sm:max-w-[340px] truncate focus:outline-hidden focus:ring-1 focus:ring-[var(--brand)]"
             >
-              {meetings.map((m) => (
-                <option key={m.id} value={m.id} disabled={m.id === meetingCurrentId}>
-                  {m.meetingNumber} ({m.date}) - Taxa: {m.rateDecision}
-                </option>
+              {groupedStatements.map((group) => (
+                <optgroup key={group.year} label={`Ano ${group.year}`}>
+                  {group.items.map(({ stmt, index }) => (
+                    <option key={stmt.id} value={index} disabled={index === currentIdx}>
+                      {stmt.meetingNumber} ({stmt.date}) — {stmt.title}
+                    </option>
+                  ))}
+                </optgroup>
               ))}
             </select>
           </div>
         </div>
 
-        {/* View Mode Toggle */}
-        <div className="flex items-center bg-[var(--page-bg)] p-1 rounded-lg border border-[var(--border)]">
+        {/* Diff Highlighting Toggle */}
+        <div className="flex items-center">
           <button
-            onClick={() => setViewMode('inline')}
-            className={`flex items-center gap-1.5 px-3 py-1 text-xs font-semibold rounded-md transition-all ${
-              viewMode === 'inline'
-                ? 'bg-[var(--surface)] text-[var(--brand)] shadow-xs border border-[var(--border)] font-bold'
-                : 'text-[var(--ink-secondary)] hover:text-[var(--ink)]'
+            onClick={() => setHighlightDiff(!highlightDiff)}
+            className={`flex items-center gap-1.5 px-3 py-1.5 text-xs font-semibold rounded-lg border transition-all ${
+              highlightDiff
+                ? 'bg-[var(--accent-wash)] text-[var(--brand)] border-[var(--brand)]'
+                : 'bg-[var(--page-bg)] text-[var(--ink-muted)] border-[var(--border)] hover:text-[var(--ink)]'
             }`}
           >
-            <AlignLeft className="w-3.5 h-3.5" />
-            <span>Unificado (Inline)</span>
-          </button>
-          <button
-            onClick={() => setViewMode('split')}
-            className={`flex items-center gap-1.5 px-3 py-1 text-xs font-semibold rounded-md transition-all ${
-              viewMode === 'split'
-                ? 'bg-[var(--surface)] text-[var(--brand)] shadow-xs border border-[var(--border)] font-bold'
-                : 'text-[var(--ink-secondary)] hover:text-[var(--ink)]'
-            }`}
-          >
-            <Columns className="w-3.5 h-3.5" />
-            <span>Lado a Lado (Split)</span>
+            <Eye className="w-3.5 h-3.5" />
+            <span>{highlightDiff ? 'Diff Ativo' : 'Texto Puro'}</span>
           </button>
         </div>
       </div>
 
       {/* Summary Metrics Banner */}
-      <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
+      <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
         <div className="bg-[var(--surface)] p-4 rounded-xl border border-[var(--border)] shadow-xs">
-          <div className="text-xs font-mono font-semibold text-[var(--ink-muted)] uppercase">Decisão de Juros</div>
-          <div className="text-xl font-bold font-serif text-[var(--ink)] mt-1 flex items-baseline gap-2">
-            <span>{currentMeeting.rateDecision}</span>
-            <span
-              className={`text-xs font-mono font-semibold px-2 py-0.5 rounded-full ${
-                currentMeeting.changeBps > 0
-                  ? 'bg-rose-500/15 text-rose-700 dark:text-rose-400'
-                  : currentMeeting.changeBps < 0
-                  ? 'bg-emerald-500/15 text-emerald-700 dark:text-emerald-400'
-                  : 'bg-[var(--page-bg)] text-[var(--ink-secondary)]'
-              }`}
-            >
-              {currentMeeting.changeBps > 0
-                ? `+${currentMeeting.changeBps} bps`
-                : currentMeeting.changeBps < 0
-                ? `${currentMeeting.changeBps} bps`
-                : '0 bps (Pausa)'}
-            </span>
+          <div className="text-xs font-mono font-semibold text-[var(--ink-muted)] uppercase">
+            Total no Histórico ({committee === 'copom' ? 'Copom' : 'FOMC'})
+          </div>
+          <div className="text-xl font-bold font-serif text-[var(--ink)] mt-1">
+            {statements.length} comunicados
           </div>
           <div className="text-[11px] text-[var(--ink-muted)] mt-1">
-            Placar: {currentMeeting.voteSplit}
+            Desde o primeiro comunicado disponível ({statements[statements.length - 1]?.date})
           </div>
         </div>
 
         <div className="bg-[var(--surface)] p-4 rounded-xl border border-[var(--border)] shadow-xs">
-          <div className="text-xs font-mono font-semibold text-[var(--ink-muted)] uppercase">Palavras Inseridas</div>
+          <div className="text-xs font-mono font-semibold text-[var(--ink-muted)] uppercase">
+            Palavras Inseridas (T)
+          </div>
           <div className="text-xl font-bold font-mono text-emerald-600 dark:text-emerald-400 mt-1 flex items-center gap-1">
             <span>+{diffResult?.totalAddedWords || 0}</span>
-            <span className="text-xs font-sans font-normal text-[var(--ink-muted)]">palavras</span>
+            <span className="text-xs font-sans font-normal text-[var(--ink-muted)]">palavras adicionadas</span>
           </div>
           <div className="text-[11px] text-[var(--ink-muted)] mt-1">
-            Novos argumentos e condições adicionadas
+            Termos e frases novas em relação à reunião de comparação
           </div>
         </div>
 
         <div className="bg-[var(--surface)] p-4 rounded-xl border border-[var(--border)] shadow-xs">
-          <div className="text-xs font-mono font-semibold text-[var(--ink-muted)] uppercase">Palavras Removidas</div>
+          <div className="text-xs font-mono font-semibold text-[var(--ink-muted)] uppercase">
+            Palavras Removidas
+          </div>
           <div className="text-xl font-bold font-mono text-rose-600 dark:text-rose-400 mt-1 flex items-center gap-1">
             <span>-{diffResult?.totalRemovedWords || 0}</span>
-            <span className="text-xs font-sans font-normal text-[var(--ink-muted)]">palavras</span>
+            <span className="text-xs font-sans font-normal text-[var(--ink-muted)]">palavras retiradas</span>
           </div>
           <div className="text-[11px] text-[var(--ink-muted)] mt-1">
-            Termos ou sinalizações abandonadas
-          </div>
-        </div>
-
-        <div className="bg-[var(--surface)] p-4 rounded-xl border border-[var(--border)] shadow-xs">
-          <div className="text-xs font-mono font-semibold text-[var(--ink-muted)] uppercase">Sinalização de Guidance</div>
-          <div className="text-xs font-serif text-[var(--ink)] mt-1 line-clamp-2 leading-relaxed">
-            {currentMeeting.keyGuidance}
-          </div>
-          <div className="text-[11px] text-[var(--brand)] font-medium mt-1 flex items-center gap-1">
-            <Sparkles className="w-3 h-3" />
-            <span>Foco no horizonte relevante</span>
+            Trechos ou sinalizações suprimidas
           </div>
         </div>
       </div>
 
-      {/* Diff View Area */}
+      {/* Side-by-Side Comparison Container (No Theme Division) */}
       <div className="bg-[var(--surface)] rounded-xl border border-[var(--border)] shadow-xs overflow-hidden">
-        <div className="px-6 py-4 border-b border-[var(--border)] bg-[var(--page-bg)] flex items-center justify-between">
-          <div className="flex items-center gap-2">
-            <GitCompare className="w-4 h-4 text-[var(--brand)]" />
-            <h2 className="text-sm font-bold text-[var(--ink)]">
-              Texto Comparado do Comunicado ({committee === 'copom' ? 'Copom / Bacen' : 'FOMC / Fed'})
-            </h2>
+        {/* Column Headers */}
+        <div className="grid grid-cols-1 md:grid-cols-2 border-b border-[var(--border)] bg-[var(--page-bg)]">
+          {/* Left Column Header (Previous) */}
+          <div className="p-4 border-b md:border-b-0 md:border-r border-[var(--border)] flex items-center justify-between">
+            <div>
+              <span className="text-[10px] font-mono font-bold text-[var(--ink-muted)] uppercase tracking-wider">
+                Comparação (Anterior / Referência)
+              </span>
+              <h3 className="text-sm font-bold font-serif text-[var(--ink)] mt-0.5">
+                {previousStmt.meetingNumber} ({previousStmt.date})
+              </h3>
+              <p className="text-xs text-[var(--ink-secondary)] truncate max-w-sm mt-0.5">
+                {previousStmt.title}
+              </p>
+            </div>
+            <span className="text-[11px] font-mono text-[var(--ink-muted)] bg-[var(--surface)] px-2 py-0.5 rounded border border-[var(--border)]">
+              {previousStmt.paragraphs.length} parágrafos
+            </span>
           </div>
-          <div className="text-xs text-[var(--ink-muted)] flex items-center gap-3">
-            <span className="inline-flex items-center gap-1">
-              <span className="w-3 h-3 bg-emerald-500/20 border border-emerald-500 rounded-xs inline-block" />
-              <span className="text-emerald-700 dark:text-emerald-400 font-medium">Inserido</span>
-            </span>
-            <span className="inline-flex items-center gap-1">
-              <span className="w-3 h-3 bg-rose-500/20 border border-rose-500 rounded-xs inline-block" />
-              <span className="line-through text-rose-700 dark:text-rose-400 font-medium">Removido</span>
-            </span>
-            <span className="hidden sm:inline font-serif italic text-[var(--ink-muted)]">
-              *Selecione texto para grifar ou anotar
+
+          {/* Right Column Header (Current) */}
+          <div className="p-4 bg-[var(--accent-wash)]/40 flex items-center justify-between">
+            <div>
+              <span className="text-[10px] font-mono font-bold text-[var(--brand)] uppercase tracking-wider">
+                Comunicado Selecionado
+              </span>
+              <h3 className="text-sm font-bold font-serif text-[var(--brand)] mt-0.5">
+                {currentStmt.meetingNumber} ({currentStmt.date})
+              </h3>
+              <p className="text-xs text-[var(--ink-secondary)] truncate max-w-sm mt-0.5">
+                {currentStmt.title}
+              </p>
+            </div>
+            <span className="text-[11px] font-mono text-[var(--brand)] bg-[var(--surface)] px-2 py-0.5 rounded border border-[var(--border)] font-bold">
+              {currentStmt.paragraphs.length} parágrafos
             </span>
           </div>
         </div>
 
-        <div className="p-6 space-y-6 font-serif">
-          {viewMode === 'inline' ? (
-            /* UNIFIED INLINE DIFF */
-            <div className="space-y-6">
-              {diffResult?.paragraphs.map((pDiff, idx) => (
-                <div
-                  key={`inline-p-${idx}`}
-                  className="p-4 rounded-xl border border-[var(--border)] bg-[var(--page-bg)]/40 hover:bg-[var(--page-bg)] transition-colors"
-                >
-                  <div className="flex items-center justify-between mb-2">
-                    <span className="text-xs font-mono font-bold text-[var(--ink-muted)] tracking-wider uppercase">
-                      § {idx + 1}. {pDiff.sectionTitle}
+        {/* Side-by-Side Paragraphs Rows (Aligned directly, no theme division) */}
+        <div className="divide-y divide-[var(--border)]">
+          {diffResult?.paragraphs.map((row, idx) => (
+            <div
+              key={`row-${idx}`}
+              className="grid grid-cols-1 md:grid-cols-2 hover:bg-[var(--page-bg)]/30 transition-colors"
+            >
+              {/* Left Column: Previous Statement Paragraph */}
+              <div className="p-5 border-b md:border-b-0 md:border-r border-[var(--border)] font-serif text-sm leading-relaxed text-[var(--ink)]">
+                <div className="flex items-center justify-between mb-2">
+                  <span className="text-[10px] font-mono text-[var(--ink-muted)] uppercase">
+                    Parágrafo {idx + 1}
+                  </span>
+                  {!row.hasChanges && row.oldText && (
+                    <span className="text-[10px] font-mono text-emerald-600 dark:text-emerald-400 flex items-center gap-1">
+                      <CheckCircle2 className="w-3 h-3" /> Idêntico
                     </span>
-                    {pDiff.hasChanges ? (
-                      <span className="text-[11px] font-mono font-medium px-2 py-0.5 rounded-full bg-[var(--accent-wash)] text-[var(--brand)] border border-[var(--border)]">
-                        +{pDiff.addedWordsCount} / -{pDiff.removedWordsCount} alterações
-                      </span>
-                    ) : (
-                      <span className="text-[11px] font-mono text-[var(--ink-muted)] flex items-center gap-1">
-                        <CheckCircle2 className="w-3 h-3 text-emerald-500" /> Inalterado
-                      </span>
-                    )}
-                  </div>
+                  )}
+                </div>
 
-                  <div className="text-base text-[var(--ink)] leading-relaxed font-serif">
-                    {pDiff.diffParts.map((part, pIdx) => {
-                      if (part.added) {
-                        return (
-                          <span
-                            key={pIdx}
-                            className="bg-emerald-500/20 text-emerald-900 dark:text-emerald-200 font-medium px-1 py-0.5 rounded-xs border-b-2 border-emerald-500"
-                          >
-                            {part.value}
-                          </span>
-                        );
-                      }
-                      if (part.removed) {
-                        return (
-                          <span
-                            key={pIdx}
-                            className="bg-rose-500/20 text-rose-800 dark:text-rose-300 line-through px-1 py-0.5 rounded-xs mx-0.5 decoration-rose-600 opacity-80"
-                          >
-                            {part.value}
-                          </span>
-                        );
-                      }
-                      return <span key={pIdx}>{part.value}</span>;
-                    })}
-                  </div>
-                </div>
-              ))}
-            </div>
-          ) : (
-            /* SPLIT SIDE-BY-SIDE DIFF */
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-              {/* Previous Column */}
-              <div className="space-y-6">
-                <div className="bg-[var(--page-bg)] px-3 py-2 rounded-lg text-xs font-mono font-bold text-[var(--ink-secondary)] border border-[var(--border)]">
-                  {previousMeeting.meetingNumber} ({previousMeeting.date}) — Anterior
-                </div>
-                {diffResult?.paragraphs.map((pDiff, idx) => (
-                  <div
-                    key={`split-old-${idx}`}
-                    className="p-4 rounded-xl border border-[var(--border)] bg-[var(--surface)] min-h-[120px]"
-                  >
-                    <div className="text-xs font-mono font-semibold text-[var(--ink-muted)] mb-2">
-                      § {idx + 1}. {pDiff.sectionTitle}
+                {row.oldText ? (
+                  highlightDiff ? (
+                    <div>
+                      {row.oldPartsHighlight.map((part, pIdx) => {
+                        if (part.removed) {
+                          return (
+                            <span
+                              key={pIdx}
+                              className="bg-rose-500/20 text-rose-800 dark:text-rose-300 line-through px-0.5 rounded-xs decoration-rose-600 font-serif"
+                            >
+                              {part.value}
+                            </span>
+                          );
+                        }
+                        return <span key={pIdx}>{part.value}</span>;
+                      })}
                     </div>
-                    <div className="text-sm leading-relaxed text-[var(--ink-secondary)]">
-                      {pDiff.oldText || <span className="text-[var(--ink-muted)] italic">(Parágrafo não existia na reunião anterior)</span>}
-                    </div>
+                  ) : (
+                    <div>{row.oldText}</div>
+                  )
+                ) : (
+                  <div className="text-[var(--ink-muted)] italic font-sans text-xs">
+                    (Este parágrafo não existia neste comunicado)
                   </div>
-                ))}
+                )}
               </div>
 
-              {/* Current Column with Annotator Support */}
-              <div className="space-y-6">
-                <div className="bg-[var(--accent-wash)] px-3 py-2 rounded-lg text-xs font-mono font-bold text-[var(--brand)] border border-[var(--border)]">
-                  {currentMeeting.meetingNumber} ({currentMeeting.date}) — Atual (Anotável)
+              {/* Right Column: Current Statement Paragraph (with Annotator) */}
+              <div className="p-5 font-serif text-sm leading-relaxed text-[var(--ink)] bg-[var(--surface)]">
+                <div className="flex items-center justify-between mb-2">
+                  <span className="text-[10px] font-mono text-[var(--brand)] font-bold uppercase">
+                    Parágrafo {idx + 1}
+                  </span>
+                  {row.hasChanges ? (
+                    <span className="text-[10px] font-mono font-semibold px-2 py-0.5 rounded-full bg-[var(--accent-wash)] text-[var(--brand)] border border-[var(--border)]">
+                      +{row.addedWordsCount} / -{row.removedWordsCount} alt.
+                    </span>
+                  ) : row.newText ? (
+                    <span className="text-[10px] font-mono text-emerald-600 dark:text-emerald-400 flex items-center gap-1">
+                      <CheckCircle2 className="w-3 h-3" /> Idêntico
+                    </span>
+                  ) : null}
                 </div>
-                {diffResult?.paragraphs.map((pDiff, idx) => (
-                  <div
-                    key={`split-new-${idx}`}
-                    className="p-4 rounded-xl border border-[var(--border)] bg-[var(--surface)] min-h-[120px]"
-                  >
-                    <div className="text-xs font-mono font-semibold text-[var(--brand)] mb-2">
-                      § {idx + 1}. {pDiff.sectionTitle}
+
+                {row.newText ? (
+                  highlightDiff ? (
+                    <div className="relative">
+                      <TextAnnotatorWrapper
+                        documentId={`statement-${currentStmt.id}`}
+                        paragraphId={`p-${idx}`}
+                        text={row.newText}
+                        className="text-sm text-[var(--ink)]"
+                      />
+                      {/* Sub-diff view if words were added */}
+                      {row.hasChanges && (
+                        <div className="mt-2.5 pt-2 border-t border-dashed border-[var(--border)] text-xs text-[var(--ink-muted)]">
+                          <span className="font-mono font-semibold mr-1 text-[var(--brand)]">
+                            Destaque de inserções:
+                          </span>
+                          {row.newPartsHighlight.map((part, pIdx) => {
+                            if (part.added) {
+                              return (
+                                <span
+                                  key={pIdx}
+                                  className="bg-emerald-500/20 text-emerald-900 dark:text-emerald-200 font-semibold px-1 py-0.5 rounded-xs border-b-2 border-emerald-500"
+                                >
+                                  {part.value}
+                                </span>
+                              );
+                            }
+                            return <span key={pIdx}>{part.value}</span>;
+                          })}
+                        </div>
+                      )}
                     </div>
+                  ) : (
                     <TextAnnotatorWrapper
-                      documentId={`statement-${currentMeeting.id}`}
+                      documentId={`statement-${currentStmt.id}`}
                       paragraphId={`p-${idx}`}
-                      text={pDiff.newText}
+                      text={row.newText}
                       className="text-sm text-[var(--ink)]"
                     />
+                  )
+                ) : (
+                  <div className="text-[var(--ink-muted)] italic font-sans text-xs">
+                    (Este parágrafo não existe neste comunicado)
                   </div>
-                ))}
+                )}
               </div>
             </div>
-          )}
+          ))}
         </div>
       </div>
     </div>

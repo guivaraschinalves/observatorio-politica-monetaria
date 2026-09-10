@@ -8,26 +8,25 @@ export interface DiffPart {
 
 export interface ParagraphDiffResult {
   paragraphIndex: number;
-  sectionTitle?: string;
   hasChanges: boolean;
   addedWordsCount: number;
   removedWordsCount: number;
   diffParts: DiffPart[];
   oldText: string;
   newText: string;
+  oldPartsHighlight: DiffPart[];
+  newPartsHighlight: DiffPart[];
 }
 
 export interface StatementDiffComparison {
-  meetingAId: string;
-  meetingBId: string;
   totalAddedWords: number;
   totalRemovedWords: number;
   paragraphs: ParagraphDiffResult[];
 }
 
 export function computeStatementDiff(
-  oldParagraphs: { text: string; section?: string }[],
-  newParagraphs: { text: string; section?: string }[]
+  oldParagraphs: string[],
+  newParagraphs: string[]
 ): StatementDiffComparison {
   const maxLength = Math.max(oldParagraphs.length, newParagraphs.length);
   const diffResults: ParagraphDiffResult[] = [];
@@ -35,15 +34,14 @@ export function computeStatementDiff(
   let totalRemoved = 0;
 
   for (let i = 0; i < maxLength; i++) {
-    const oldP = oldParagraphs[i] ? oldParagraphs[i].text : '';
-    const newP = newParagraphs[i] ? newParagraphs[i].text : '';
-    const sectionTitle = newParagraphs[i]?.section || oldParagraphs[i]?.section || `Parágrafo ${i + 1}`;
+    const oldP = oldParagraphs[i] || '';
+    const newP = newParagraphs[i] || '';
 
     const parts = Diff.diffWordsWithSpace(oldP, newP);
     let pAdded = 0;
     let pRemoved = 0;
 
-    parts.forEach(part => {
+    parts.forEach((part) => {
       const words = part.value.trim().split(/\s+/).filter(Boolean).length;
       if (part.added) pAdded += words;
       if (part.removed) pRemoved += words;
@@ -52,21 +50,25 @@ export function computeStatementDiff(
     totalAdded += pAdded;
     totalRemoved += pRemoved;
 
+    // For the left (old) side: highlight removed words
+    // For the right (new) side: highlight added words
+    const oldPartsHighlight: DiffPart[] = parts.filter((p) => !p.added);
+    const newPartsHighlight: DiffPart[] = parts.filter((p) => !p.removed);
+
     diffResults.push({
       paragraphIndex: i,
-      sectionTitle,
       hasChanges: pAdded > 0 || pRemoved > 0,
       addedWordsCount: pAdded,
       removedWordsCount: pRemoved,
       diffParts: parts,
       oldText: oldP,
       newText: newP,
+      oldPartsHighlight,
+      newPartsHighlight,
     });
   }
 
   return {
-    meetingAId: '',
-    meetingBId: '',
     totalAddedWords: totalAdded,
     totalRemovedWords: totalRemoved,
     paragraphs: diffResults,

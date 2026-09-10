@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { Committee } from './types/monetary';
 import { AnnotationProvider, useAnnotations } from './context/AnnotationContext';
+import { allCopomStatements, allFomcStatements } from './data/allStatements';
 import { copomMeetings } from './data/copomData';
 import { fomcMeetings } from './data/fomcData';
 import { copomMarketOverview, fomcMarketOverview } from './data/marketData';
@@ -17,6 +18,7 @@ const ObservatoryContent: React.FC = () => {
   const [activeTab, setActiveTab] = useState<'comparator' | 'minutes' | 'probabilities' | 'speeches' | 'notes'>('comparator');
   const { annotations } = useAnnotations();
 
+  const statements = committee === 'copom' ? allCopomStatements : allFomcStatements;
   const meetings = committee === 'copom' ? copomMeetings : fomcMeetings;
   const marketOverview = committee === 'copom' ? copomMarketOverview : fomcMarketOverview;
 
@@ -34,7 +36,7 @@ const ObservatoryContent: React.FC = () => {
       {/* Main Container */}
       <main className="flex-1 max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-8">
         {activeTab === 'comparator' && (
-          <StatementComparator meetings={meetings} committee={committee} />
+          <StatementComparator statements={statements} committee={committee} />
         )}
 
         {activeTab === 'minutes' && (
@@ -63,7 +65,7 @@ const ObservatoryContent: React.FC = () => {
             <span className="font-serif italic">Observatório de Política Monetária</span>
           </div>
           <div className="text-[var(--ink-muted)]">
-            Fontes: Banco Central do Brasil (Bacen), Federal Reserve Board (Fed), B3 e CME Group.
+            Fontes: Banco Central do Brasil (Bacen - {allCopomStatements.length} comunicados), Federal Reserve Board (Fed - {allFomcStatements.length} statements), B3 e CME Group.
           </div>
         </div>
       </footer>
