@@ -21,7 +21,7 @@ const ObservatoryContent: React.FC = () => {
   const marketOverview = committee === 'copom' ? copomMarketOverview : fomcMarketOverview;
 
   return (
-    <div className="min-h-screen bg-[#fbfbfa] flex flex-col font-sans text-gray-900 selection:bg-blue-100 selection:text-blue-900">
+    <div className="min-h-screen bg-[var(--page-bg)] text-[var(--ink)] flex flex-col font-sans selection:bg-[var(--accent-wash)] selection:text-[var(--brand)] transition-colors">
       {/* Top Navbar */}
       <Header
         committee={committee}
@@ -54,15 +54,15 @@ const ObservatoryContent: React.FC = () => {
         )}
       </main>
 
-      {/* Footer */}
-      <footer className="border-t border-gray-200 bg-white py-6 mt-12 text-xs text-gray-500">
+      {/* Footer styled as FTM */}
+      <footer className="border-t border-[var(--border)] bg-[var(--surface)] py-6 mt-12 text-xs text-[var(--ink-muted)] transition-colors">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col sm:flex-row items-center justify-between gap-4">
           <div className="flex items-center gap-2">
-            <span className="font-bold text-gray-900">Observatório de Política Monetária</span>
+            <span className="font-bold text-[var(--ink)]">Follow the Money</span>
             <span>•</span>
-            <span>Follow The Money Macro Analytics</span>
+            <span className="font-serif italic">Observatório de Política Monetária</span>
           </div>
-          <div className="text-gray-400">
+          <div className="text-[var(--ink-muted)]">
             Fontes: Banco Central do Brasil (Bacen), Federal Reserve Board (Fed), B3 e CME Group.
           </div>
         </div>

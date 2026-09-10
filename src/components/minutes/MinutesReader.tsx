@@ -38,21 +38,21 @@ export const MinutesReader: React.FC<MinutesReaderProps> = ({ meetings, committe
   }, [currentMeeting]);
 
   if (!currentMeeting) {
-    return <div className="p-8 text-center text-gray-500">Nenhuma ata disponível.</div>;
+    return <div className="p-8 text-center text-[var(--ink-muted)]">Nenhuma ata disponível.</div>;
   }
 
   return (
     <div className="space-y-6">
       {/* Controls Bar */}
-      <div className="bg-white p-4 rounded-xl border border-gray-200 shadow-xs flex flex-wrap items-center justify-between gap-4">
+      <div className="bg-[var(--surface)] p-4 rounded-xl border border-[var(--border)] shadow-xs flex flex-wrap items-center justify-between gap-4">
         <div className="flex items-center gap-3">
-          <span className="text-xs font-semibold text-gray-500 uppercase tracking-wider">
+          <span className="text-xs font-mono font-semibold text-[var(--ink-muted)] uppercase tracking-wider">
             Selecione a Reunião / Ata:
           </span>
           <select
             value={selectedMeetingId}
             onChange={(e) => setSelectedMeetingId(e.target.value)}
-            className="bg-gray-50 border border-gray-300 text-gray-900 text-xs rounded-lg px-3 py-1.5 font-medium focus:ring-blue-500 focus:border-blue-500"
+            className="bg-[var(--page-bg)] border border-[var(--border)] text-[var(--ink)] text-xs rounded-lg px-3 py-1.5 font-medium focus:outline-hidden focus:ring-1 focus:ring-[var(--brand)]"
           >
             {meetings.map((m) => (
               <option key={m.id} value={m.id}>
@@ -64,8 +64,8 @@ export const MinutesReader: React.FC<MinutesReaderProps> = ({ meetings, committe
 
         {/* Quick info badges */}
         <div className="flex items-center gap-2 text-xs">
-          <span className="px-2.5 py-1 bg-emerald-50 text-emerald-800 border border-emerald-200 rounded-md font-medium flex items-center gap-1.5">
-            <BookOpen className="w-3.5 h-3.5 text-emerald-600" />
+          <span className="px-2.5 py-1 bg-[var(--accent-wash)] text-[var(--brand)] border border-[var(--border)] rounded-md font-medium flex items-center gap-1.5">
+            <BookOpen className="w-3.5 h-3.5" />
             <span>
               {committee === 'copom'
                 ? 'Atas com Referências Cruzadas ao RPM'
@@ -79,21 +79,21 @@ export const MinutesReader: React.FC<MinutesReaderProps> = ({ meetings, committe
       <div className="grid grid-cols-1 lg:grid-cols-4 gap-6">
         {/* Table of Contents & RPM Links Sidebar */}
         <div className="space-y-4">
-          <div className="bg-white p-4 rounded-xl border border-gray-200 shadow-xs sticky top-28 space-y-4">
+          <div className="bg-[var(--surface)] p-4 rounded-xl border border-[var(--border)] shadow-xs sticky top-28 space-y-4">
             <div>
-              <h3 className="text-xs font-bold text-gray-900 uppercase tracking-wider flex items-center gap-1.5">
-                <Bookmark className="w-3.5 h-3.5 text-blue-600" />
-                <span>Estrutura do Documento</span>
+              <h3 className="text-xs font-mono font-bold text-[var(--ink)] uppercase tracking-wider flex items-center gap-1.5">
+                <Bookmark className="w-3.5 h-3.5 text-[var(--brand)]" />
+                <span>Estrutura da Ata</span>
               </h3>
               <nav className="mt-2.5 space-y-1 text-xs">
                 {sections.map(([secTitle], idx) => (
                   <a
                     key={idx}
                     href={`#sec-${idx}`}
-                    className="flex items-center justify-between text-gray-600 hover:text-blue-600 py-1 px-1.5 rounded hover:bg-gray-50 transition-colors"
+                    className="flex items-center justify-between text-[var(--ink-secondary)] hover:text-[var(--brand)] py-1 px-1.5 rounded hover:bg-[var(--page-bg)] transition-colors"
                   >
                     <span className="truncate">{secTitle}</span>
-                    <ChevronRight className="w-3 h-3 text-gray-400 shrink-0" />
+                    <ChevronRight className="w-3 h-3 text-[var(--ink-muted)] shrink-0" />
                   </a>
                 ))}
               </nav>
@@ -101,9 +101,9 @@ export const MinutesReader: React.FC<MinutesReaderProps> = ({ meetings, committe
 
             {/* Direct RPM Links in this meeting */}
             {currentMeeting.rpmReferences && currentMeeting.rpmReferences.length > 0 && (
-              <div className="pt-4 border-t border-gray-100">
-                <h3 className="text-xs font-bold text-emerald-900 uppercase tracking-wider flex items-center gap-1.5">
-                  <Sparkles className="w-3.5 h-3.5 text-emerald-600" />
+              <div className="pt-4 border-t border-[var(--border)]">
+                <h3 className="text-xs font-mono font-bold text-[var(--brand)] uppercase tracking-wider flex items-center gap-1.5">
+                  <Sparkles className="w-3.5 h-3.5 text-[var(--brand)]" />
                   <span>Referências ao RPM ({committee === 'copom' ? 'Bacen' : 'Fed'})</span>
                 </h3>
                 <div className="mt-2 space-y-1.5">
@@ -111,12 +111,12 @@ export const MinutesReader: React.FC<MinutesReaderProps> = ({ meetings, committe
                     <button
                       key={ref.id}
                       onClick={() => setActiveRpmRef(ref)}
-                      className="w-full text-left p-2 rounded-lg bg-emerald-50/70 hover:bg-emerald-100/70 border border-emerald-200/80 transition-colors group"
+                      className="w-full text-left p-2 rounded-lg bg-[var(--page-bg)] hover:bg-[var(--accent-wash)] border border-[var(--border)] transition-colors group"
                     >
-                      <div className="text-[11px] font-bold text-emerald-900 line-clamp-1 group-hover:text-emerald-950">
+                      <div className="text-[11px] font-bold text-[var(--ink)] line-clamp-1 group-hover:text-[var(--brand)]">
                         {ref.title}
                       </div>
-                      <div className="text-[10px] text-emerald-700">{ref.quarter} • {ref.chapter}</div>
+                      <div className="text-[10px] text-[var(--ink-muted)]">{ref.quarter} • {ref.chapter}</div>
                     </button>
                   ))}
                 </div>
@@ -127,27 +127,27 @@ export const MinutesReader: React.FC<MinutesReaderProps> = ({ meetings, committe
 
         {/* Reader Body */}
         <div className="lg:col-span-3 space-y-6">
-          <div className="bg-white p-8 rounded-xl border border-gray-200 shadow-xs">
+          <div className="bg-[var(--surface)] p-8 rounded-xl border border-[var(--border)] shadow-xs">
             {/* Document Header */}
-            <div className="border-b border-gray-200 pb-6 mb-8 text-center sm:text-left">
-              <span className="text-xs font-bold text-blue-600 uppercase tracking-widest">
+            <div className="border-b border-[var(--border)] pb-6 mb-8 text-center sm:text-left">
+              <span className="text-xs font-mono font-bold text-[var(--brand)] uppercase tracking-widest">
                 {committee === 'copom' ? 'Banco Central do Brasil • Copom' : 'Federal Reserve • FOMC'}
               </span>
-              <h1 className="text-2xl font-bold font-serif text-gray-900 mt-1">
+              <h1 className="text-2xl font-bold font-serif text-[var(--ink)] mt-1">
                 Ata da {currentMeeting.meetingNumber} ({currentMeeting.date})
               </h1>
-              <p className="text-sm text-gray-600 mt-2 font-serif max-w-3xl leading-relaxed">
+              <p className="text-sm text-[var(--ink-secondary)] mt-2 font-serif max-w-3xl leading-relaxed">
                 {currentMeeting.summary}
               </p>
-              <div className="mt-4 flex flex-wrap items-center gap-3 text-xs text-gray-500">
-                <span className="bg-gray-100 px-2.5 py-1 rounded-md font-medium text-gray-700">
+              <div className="mt-4 flex flex-wrap items-center gap-3 text-xs text-[var(--ink-muted)]">
+                <span className="bg-[var(--page-bg)] px-2.5 py-1 rounded-md font-medium text-[var(--ink)] border border-[var(--border)]">
                   Taxa fixada: <strong>{currentMeeting.rateDecision}</strong>
                 </span>
-                <span className="bg-gray-100 px-2.5 py-1 rounded-md font-medium text-gray-700">
+                <span className="bg-[var(--page-bg)] px-2.5 py-1 rounded-md font-medium text-[var(--ink)] border border-[var(--border)]">
                   Votação: <strong>{currentMeeting.voteSplit}</strong>
                 </span>
-                <span className="text-blue-600 font-medium">
-                  💡 Dica: Selecione qualquer texto com o mouse para grifar, riscar ou anotar.
+                <span className="text-[var(--brand)] font-medium">
+                  💡 Selecione qualquer texto com o mouse para grifar ou anotar.
                 </span>
               </div>
             </div>
@@ -156,7 +156,7 @@ export const MinutesReader: React.FC<MinutesReaderProps> = ({ meetings, committe
             <div className="space-y-8 font-serif">
               {sections.map(([secTitle, paragraphs], secIdx) => (
                 <div key={`sec-${secIdx}`} id={`sec-${secIdx}`} className="space-y-4">
-                  <h2 className="text-base font-sans font-bold text-gray-800 pb-2 border-b border-gray-100 tracking-tight">
+                  <h2 className="text-base font-sans font-bold text-[var(--ink)] pb-2 border-b border-[var(--border)] tracking-tight">
                     {secTitle}
                   </h2>
                   <div className="space-y-5">
@@ -165,13 +165,13 @@ export const MinutesReader: React.FC<MinutesReaderProps> = ({ meetings, committe
                       return (
                         <div
                           key={p.id}
-                          className="p-4 rounded-xl border border-transparent hover:border-gray-200 hover:bg-stone-50/40 transition-all"
+                          className="p-4 rounded-xl border border-transparent hover:border-[var(--border)] hover:bg-[var(--page-bg)]/50 transition-all"
                         >
                           <TextAnnotatorWrapper
                             documentId={`minutes-${currentMeeting.id}`}
                             paragraphId={p.id}
                             text={p.text}
-                            className="text-base text-gray-800 leading-relaxed"
+                            className="text-base text-[var(--ink)] leading-relaxed"
                           />
 
                           {/* Interactive RPM Cross Reference Badge */}
@@ -179,12 +179,12 @@ export const MinutesReader: React.FC<MinutesReaderProps> = ({ meetings, committe
                             <div className="mt-3 flex items-center">
                               <button
                                 onClick={() => setActiveRpmRef(rpmRef)}
-                                className="inline-flex items-center gap-1.5 px-3 py-1 rounded-lg text-xs font-sans font-semibold bg-emerald-50 text-emerald-800 border border-emerald-300 hover:bg-emerald-100 hover:border-emerald-400 transition-colors shadow-2xs"
+                                className="inline-flex items-center gap-1.5 px-3 py-1 rounded-lg text-xs font-sans font-semibold bg-[var(--accent-wash)] text-[var(--brand)] border border-[var(--border)] hover:opacity-85 transition-opacity"
                               >
-                                <Sparkles className="w-3.5 h-3.5 text-emerald-600" />
+                                <Sparkles className="w-3.5 h-3.5 text-[var(--brand)]" />
                                 <span>Ver no Relatório de Política Monetária (RPM):</span>
                                 <strong className="underline">{rpmRef.title}</strong>
-                                <span className="text-emerald-600 font-bold">↗</span>
+                                <span className="text-[var(--brand)] font-bold">↗</span>
                               </button>
                             </div>
                           )}

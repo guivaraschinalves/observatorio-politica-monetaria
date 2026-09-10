@@ -1,6 +1,6 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { Committee } from '../../types/monetary';
-import { GitCompare, BookOpen, TrendingUp, Mic, Edit3, Github, ExternalLink } from 'lucide-react';
+import { GitCompare, BookOpen, TrendingUp, Mic, Edit3, Github, ExternalLink, Sun, Moon } from 'lucide-react';
 
 interface HeaderProps {
   committee: Committee;
@@ -17,142 +17,170 @@ export const Header: React.FC<HeaderProps> = ({
   onSelectTab,
   totalAnnotationsCount,
 }) => {
+  const [theme, setTheme] = useState<'light' | 'dark'>(() => {
+    const saved = localStorage.getItem('ftm_theme');
+    if (saved === 'dark' || saved === 'light') return saved;
+    return window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+  });
+
+  useEffect(() => {
+    document.documentElement.setAttribute('data-theme', theme);
+    localStorage.setItem('ftm_theme', theme);
+  }, [theme]);
+
+  const toggleTheme = () => {
+    setTheme((prev) => (prev === 'light' ? 'dark' : 'light'));
+  };
+
   return (
-    <header className="border-b border-gray-200 bg-white sticky top-0 z-40 shadow-xs">
+    <header className="border-b border-[var(--border)] bg-[var(--surface)] sticky top-0 z-40 shadow-xs transition-colors">
       {/* Top tier brand and jurisdiction switcher */}
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between h-16">
-          {/* Logo & Title */}
-          <div className="flex items-center space-x-3">
-            <div className="w-9 h-9 rounded-lg bg-gradient-to-br from-blue-600 to-indigo-800 flex items-center justify-center text-white font-serif font-bold text-lg shadow-sm">
-              🏛️
-            </div>
+          {/* FTM Logo & Title */}
+          <div className="flex items-center space-x-3.5">
+            <svg
+              className="text-[var(--brand)] shrink-0 transition-transform hover:scale-105"
+              viewBox="1015 135 400 415"
+              width="26"
+              height="26"
+              fill="currentColor"
+              aria-hidden="true"
+            >
+              <path d="M1210.27,141.85c-85.33,0-158.08,54.13-186.48,130.22h144.44c7.34,0,13.29-5.95,13.29-13.29v-69.58 c0-2.39,1.38-4.53,3.55-5.52c2.15-0.99,4.69-0.62,6.49,0.93l172.26,149.62c2.53,2.2,3.96,5.38,3.96,8.72s-1.44,6.53-3.96,8.72 L1191.56,501.3c-1.8,1.56-4.34,1.92-6.49,0.93c-2.16-0.99-3.55-3.13-3.55-5.5v-69.58c0-7.34-5.95-13.29-13.29-13.29H1023.8 c28.4,76.08,101.16,130.22,186.48,130.22c110.04,0,199.23-90.04,199.23-201.12S1320.31,141.85,1210.27,141.85z" />
+            </svg>
             <div>
-              <div className="flex items-center space-x-2">
-                <span className="text-xs font-semibold tracking-wider text-blue-600 uppercase">
-                  Follow The Money • Macro Intelligence
-                </span>
+              <div className="font-serif text-[1.12rem] font-bold text-[var(--ink)] leading-none tracking-tight">
+                Follow the Money
               </div>
-              <h1 className="text-lg font-bold text-gray-900 tracking-tight flex items-center gap-2">
+              <div className="font-mono text-[0.66rem] tracking-[0.09em] uppercase text-[var(--ink-muted)] mt-1 font-semibold">
                 Observatório de Política Monetária
-              </h1>
+              </div>
             </div>
           </div>
 
           {/* Committee Switcher */}
-          <div className="flex items-center bg-gray-100 p-1 rounded-xl border border-gray-200 shadow-inner">
+          <div className="flex items-center bg-[var(--page-bg)] p-1 rounded-xl border border-[var(--border)]">
             <button
               onClick={() => onSelectCommittee('copom')}
-              className={`flex items-center space-x-2 px-3.5 py-1.5 rounded-lg text-xs font-semibold transition-all ${
+              className={`flex items-center space-x-2 px-3 py-1.5 rounded-lg text-xs font-semibold transition-all ${
                 committee === 'copom'
-                  ? 'bg-white text-gray-900 shadow-xs border border-gray-200/80 font-bold'
-                  : 'text-gray-600 hover:text-gray-900'
+                  ? 'bg-[var(--surface)] text-[var(--ink)] shadow-xs border border-[var(--border)] font-bold'
+                  : 'text-[var(--ink-secondary)] hover:text-[var(--ink)]'
               }`}
             >
-              <span className="text-base">🇧🇷</span>
+              <span className="text-sm">🇧🇷</span>
               <span>Copom (Bacen)</span>
             </button>
             <button
               onClick={() => onSelectCommittee('fomc')}
-              className={`flex items-center space-x-2 px-3.5 py-1.5 rounded-lg text-xs font-semibold transition-all ${
+              className={`flex items-center space-x-2 px-3 py-1.5 rounded-lg text-xs font-semibold transition-all ${
                 committee === 'fomc'
-                  ? 'bg-white text-gray-900 shadow-xs border border-gray-200/80 font-bold'
-                  : 'text-gray-600 hover:text-gray-900'
+                  ? 'bg-[var(--surface)] text-[var(--ink)] shadow-xs border border-[var(--border)] font-bold'
+                  : 'text-[var(--ink-secondary)] hover:text-[var(--ink)]'
               }`}
             >
-              <span className="text-base">🇺🇸</span>
+              <span className="text-sm">🇺🇸</span>
               <span>FOMC (Fed)</span>
             </button>
           </div>
 
-          {/* External Links & Status */}
-          <div className="flex items-center space-x-3">
+          {/* Actions: Theme Toggle & GitHub */}
+          <div className="flex items-center space-x-2.5">
+            <button
+              onClick={toggleTheme}
+              title={`Alternar para modo ${theme === 'light' ? 'escuro' : 'claro'}`}
+              className="p-2 rounded-lg text-[var(--ink-secondary)] hover:text-[var(--ink)] bg-[var(--page-bg)] hover:bg-[var(--border)] border border-[var(--border)] transition-colors"
+            >
+              {theme === 'light' ? <Moon className="w-4 h-4" /> : <Sun className="w-4 h-4" />}
+            </button>
+
             <a
               href="https://github.com/guivaraschinalves/observatorio-politica-monetaria"
               target="_blank"
               rel="noreferrer"
-              className="inline-flex items-center gap-1.5 text-xs text-gray-600 hover:text-gray-900 bg-gray-50 hover:bg-gray-100 px-3 py-1.5 rounded-lg border border-gray-200 transition-colors"
+              className="inline-flex items-center gap-1.5 text-xs font-medium text-[var(--ink-secondary)] hover:text-[var(--ink)] bg-[var(--page-bg)] hover:bg-[var(--border)] px-3 py-1.5 rounded-lg border border-[var(--border)] transition-colors"
             >
               <Github className="w-3.5 h-3.5" />
-              <span>GitHub</span>
-              <ExternalLink className="w-3 h-3 text-gray-400" />
+              <span className="hidden sm:inline">GitHub</span>
+              <ExternalLink className="w-3 h-3 text-[var(--ink-muted)]" />
             </a>
           </div>
         </div>
       </div>
 
       {/* Navigation Tabs */}
-      <div className="border-t border-gray-100 bg-gray-50/70">
+      <div className="border-t border-[var(--border)] bg-[var(--page-bg)]">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <nav className="flex space-x-1 sm:space-x-4 overflow-x-auto py-2">
+          <nav className="flex space-x-1 sm:space-x-3 overflow-x-auto py-2">
             <button
               onClick={() => onSelectTab('comparator')}
-              className={`flex items-center space-x-2 px-3.5 py-2 rounded-lg text-xs font-medium whitespace-nowrap transition-all ${
+              className={`flex items-center space-x-2 px-3.5 py-1.5 rounded-lg text-xs font-medium whitespace-nowrap transition-all ${
                 activeTab === 'comparator'
-                  ? 'bg-white text-blue-700 shadow-xs border border-gray-200 font-semibold'
-                  : 'text-gray-600 hover:text-gray-900 hover:bg-gray-100/80'
+                  ? 'bg-[var(--surface)] text-[var(--brand)] shadow-xs border border-[var(--border)] font-bold'
+                  : 'text-[var(--ink-secondary)] hover:text-[var(--ink)] hover:bg-[var(--surface)]'
               }`}
             >
-              <GitCompare className="w-4 h-4 text-blue-600" />
+              <GitCompare className="w-4 h-4 text-[var(--brand)]" />
               <span>Comparador de Comunicados</span>
             </button>
 
             <button
               onClick={() => onSelectTab('minutes')}
-              className={`flex items-center space-x-2 px-3.5 py-2 rounded-lg text-xs font-medium whitespace-nowrap transition-all ${
+              className={`flex items-center space-x-2 px-3.5 py-1.5 rounded-lg text-xs font-medium whitespace-nowrap transition-all ${
                 activeTab === 'minutes'
-                  ? 'bg-white text-blue-700 shadow-xs border border-gray-200 font-semibold'
-                  : 'text-gray-600 hover:text-gray-900 hover:bg-gray-100/80'
+                  ? 'bg-[var(--surface)] text-[var(--brand)] shadow-xs border border-[var(--border)] font-bold'
+                  : 'text-[var(--ink-secondary)] hover:text-[var(--ink)] hover:bg-[var(--surface)]'
               }`}
             >
-              <BookOpen className="w-4 h-4 text-emerald-600" />
+              <BookOpen className="w-4 h-4 text-emerald-600 dark:text-emerald-400" />
               <span>Leitor de Atas / Minutas</span>
-              <span className="ml-1 px-1.5 py-0.2 bg-emerald-100 text-emerald-800 rounded-md text-[10px] font-bold">
+              <span className="ml-1 px-1.5 py-0.2 bg-[var(--accent-wash)] text-[var(--brand)] rounded-md text-[10px] font-mono font-bold">
                 {committee === 'copom' ? 'RPM Bacen' : 'SEP Fed'}
               </span>
             </button>
 
             <button
               onClick={() => onSelectTab('probabilities')}
-              className={`flex items-center space-x-2 px-3.5 py-2 rounded-lg text-xs font-medium whitespace-nowrap transition-all ${
+              className={`flex items-center space-x-2 px-3.5 py-1.5 rounded-lg text-xs font-medium whitespace-nowrap transition-all ${
                 activeTab === 'probabilities'
-                  ? 'bg-white text-blue-700 shadow-xs border border-gray-200 font-semibold'
-                  : 'text-gray-600 hover:text-gray-900 hover:bg-gray-100/80'
+                  ? 'bg-[var(--surface)] text-[var(--brand)] shadow-xs border border-[var(--border)] font-bold'
+                  : 'text-[var(--ink-secondary)] hover:text-[var(--ink)] hover:bg-[var(--surface)]'
               }`}
             >
-              <TrendingUp className="w-4 h-4 text-purple-600" />
+              <TrendingUp className="w-4 h-4 text-purple-600 dark:text-purple-400" />
               <span>Probabilidades de Mercado</span>
-              <span className="ml-1 px-1.5 py-0.2 bg-purple-100 text-purple-800 rounded-md text-[10px] font-bold">
-                {committee === 'copom' ? 'DI1 / B3' : 'FedWatch'}
+              <span className="ml-1 px-1.5 py-0.2 bg-[var(--accent-wash)] text-[var(--brand)] rounded-md text-[10px] font-mono font-bold">
+                {committee === 'copom' ? 'DI1 B3' : 'FedWatch'}
               </span>
             </button>
 
             <button
               onClick={() => onSelectTab('speeches')}
-              className={`flex items-center space-x-2 px-3.5 py-2 rounded-lg text-xs font-medium whitespace-nowrap transition-all ${
+              className={`flex items-center space-x-2 px-3.5 py-1.5 rounded-lg text-xs font-medium whitespace-nowrap transition-all ${
                 activeTab === 'speeches'
-                  ? 'bg-white text-blue-700 shadow-xs border border-gray-200 font-semibold'
-                  : 'text-gray-600 hover:text-gray-900 hover:bg-gray-100/80'
+                  ? 'bg-[var(--surface)] text-[var(--brand)] shadow-xs border border-[var(--border)] font-bold'
+                  : 'text-[var(--ink-secondary)] hover:text-[var(--ink)] hover:bg-[var(--surface)]'
               }`}
             >
-              <Mic className="w-4 h-4 text-amber-600" />
+              <Mic className="w-4 h-4 text-amber-600 dark:text-amber-400" />
               <span>Calendário & Discursos</span>
             </button>
 
             <button
               onClick={() => onSelectTab('notes')}
-              className={`flex items-center space-x-2 px-3.5 py-2 rounded-lg text-xs font-medium whitespace-nowrap transition-all ml-auto ${
+              className={`flex items-center space-x-2 px-3.5 py-1.5 rounded-lg text-xs font-medium whitespace-nowrap transition-all ml-auto ${
                 activeTab === 'notes'
-                  ? 'bg-blue-600 text-white shadow-xs font-semibold'
-                  : 'text-gray-700 bg-white border border-gray-200 hover:bg-gray-50'
+                  ? 'bg-[var(--brand)] text-white shadow-xs font-bold'
+                  : 'text-[var(--ink)] bg-[var(--surface)] border border-[var(--border)] hover:bg-[var(--page-bg)]'
               }`}
             >
               <Edit3 className="w-3.5 h-3.5" />
               <span>Caderno de Anotações</span>
               {totalAnnotationsCount > 0 && (
                 <span
-                  className={`ml-1 px-1.5 py-0.2 text-[10px] font-bold rounded-full ${
-                    activeTab === 'notes' ? 'bg-blue-800 text-white' : 'bg-blue-100 text-blue-800'
+                  className={`ml-1 px-1.5 py-0.2 text-[10px] font-mono font-bold rounded-full ${
+                    activeTab === 'notes' ? 'bg-black/30 text-white' : 'bg-[var(--accent-wash)] text-[var(--brand)]'
                   }`}
                 >
                   {totalAnnotationsCount}

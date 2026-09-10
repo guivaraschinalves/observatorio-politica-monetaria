@@ -34,23 +34,23 @@ export const StatementComparator: React.FC<StatementComparatorProps> = ({
   }, [currentMeeting, previousMeeting]);
 
   if (!currentMeeting) {
-    return <div className="p-8 text-center text-gray-500">Nenhuma reunião disponível.</div>;
+    return <div className="p-8 text-center text-[var(--ink-muted)]">Nenhuma reunião disponível.</div>;
   }
 
   return (
     <div className="space-y-6">
       {/* Selection Bar & Controls */}
-      <div className="bg-white p-4 rounded-xl border border-gray-200 shadow-xs flex flex-wrap items-center justify-between gap-4">
+      <div className="bg-[var(--surface)] p-4 rounded-xl border border-[var(--border)] shadow-xs flex flex-wrap items-center justify-between gap-4">
         <div className="flex flex-wrap items-center gap-3">
           {/* Reunião Base (Atual) */}
           <div className="flex items-center gap-2">
-            <span className="text-xs font-semibold text-gray-500 uppercase tracking-wider">
+            <span className="text-xs font-mono font-semibold text-[var(--ink-muted)] uppercase tracking-wider">
               Reunião Recente (T):
             </span>
             <select
               value={meetingCurrentId}
               onChange={(e) => setMeetingCurrentId(e.target.value)}
-              className="bg-gray-50 border border-gray-300 text-gray-900 text-xs rounded-lg px-3 py-1.5 font-medium focus:ring-blue-500 focus:border-blue-500"
+              className="bg-[var(--page-bg)] border border-[var(--border)] text-[var(--ink)] text-xs rounded-lg px-3 py-1.5 font-medium focus:outline-hidden focus:ring-1 focus:ring-[var(--brand)]"
             >
               {meetings.map((m) => (
                 <option key={m.id} value={m.id}>
@@ -60,17 +60,17 @@ export const StatementComparator: React.FC<StatementComparatorProps> = ({
             </select>
           </div>
 
-          <span className="text-gray-400 font-bold text-sm">vs</span>
+          <span className="text-[var(--ink-muted)] font-mono font-bold text-xs">vs</span>
 
           {/* Reunião Anterior (T-1) */}
           <div className="flex items-center gap-2">
-            <span className="text-xs font-semibold text-gray-500 uppercase tracking-wider">
+            <span className="text-xs font-mono font-semibold text-[var(--ink-muted)] uppercase tracking-wider">
               Comparar Com (T-1):
             </span>
             <select
               value={meetingPreviousId}
               onChange={(e) => setMeetingPreviousId(e.target.value)}
-              className="bg-gray-50 border border-gray-300 text-gray-900 text-xs rounded-lg px-3 py-1.5 font-medium focus:ring-blue-500 focus:border-blue-500"
+              className="bg-[var(--page-bg)] border border-[var(--border)] text-[var(--ink)] text-xs rounded-lg px-3 py-1.5 font-medium focus:outline-hidden focus:ring-1 focus:ring-[var(--brand)]"
             >
               {meetings.map((m) => (
                 <option key={m.id} value={m.id} disabled={m.id === meetingCurrentId}>
@@ -82,13 +82,13 @@ export const StatementComparator: React.FC<StatementComparatorProps> = ({
         </div>
 
         {/* View Mode Toggle */}
-        <div className="flex items-center bg-gray-100 p-1 rounded-lg border border-gray-200">
+        <div className="flex items-center bg-[var(--page-bg)] p-1 rounded-lg border border-[var(--border)]">
           <button
             onClick={() => setViewMode('inline')}
             className={`flex items-center gap-1.5 px-3 py-1 text-xs font-semibold rounded-md transition-all ${
               viewMode === 'inline'
-                ? 'bg-white text-blue-700 shadow-xs'
-                : 'text-gray-600 hover:text-gray-900'
+                ? 'bg-[var(--surface)] text-[var(--brand)] shadow-xs border border-[var(--border)] font-bold'
+                : 'text-[var(--ink-secondary)] hover:text-[var(--ink)]'
             }`}
           >
             <AlignLeft className="w-3.5 h-3.5" />
@@ -98,8 +98,8 @@ export const StatementComparator: React.FC<StatementComparatorProps> = ({
             onClick={() => setViewMode('split')}
             className={`flex items-center gap-1.5 px-3 py-1 text-xs font-semibold rounded-md transition-all ${
               viewMode === 'split'
-                ? 'bg-white text-blue-700 shadow-xs'
-                : 'text-gray-600 hover:text-gray-900'
+                ? 'bg-[var(--surface)] text-[var(--brand)] shadow-xs border border-[var(--border)] font-bold'
+                : 'text-[var(--ink-secondary)] hover:text-[var(--ink)]'
             }`}
           >
             <Columns className="w-3.5 h-3.5" />
@@ -110,17 +110,17 @@ export const StatementComparator: React.FC<StatementComparatorProps> = ({
 
       {/* Summary Metrics Banner */}
       <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
-        <div className="bg-white p-4 rounded-xl border border-gray-200 shadow-xs">
-          <div className="text-xs font-semibold text-gray-500 uppercase">Decisão de Juros</div>
-          <div className="text-xl font-bold text-gray-900 mt-1 flex items-baseline gap-2">
+        <div className="bg-[var(--surface)] p-4 rounded-xl border border-[var(--border)] shadow-xs">
+          <div className="text-xs font-mono font-semibold text-[var(--ink-muted)] uppercase">Decisão de Juros</div>
+          <div className="text-xl font-bold font-serif text-[var(--ink)] mt-1 flex items-baseline gap-2">
             <span>{currentMeeting.rateDecision}</span>
             <span
-              className={`text-xs font-semibold px-2 py-0.5 rounded-full ${
+              className={`text-xs font-mono font-semibold px-2 py-0.5 rounded-full ${
                 currentMeeting.changeBps > 0
-                  ? 'bg-rose-100 text-rose-800'
+                  ? 'bg-rose-500/15 text-rose-700 dark:text-rose-400'
                   : currentMeeting.changeBps < 0
-                  ? 'bg-emerald-100 text-emerald-800'
-                  : 'bg-gray-100 text-gray-800'
+                  ? 'bg-emerald-500/15 text-emerald-700 dark:text-emerald-400'
+                  : 'bg-[var(--page-bg)] text-[var(--ink-secondary)]'
               }`}
             >
               {currentMeeting.changeBps > 0
@@ -130,39 +130,39 @@ export const StatementComparator: React.FC<StatementComparatorProps> = ({
                 : '0 bps (Pausa)'}
             </span>
           </div>
-          <div className="text-[11px] text-gray-500 mt-1">
+          <div className="text-[11px] text-[var(--ink-muted)] mt-1">
             Placar: {currentMeeting.voteSplit}
           </div>
         </div>
 
-        <div className="bg-white p-4 rounded-xl border border-gray-200 shadow-xs">
-          <div className="text-xs font-semibold text-gray-500 uppercase">Palavras Inseridas</div>
-          <div className="text-xl font-bold text-emerald-600 mt-1 flex items-center gap-1">
+        <div className="bg-[var(--surface)] p-4 rounded-xl border border-[var(--border)] shadow-xs">
+          <div className="text-xs font-mono font-semibold text-[var(--ink-muted)] uppercase">Palavras Inseridas</div>
+          <div className="text-xl font-bold font-mono text-emerald-600 dark:text-emerald-400 mt-1 flex items-center gap-1">
             <span>+{diffResult?.totalAddedWords || 0}</span>
-            <span className="text-xs font-normal text-gray-500">novas palavras</span>
+            <span className="text-xs font-sans font-normal text-[var(--ink-muted)]">palavras</span>
           </div>
-          <div className="text-[11px] text-gray-500 mt-1">
+          <div className="text-[11px] text-[var(--ink-muted)] mt-1">
             Novos argumentos e condições adicionadas
           </div>
         </div>
 
-        <div className="bg-white p-4 rounded-xl border border-gray-200 shadow-xs">
-          <div className="text-xs font-semibold text-gray-500 uppercase">Palavras Removidas</div>
-          <div className="text-xl font-bold text-rose-600 mt-1 flex items-center gap-1">
+        <div className="bg-[var(--surface)] p-4 rounded-xl border border-[var(--border)] shadow-xs">
+          <div className="text-xs font-mono font-semibold text-[var(--ink-muted)] uppercase">Palavras Removidas</div>
+          <div className="text-xl font-bold font-mono text-rose-600 dark:text-rose-400 mt-1 flex items-center gap-1">
             <span>-{diffResult?.totalRemovedWords || 0}</span>
-            <span className="text-xs font-normal text-gray-500">palavras retiradas</span>
+            <span className="text-xs font-sans font-normal text-[var(--ink-muted)]">palavras</span>
           </div>
-          <div className="text-[11px] text-gray-500 mt-1">
+          <div className="text-[11px] text-[var(--ink-muted)] mt-1">
             Termos ou sinalizações abandonadas
           </div>
         </div>
 
-        <div className="bg-white p-4 rounded-xl border border-gray-200 shadow-xs">
-          <div className="text-xs font-semibold text-gray-500 uppercase">Sinalização de Guidance</div>
-          <div className="text-sm font-semibold text-blue-900 mt-1 line-clamp-2">
+        <div className="bg-[var(--surface)] p-4 rounded-xl border border-[var(--border)] shadow-xs">
+          <div className="text-xs font-mono font-semibold text-[var(--ink-muted)] uppercase">Sinalização de Guidance</div>
+          <div className="text-xs font-serif text-[var(--ink)] mt-1 line-clamp-2 leading-relaxed">
             {currentMeeting.keyGuidance}
           </div>
-          <div className="text-[11px] text-blue-600 font-medium mt-1 flex items-center gap-1">
+          <div className="text-[11px] text-[var(--brand)] font-medium mt-1 flex items-center gap-1">
             <Sparkles className="w-3 h-3" />
             <span>Foco no horizonte relevante</span>
           </div>
@@ -170,25 +170,25 @@ export const StatementComparator: React.FC<StatementComparatorProps> = ({
       </div>
 
       {/* Diff View Area */}
-      <div className="bg-white rounded-xl border border-gray-200 shadow-xs overflow-hidden">
-        <div className="px-6 py-4 border-b border-gray-200 bg-gray-50/70 flex items-center justify-between">
+      <div className="bg-[var(--surface)] rounded-xl border border-[var(--border)] shadow-xs overflow-hidden">
+        <div className="px-6 py-4 border-b border-[var(--border)] bg-[var(--page-bg)] flex items-center justify-between">
           <div className="flex items-center gap-2">
-            <GitCompare className="w-4 h-4 text-blue-600" />
-            <h2 className="text-sm font-bold text-gray-900">
+            <GitCompare className="w-4 h-4 text-[var(--brand)]" />
+            <h2 className="text-sm font-bold text-[var(--ink)]">
               Texto Comparado do Comunicado ({committee === 'copom' ? 'Copom / Bacen' : 'FOMC / Fed'})
             </h2>
           </div>
-          <div className="text-xs text-gray-500 flex items-center gap-3">
+          <div className="text-xs text-[var(--ink-muted)] flex items-center gap-3">
             <span className="inline-flex items-center gap-1">
-              <span className="w-3 h-3 bg-emerald-100 border border-emerald-400 rounded-xs inline-block" />
-              <span>Inserido</span>
+              <span className="w-3 h-3 bg-emerald-500/20 border border-emerald-500 rounded-xs inline-block" />
+              <span className="text-emerald-700 dark:text-emerald-400 font-medium">Inserido</span>
             </span>
             <span className="inline-flex items-center gap-1">
-              <span className="w-3 h-3 bg-rose-100 border border-rose-400 rounded-xs inline-block" />
-              <span className="line-through text-rose-800">Removido</span>
+              <span className="w-3 h-3 bg-rose-500/20 border border-rose-500 rounded-xs inline-block" />
+              <span className="line-through text-rose-700 dark:text-rose-400 font-medium">Removido</span>
             </span>
-            <span className="text-gray-400 font-serif italic">
-              *Selecione qualquer trecho para grifar ou anotar
+            <span className="hidden sm:inline font-serif italic text-[var(--ink-muted)]">
+              *Selecione texto para grifar ou anotar
             </span>
           </div>
         </div>
@@ -200,30 +200,30 @@ export const StatementComparator: React.FC<StatementComparatorProps> = ({
               {diffResult?.paragraphs.map((pDiff, idx) => (
                 <div
                   key={`inline-p-${idx}`}
-                  className="p-4 rounded-xl border border-gray-100 bg-stone-50/40 hover:bg-stone-50/90 transition-colors"
+                  className="p-4 rounded-xl border border-[var(--border)] bg-[var(--page-bg)]/40 hover:bg-[var(--page-bg)] transition-colors"
                 >
                   <div className="flex items-center justify-between mb-2">
-                    <span className="text-xs font-sans font-bold text-gray-500 tracking-wider uppercase">
+                    <span className="text-xs font-mono font-bold text-[var(--ink-muted)] tracking-wider uppercase">
                       § {idx + 1}. {pDiff.sectionTitle}
                     </span>
                     {pDiff.hasChanges ? (
-                      <span className="text-[11px] font-sans font-medium px-2 py-0.5 rounded-full bg-blue-50 text-blue-700 border border-blue-200">
+                      <span className="text-[11px] font-mono font-medium px-2 py-0.5 rounded-full bg-[var(--accent-wash)] text-[var(--brand)] border border-[var(--border)]">
                         +{pDiff.addedWordsCount} / -{pDiff.removedWordsCount} alterações
                       </span>
                     ) : (
-                      <span className="text-[11px] font-sans text-gray-400 flex items-center gap-1">
+                      <span className="text-[11px] font-mono text-[var(--ink-muted)] flex items-center gap-1">
                         <CheckCircle2 className="w-3 h-3 text-emerald-500" /> Inalterado
                       </span>
                     )}
                   </div>
 
-                  <div className="text-base text-gray-800 leading-relaxed font-serif">
+                  <div className="text-base text-[var(--ink)] leading-relaxed font-serif">
                     {pDiff.diffParts.map((part, pIdx) => {
                       if (part.added) {
                         return (
                           <span
                             key={pIdx}
-                            className="bg-emerald-100/90 text-emerald-950 font-medium px-1 py-0.5 rounded-xs border-b-2 border-emerald-500"
+                            className="bg-emerald-500/20 text-emerald-900 dark:text-emerald-200 font-medium px-1 py-0.5 rounded-xs border-b-2 border-emerald-500"
                           >
                             {part.value}
                           </span>
@@ -233,7 +233,7 @@ export const StatementComparator: React.FC<StatementComparatorProps> = ({
                         return (
                           <span
                             key={pIdx}
-                            className="bg-rose-100 text-rose-800 line-through px-1 py-0.5 rounded-xs mx-0.5 decoration-rose-600 opacity-70"
+                            className="bg-rose-500/20 text-rose-800 dark:text-rose-300 line-through px-1 py-0.5 rounded-xs mx-0.5 decoration-rose-600 opacity-80"
                           >
                             {part.value}
                           </span>
@@ -250,19 +250,19 @@ export const StatementComparator: React.FC<StatementComparatorProps> = ({
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
               {/* Previous Column */}
               <div className="space-y-6">
-                <div className="bg-gray-100/80 px-3 py-2 rounded-lg text-xs font-sans font-bold text-gray-700">
+                <div className="bg-[var(--page-bg)] px-3 py-2 rounded-lg text-xs font-mono font-bold text-[var(--ink-secondary)] border border-[var(--border)]">
                   {previousMeeting.meetingNumber} ({previousMeeting.date}) — Anterior
                 </div>
                 {diffResult?.paragraphs.map((pDiff, idx) => (
                   <div
                     key={`split-old-${idx}`}
-                    className="p-4 rounded-xl border border-gray-200 bg-white min-h-[120px]"
+                    className="p-4 rounded-xl border border-[var(--border)] bg-[var(--surface)] min-h-[120px]"
                   >
-                    <div className="text-xs font-sans font-semibold text-gray-500 mb-2">
+                    <div className="text-xs font-mono font-semibold text-[var(--ink-muted)] mb-2">
                       § {idx + 1}. {pDiff.sectionTitle}
                     </div>
-                    <div className="text-sm leading-relaxed text-gray-700">
-                      {pDiff.oldText || <span className="text-gray-400 italic">(Parágrafo não existia na reunião anterior)</span>}
+                    <div className="text-sm leading-relaxed text-[var(--ink-secondary)]">
+                      {pDiff.oldText || <span className="text-[var(--ink-muted)] italic">(Parágrafo não existia na reunião anterior)</span>}
                     </div>
                   </div>
                 ))}
@@ -270,22 +270,22 @@ export const StatementComparator: React.FC<StatementComparatorProps> = ({
 
               {/* Current Column with Annotator Support */}
               <div className="space-y-6">
-                <div className="bg-blue-50 px-3 py-2 rounded-lg text-xs font-sans font-bold text-blue-900 border border-blue-200">
+                <div className="bg-[var(--accent-wash)] px-3 py-2 rounded-lg text-xs font-mono font-bold text-[var(--brand)] border border-[var(--border)]">
                   {currentMeeting.meetingNumber} ({currentMeeting.date}) — Atual (Anotável)
                 </div>
                 {diffResult?.paragraphs.map((pDiff, idx) => (
                   <div
                     key={`split-new-${idx}`}
-                    className="p-4 rounded-xl border border-blue-100 bg-white min-h-[120px]"
+                    className="p-4 rounded-xl border border-[var(--border)] bg-[var(--surface)] min-h-[120px]"
                   >
-                    <div className="text-xs font-sans font-semibold text-blue-800 mb-2">
+                    <div className="text-xs font-mono font-semibold text-[var(--brand)] mb-2">
                       § {idx + 1}. {pDiff.sectionTitle}
                     </div>
                     <TextAnnotatorWrapper
                       documentId={`statement-${currentMeeting.id}`}
                       paragraphId={`p-${idx}`}
                       text={pDiff.newText}
-                      className="text-sm text-gray-900"
+                      className="text-sm text-[var(--ink)]"
                     />
                   </div>
                 ))}
