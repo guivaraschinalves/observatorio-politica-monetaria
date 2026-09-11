@@ -1,0 +1,98 @@
+{
+  "committee": "copom",
+  "lastUpdated": "11 de Setembro de 2026 (curva de DI1 — B3)",
+  "terminalRate": "13.54%",
+  "terminalDate": "27 de Janeiro de 2027",
+  "totalCutsOrHikesExpectedBps": -46,
+  "meetings": [
+    {
+      "id": "copom-next-1",
+      "meetingDate": "16 de Setembro de 2026",
+      "daysToMeeting": 5,
+      "currentRate": "14.00%",
+      "impliedRate": "13.68%",
+      "expectedChangeBps": -32,
+      "probabilities": [
+        {
+          "rateLabel": "13.75% — -25bps (corte)",
+          "changeBps": -25,
+          "probability": 73.1
+        },
+        {
+          "rateLabel": "13.50% — -50bps (corte)",
+          "changeBps": -50,
+          "probability": 26.9
+        }
+      ],
+      "historicalProbabilities": {
+        "current": 73.1,
+        "oneDayAgo": 73.0,
+        "oneWeekAgo": 77.2,
+        "oneMonthAgo": 99.9
+      }
+    },
+    {
+      "id": "copom-next-2",
+      "meetingDate": "4 de Novembro de 2026",
+      "daysToMeeting": 54,
+      "currentRate": "13.68%",
+      "impliedRate": "13.51%",
+      "expectedChangeBps": -18,
+      "probabilities": [
+        {
+          "rateLabel": "13.43% — -25bps (corte)",
+          "changeBps": -25,
+          "probability": 70.8
+        },
+        {
+          "rateLabel": "13.68% — Mantém",
+          "changeBps": 0,
+          "probability": 29.2
+        }
+      ],
+      "historicalProbabilities": null
+    },
+    {
+      "id": "copom-next-3",
+      "meetingDate": "9 de Dezembro de 2026",
+      "daysToMeeting": 89,
+      "currentRate": "13.51%",
+      "impliedRate": "13.46%",
+      "expectedChangeBps": -5,
+      "probabilities": [
+        {
+          "rateLabel": "13.51% — Mantém",
+          "changeBps": 0,
+          "probability": 79.9
+        },
+        {
+          "rateLabel": "13.26% — -25bps (corte)",
+          "changeBps": -25,
+          "probability": 20.1
+        }
+      ],
+      "historicalProbabilities": null
+    },
+    {
+      "id": "copom-next-4",
+      "meetingDate": "27 de Janeiro de 2027",
+      "daysToMeeting": 138,
+      "currentRate": "13.46%",
+      "impliedRate": "13.54%",
+      "expectedChangeBps": 8,
+      "probabilities": [
+        {
+          "rateLabel": "13.46% — Mantém",
+          "changeBps": 0,
+          "probability": 67.3
+        },
+        {
+          "rateLabel": "13.71% — +25bps (alta)",
+          "changeBps": 25,
+          "probability": 32.7
+        }
+      ],
+      "historicalProbabilities": null
+    }
+  ]
+}

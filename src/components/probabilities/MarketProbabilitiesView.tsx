@@ -23,7 +23,7 @@ export const MarketProbabilitiesView: React.FC<MarketProbabilitiesViewProps> = (
           <div>
             <div className="flex items-center gap-2">
               <span className="text-xs font-mono font-semibold uppercase tracking-wider text-[var(--brand)]">
-                {committee === 'copom' ? 'Curva a Termo DI1 (B3) & Opções de Copom' : 'Fed de Atlanta · Market Probability Tracker'}
+                {committee === 'copom' ? 'Curva a Termo de DI1 (B3)' : 'Fed de Atlanta · Market Probability Tracker'}
               </span>
               <span className="w-1.5 h-1.5 rounded-full bg-[var(--status-good)] animate-pulse" />
             </div>

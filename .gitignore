@@ -11,3 +11,4 @@ dist-ssr
 *.njsproj
 *.sln
 *.sw?
+.feriados_anbima_tmp.xls

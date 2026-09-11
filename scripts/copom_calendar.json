@@ -1,0 +1,21 @@
+{
+  "_comentario": "Datas oficiais das reuniões ordinárias do Copom, divulgadas pelo BCB com um ano de antecedência (Resolução BCB nº 61/2021). Aqui vai só a data da DECISÃO (segundo dia de cada reunião de dois dias) — é o que importa pra separar o efeito de cada reunião na curva de juros. Atualize esta lista uma vez por ano, quando o Bacen publicar o calendário do ano seguinte (normalmente no fim do ano anterior).",
+  "reunioes": [
+    "2026-01-28",
+    "2026-03-18",
+    "2026-04-29",
+    "2026-06-17",
+    "2026-08-05",
+    "2026-09-16",
+    "2026-11-04",
+    "2026-12-09",
+    "2027-01-27",
+    "2027-03-17",
+    "2027-04-28",
+    "2027-06-16",
+    "2027-08-04",
+    "2027-09-22",
+    "2027-10-27",
+    "2027-12-08"
+  ]
+}

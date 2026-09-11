@@ -28,17 +28,29 @@ jobs:
       - name: Instala dependências dos scripts
         run: pip install -r scripts/requirements.txt
 
-      - name: Busca comunicados e probabilidades de mercado atualizados
+      - name: Busca comunicados atualizados
         run: |
           python scripts/fetch_all_copom_history.py
           python scripts/fetch_all_fomc_history.py
-          python scripts/fetch_fomc_probabilities.py
+
+      # As duas fontes de probabilidade dependem de páginas/endpoints que não
+      # são uma API documentada (a do Fed de Atlanta extrai variáveis do HTML,
+      # a da B3 é um endpoint de download que não é público oficialmente).
+      # Se uma delas mudar de formato e quebrar, não deve travar a atualização
+      # dos comunicados nem o deploy — por isso continue-on-error aqui.
+      - name: Busca probabilidades de mercado do FOMC
+        continue-on-error: true
+        run: python scripts/fetch_fomc_probabilities.py
+
+      - name: Busca probabilidades de mercado do Copom
+        continue-on-error: true
+        run: python scripts/fetch_copom_probabilities.py
 
       - name: Comita os dados, se algo mudou
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
-          FILES="src/data/copom_comunicados_all.json src/data/fomc_statements_all.json src/data/fomc_market_overview.json"
+          FILES="src/data/copom_comunicados_all.json src/data/fomc_statements_all.json src/data/fomc_market_overview.json src/data/copom_market_overview.json"
           if ! git diff --quiet -- $FILES; then
             git add $FILES
             git commit -m "chore: atualiza comunicados e probabilidades de mercado [skip ci]"
