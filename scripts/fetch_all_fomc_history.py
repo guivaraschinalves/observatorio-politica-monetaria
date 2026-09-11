@@ -2,10 +2,12 @@
 """
 Extrai o histórico COMPLETO de declarações (statements) do FOMC desde 2000 até a última reunião.
 """
+import os
 import pandas as pd
 import json
 import re
 
+SCRIPT_DIR = os.path.dirname(os.path.abspath(__file__))
 URL = 'https://raw.githubusercontent.com/vtasca/fed-statement-scraping/master/communications.csv'
 
 def clean_fomc_text(raw_text):
@@ -48,7 +50,7 @@ def main():
             "fullText": "\n\n".join(paragraphs)
         })
         
-    output_path = "/home/guilherme/projetos/observatorio-politica-monetaria/src/data/fomc_statements_all.json"
+    output_path = os.path.join(SCRIPT_DIR, "..", "src", "data", "fomc_statements_all.json")
     with open(output_path, "w", encoding="utf-8") as f:
         json.dump(results, f, ensure_ascii=False, indent=2)
         

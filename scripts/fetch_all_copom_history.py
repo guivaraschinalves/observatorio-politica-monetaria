@@ -2,12 +2,15 @@
 """
 Coleta o histórico COMPLETO de comunicados do Copom desde o primeiro disponível na API do Banco Central (46ª reunião em 2000 até a última realizada).
 """
+import os
 import requests
 import json
 import re
 import time
 from bs4 import BeautifulSoup
 from concurrent.futures import ThreadPoolExecutor, as_completed
+
+SCRIPT_DIR = os.path.dirname(os.path.abspath(__file__))
 
 BCB_LIST_URL = "https://www.bcb.gov.br/api/servico/sitebcb/copom/comunicados?quantidade=500"
 BCB_DETAIL_URL = "https://www.bcb.gov.br/api/servico/sitebcb/copom/comunicados_detalhes?nro_reuniao={}"
@@ -110,7 +113,7 @@ def main():
     # Sort descending by meeting number (most recent first)
     results.sort(key=lambda x: x['number'], reverse=True)
     
-    output_path = "/home/guilherme/projetos/observatorio-politica-monetaria/src/data/copom_comunicados_all.json"
+    output_path = os.path.join(SCRIPT_DIR, "..", "src", "data", "copom_comunicados_all.json")
     with open(output_path, "w", encoding="utf-8") as f:
         json.dump(results, f, ensure_ascii=False, indent=2)
         

@@ -97,6 +97,9 @@ Abra no navegador em `http://localhost:5173`.
 /home/guilherme/.venvs/dados-economicos/bin/python scripts/calc_probabilities.py
 ```
 
+Isso é opcional para uso local — os comunicados do Copom e do FOMC já se atualizam sozinhos todo dia
+via GitHub Actions. Detalhes em [`scripts/README.md`](scripts/README.md).
+
 ---
 
 ## 📄 Licença
