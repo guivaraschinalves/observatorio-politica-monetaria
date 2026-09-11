@@ -13,12 +13,13 @@ Uma plataforma analítica avançada para economistas, analistas de mercado e pes
   - Métricas automáticas de alteração: total de palavras adicionadas, palavras excluídas e rastreamento de mudanças no *Forward Guidance*.
   - Seletor dinâmico de reuniões históricas para comparar quaisquer duas reuniões.
 
-### 2. 📜 Leitor de Atas com Referências Cruzadas ao RPM (Bacen) e SEP (Fed)
+### 2. 📜 Leitor de Atas
+- Dado real, atualizado sozinho todo dia (ver [`scripts/README.md`](scripts/README.md)): comunicado +
+  ata de cada reunião do Copom (via API do Bacen) e statement + minutes de cada reunião do FOMC (via
+  site do Fed), cobrindo as 24 reuniões mais recentes de cada comitê.
 - Leitor com tipografia editorial financeira (*serif*) para leitura profunda e confortável.
 - Índice estrutural lateral (*Table of Contents*) para salto rápido entre seções.
-- **Conexão Direta com o Relatório de Política Monetária (RPM / antigo RTI)**:
-  - Badges interativos no texto das atas do Copom (ex: `[RPM ↗ Box 1: Hiato do Produto]`, `[RPM ↗ Trajetória de Inflação e Projeções]`).
-  - Ao clicar, abre-se uma gaveta lateral (*Drawer*) com os extratos, premissas de modelos, números-chave e descrição dos gráficos do RPM sem precisar sair da leitura da ata.
+- Selecione qualquer trecho do texto pra grifar, riscar ou anotar (ver item 5).
 
 ### 3. 📊 Probabilidades de Mercado
 Dado real dos dois lados, atualizado sozinho todo dia (ver [`scripts/README.md`](scripts/README.md)
@@ -41,22 +42,19 @@ pra fonte, metodologia e limitações de cada um):
   falou e link pra fonte. Diferenciação entre **membros com direito a voto sempre** (Chair, Vice Chair,
   Governor, presidente do Fed de Nova York) e os demais.
 - **Copom** — ainda sem fonte automatizada (ver [`scripts/README.md`](scripts/README.md)).
-- O que este recurso **não** faz: não classifica tom (*hawkish*/*dovish*) nem escolhe "citações-chave"
-  automaticamente — isso é leitura, não extração de dado, e ficou fora de propósito pra não fabricar
-  análise em nome de terceiros.
+- O que este recurso **não** faz: não classifica tom (*hawkish*/*dovish*) nem quem é membro votante do
+  momento, nem escolhe "citações-chave" automaticamente — isso é leitura, não extração de dado, e
+  ficou fora de propósito pra não fabricar análise em nome de terceiros.
 - Alerta visual do **Período de Silêncio (*Blackout Period*)** em que declarações são vedadas.
 
-### 5. 📝 Caderno Interativo de Anotações, Grifos e Riscos
-- **Interação Direta sobre o Texto**:
-  - Selecione qualquer frase ou parágrafo com o cursor para abrir o menu flutuante.
-  - 🟡 **Grifar**: Escolha entre Amarelo clássico, Verde (*Dovish*), Vermelho (*Hawkish*) ou Azul (*Neutro/Técnico*).
-  - <s>**Riscar (Strikethrough)**</s>: Marque trechos superados ou que perderam relevância.
-  - 💬 **Anotar**: Adicione notas pessoais de análise diretamente vinculadas ao parágrafo.
-  - 🏷️ **Tag de Tom**: Classifique o trecho como Hawkish ou Dovish.
-- **Persistência Automática**:
-  - Todas as anotações ficam salvas localmente no navegador (`localStorage`), garantindo que nunca se percam ao recarregar a página.
-- **Exportação para Relatórios**:
-  - Botão de exportação para **Markdown (.md)** e cópia rápida para a área de transferência, pronto para colar em relatórios ou newsletters.
+### 5. ✏️ Grifos e Anotações no Texto
+- Selecione qualquer frase ou parágrafo nos comunicados ou nas atas para abrir o menu flutuante:
+  - 🟡 **Grifar**: quatro cores (amarelo, verde, vermelho, azul) — sem sentido pré-definido, é livre pra
+    você usar como quiser.
+  - <s>**Riscar**</s>: marque trechos superados ou que perderam relevância.
+  - 💬 **Comentar**: adicione uma nota pessoal vinculada ao trecho.
+- Tudo fica salvo localmente no navegador (`localStorage`) — nunca se perde ao recarregar a página, mas
+  também não sai desse navegador (não há caderno/exportação centralizada das anotações).
 
 ---
 

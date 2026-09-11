@@ -1,23 +1,9 @@
 export type Committee = 'copom' | 'fomc';
 
-export interface RpmReference {
-  id: string;
-  topic: string;
-  title: string;
-  chapter: string;
-  quarter: string; // ex: 'Mar/2026' ou 'Dez/2025'
-  summary: string;
-  keyInsights: string[];
-  chartDescription?: string;
-  pdfPage?: number;
-  url?: string;
-}
-
 export interface StatementParagraph {
   id: string;
   section?: string;
   text: string;
-  rpmRefId?: string; // id de RpmReference se aplicável
 }
 
 export interface MeetingData {
@@ -33,7 +19,6 @@ export interface MeetingData {
   keyGuidance: string;
   statement: StatementParagraph[];
   minutes: StatementParagraph[];
-  rpmReferences?: RpmReference[];
 }
 
 export interface SpeechItem {
@@ -41,12 +26,10 @@ export interface SpeechItem {
   committee: Committee;
   speaker: string;
   role: string;
-  isVoter: boolean;
   date: string; // YYYY-MM-DD
   time?: string;
   event: string;
   location: string;
-  tone: 'hawkish' | 'dovish' | 'neutral';
   title: string;
   summary: string;
   keyQuotes: string[];

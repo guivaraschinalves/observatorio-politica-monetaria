@@ -17,26 +17,9 @@ export const SpeechDetailModal: React.FC<SpeechDetailModalProps> = ({ speech, on
         <div className="p-6 border-b border-[var(--border)] bg-[var(--page-bg)] flex items-start justify-between">
           <div>
             <div className="flex items-center gap-2 mb-1">
-              <span
-                className={`text-[10px] font-mono font-bold px-2 py-0.5 rounded-full uppercase tracking-wider ${
-                  speech.tone === 'hawkish'
-                    ? 'bg-rose-500/15 text-rose-700 dark:text-rose-400 border border-rose-500/30'
-                    : speech.tone === 'dovish'
-                    ? 'bg-emerald-500/15 text-emerald-700 dark:text-emerald-400 border border-emerald-500/30'
-                    : 'bg-[var(--accent-wash)] text-[var(--brand)] border border-[var(--border)]'
-                }`}
-              >
-                Tom: {speech.tone.toUpperCase()}
-              </span>
-              <span className="text-xs text-[var(--ink-muted)]">•</span>
               <span className="text-xs font-semibold text-[var(--ink-secondary)]">
                 {speech.committee === 'copom' ? '🇧🇷 Copom / Bacen' : '🇺🇸 FOMC / Fed'}
               </span>
-              {speech.isVoter && (
-                <span className="text-[10px] bg-amber-500/15 text-amber-700 dark:text-amber-300 px-2 py-0.5 rounded-md font-mono font-bold border border-amber-500/30">
-                  Membro Votante
-                </span>
-              )}
             </div>
             <h2 className="text-xl font-bold text-[var(--ink)] font-serif">{speech.title}</h2>
             <div className="flex flex-wrap items-center gap-3 text-xs text-[var(--ink-muted)] mt-2">
@@ -103,17 +86,19 @@ export const SpeechDetailModal: React.FC<SpeechDetailModalProps> = ({ speech, on
           </div>
 
           {/* Topic Tags */}
-          <div className="flex flex-wrap items-center gap-1.5 pt-2">
-            <span className="text-xs font-mono font-semibold text-[var(--ink-muted)] mr-1">Tópicos:</span>
-            {speech.topics.map((t, idx) => (
-              <span
-                key={idx}
-                className="text-xs px-2.5 py-0.5 rounded-md bg-[var(--page-bg)] text-[var(--ink-secondary)] border border-[var(--border)] font-mono"
-              >
-                #{t}
-              </span>
-            ))}
-          </div>
+          {speech.topics.length > 0 && (
+            <div className="flex flex-wrap items-center gap-1.5 pt-2">
+              <span className="text-xs font-mono font-semibold text-[var(--ink-muted)] mr-1">Tópicos:</span>
+              {speech.topics.map((t, idx) => (
+                <span
+                  key={idx}
+                  className="text-xs px-2.5 py-0.5 rounded-md bg-[var(--page-bg)] text-[var(--ink-secondary)] border border-[var(--border)] font-mono"
+                >
+                  #{t}
+                </span>
+              ))}
+            </div>
+          )}
         </div>
 
         {/* Modal Footer */}

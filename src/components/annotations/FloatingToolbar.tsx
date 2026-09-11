@@ -1,11 +1,11 @@
 import React, { useState } from 'react';
-import { HighlightColor, AnnotationType, AnnotationTone } from '../../types/annotation';
+import { HighlightColor, AnnotationType } from '../../types/annotation';
 import { Strikethrough, MessageSquare, X, Check } from 'lucide-react';
 
 interface FloatingToolbarProps {
   position: { top: number; left: number };
   selectedText: string;
-  onApply: (type: AnnotationType, color?: HighlightColor, tone?: AnnotationTone, note?: string) => void;
+  onApply: (type: AnnotationType, color?: HighlightColor, note?: string) => void;
   onClose: () => void;
 }
 
@@ -17,19 +17,18 @@ export const FloatingToolbar: React.FC<FloatingToolbarProps> = ({
 }) => {
   const [showNoteInput, setShowNoteInput] = useState(false);
   const [noteText, setNoteText] = useState('');
-  const [selectedTone, setSelectedTone] = useState<AnnotationTone | undefined>(undefined);
 
   const handleQuickHighlight = (color: HighlightColor) => {
-    onApply('highlight', color, selectedTone);
+    onApply('highlight', color);
   };
 
   const handleStrikethrough = () => {
-    onApply('strikethrough', undefined, selectedTone);
+    onApply('strikethrough');
   };
 
   const handleSaveNote = () => {
     if (!noteText.trim()) return;
-    onApply('note', 'yellow', selectedTone, noteText);
+    onApply('note', 'yellow', noteText);
     setShowNoteInput(false);
     setNoteText('');
   };
@@ -50,17 +49,17 @@ export const FloatingToolbar: React.FC<FloatingToolbarProps> = ({
             />
             <button
               onClick={() => handleQuickHighlight('green')}
-              title="Grifar Verde (Dovish / Alívio)"
+              title="Grifar Verde"
               className="w-5 h-5 rounded-full bg-emerald-500 hover:scale-110 transition-transform ring-1 ring-white/40"
             />
             <button
               onClick={() => handleQuickHighlight('red')}
-              title="Grifar Vermelho (Hawkish / Alerta)"
+              title="Grifar Vermelho"
               className="w-5 h-5 rounded-full bg-rose-500 hover:scale-110 transition-transform ring-1 ring-white/40"
             />
             <button
               onClick={() => handleQuickHighlight('blue')}
-              title="Grifar Azul (Técnico / Neutro)"
+              title="Grifar Azul"
               className="w-5 h-5 rounded-full bg-sky-500 hover:scale-110 transition-transform ring-1 ring-white/40"
             />
           </div>
@@ -85,28 +84,6 @@ export const FloatingToolbar: React.FC<FloatingToolbarProps> = ({
             <span className="text-[11px] font-medium">Comentar</span>
           </button>
 
-          {/* Tone tagging */}
-          <div className="flex items-center space-x-1 pl-1 border-l border-gray-700">
-            <button
-              onClick={() => setSelectedTone(selectedTone === 'hawkish' ? undefined : 'hawkish')}
-              title="Tag Hawkish (Aperto)"
-              className={`px-1.5 py-0.5 rounded text-[10px] font-bold ${
-                selectedTone === 'hawkish' ? 'bg-rose-700 text-white' : 'text-rose-400 hover:bg-gray-800'
-              }`}
-            >
-              Hawk
-            </button>
-            <button
-              onClick={() => setSelectedTone(selectedTone === 'dovish' ? undefined : 'dovish')}
-              title="Tag Dovish (Alívio)"
-              className={`px-1.5 py-0.5 rounded text-[10px] font-bold ${
-                selectedTone === 'dovish' ? 'bg-emerald-700 text-white' : 'text-emerald-400 hover:bg-gray-800'
-              }`}
-            >
-              Dove
-            </button>
-          </div>
-
           {/* Close button */}
           <button
             onClick={onClose}
@@ -129,27 +106,7 @@ export const FloatingToolbar: React.FC<FloatingToolbarProps> = ({
             autoFocus
             className="w-full bg-gray-800 text-white text-xs rounded-lg p-2 border border-gray-700 focus:outline-hidden focus:border-blue-500 resize-none placeholder-gray-500"
           />
-          <div className="flex items-center justify-between mt-1.5">
-            <div className="flex items-center space-x-1">
-              <button
-                type="button"
-                onClick={() => setSelectedTone(selectedTone === 'hawkish' ? undefined : 'hawkish')}
-                className={`px-1.5 py-0.5 rounded text-[10px] font-bold ${
-                  selectedTone === 'hawkish' ? 'bg-rose-700 text-white' : 'text-gray-400 hover:text-rose-400'
-                }`}
-              >
-                Hawkish
-              </button>
-              <button
-                type="button"
-                onClick={() => setSelectedTone(selectedTone === 'dovish' ? undefined : 'dovish')}
-                className={`px-1.5 py-0.5 rounded text-[10px] font-bold ${
-                  selectedTone === 'dovish' ? 'bg-emerald-700 text-white' : 'text-gray-400 hover:text-emerald-400'
-                }`}
-              >
-                Dovish
-              </button>
-            </div>
+          <div className="flex items-center justify-end mt-1.5">
             <div className="flex items-center space-x-1.5">
               <button
                 type="button"

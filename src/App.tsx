@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Committee } from './types/monetary';
-import { AnnotationProvider, useAnnotations } from './context/AnnotationContext';
+import { AnnotationProvider } from './context/AnnotationContext';
 import { allCopomStatements, allFomcStatements } from './data/allStatements';
 import { copomMeetings } from './data/copomData';
 import { fomcMeetings } from './data/fomcData';
@@ -11,12 +11,10 @@ import { StatementComparator } from './components/diff/StatementComparator';
 import { MinutesReader } from './components/minutes/MinutesReader';
 import { MarketProbabilitiesView } from './components/probabilities/MarketProbabilitiesView';
 import { SpeechesCalendar } from './components/speeches/SpeechesCalendar';
-import { NotesNotebookView } from './components/annotations/NotesNotebookView';
 
 const ObservatoryContent: React.FC = () => {
   const [committee, setCommittee] = useState<Committee>('copom');
-  const [activeTab, setActiveTab] = useState<'comparator' | 'minutes' | 'probabilities' | 'speeches' | 'notes'>('comparator');
-  const { annotations } = useAnnotations();
+  const [activeTab, setActiveTab] = useState<'comparator' | 'minutes' | 'probabilities' | 'speeches'>('comparator');
 
   const statements = committee === 'copom' ? allCopomStatements : allFomcStatements;
   const meetings = committee === 'copom' ? copomMeetings : fomcMeetings;
@@ -30,7 +28,6 @@ const ObservatoryContent: React.FC = () => {
         onSelectCommittee={setCommittee}
         activeTab={activeTab}
         onSelectTab={setActiveTab}
-        totalAnnotationsCount={annotations.length}
       />
 
       {/* Main Container */}
@@ -50,10 +47,6 @@ const ObservatoryContent: React.FC = () => {
         {activeTab === 'speeches' && (
           <SpeechesCalendar speeches={speechesData} defaultCommittee={committee} />
         )}
-
-        {activeTab === 'notes' && (
-          <NotesNotebookView />
-        )}
       </main>
 
       {/* Footer styled as FTM */}
@@ -65,7 +58,7 @@ const ObservatoryContent: React.FC = () => {
             <span className="font-serif italic">Observatório de Política Monetária</span>
           </div>
           <div className="text-[var(--ink-muted)]">
-            Fontes: Banco Central do Brasil (Bacen - {allCopomStatements.length} comunicados), Federal Reserve Board (Fed - {allFomcStatements.length} statements), B3 e CME Group.
+            Fontes: Banco Central do Brasil (Bacen - {allCopomStatements.length} comunicados), Federal Reserve Board (Fed - {allFomcStatements.length} statements), B3 e Fed de Atlanta.
           </div>
         </div>
       </footer>

@@ -1,7 +1,7 @@
 import React, { useState, useRef } from 'react';
 import { useAnnotations } from '../../context/AnnotationContext';
 import { FloatingToolbar } from './FloatingToolbar';
-import { HighlightColor, AnnotationType, AnnotationTone } from '../../types/annotation';
+import { HighlightColor, AnnotationType } from '../../types/annotation';
 import { MessageSquare, Trash2 } from 'lucide-react';
 
 interface TextAnnotatorWrapperProps {
@@ -54,7 +54,6 @@ export const TextAnnotatorWrapper: React.FC<TextAnnotatorWrapperProps> = ({
   const handleApplyAnnotation = (
     type: AnnotationType,
     color?: HighlightColor,
-    tone?: AnnotationTone,
     note?: string
   ) => {
     if (!selectionRange) return;
@@ -64,7 +63,6 @@ export const TextAnnotatorWrapper: React.FC<TextAnnotatorWrapperProps> = ({
       selectedText: selectionRange.text,
       type,
       color,
-      tone,
       note,
     });
     setSelectionRange(null);
@@ -133,15 +131,6 @@ export const TextAnnotatorWrapper: React.FC<TextAnnotatorWrapperProps> = ({
             {match}
             {/* Hover tooltip with delete & note details */}
             <span className="invisible group-hover/mark:visible absolute -top-8 left-0 z-30 bg-gray-900 text-white text-[11px] px-2 py-1 rounded shadow-lg flex items-center gap-1.5 whitespace-nowrap">
-              {ann.tone && (
-                <span
-                  className={`text-[9px] font-bold px-1 rounded uppercase ${
-                    ann.tone === 'hawkish' ? 'bg-rose-700' : 'bg-emerald-700'
-                  }`}
-                >
-                  {ann.tone}
-                </span>
-              )}
               {ann.note ? (
                 <span className="max-w-xs truncate font-normal text-blue-200">"{ann.note}"</span>
               ) : (
@@ -193,11 +182,6 @@ export const TextAnnotatorWrapper: React.FC<TextAnnotatorWrapperProps> = ({
                   <div>
                     <span className="font-semibold text-gray-800 mr-1">Sua Anotação:</span>
                     <span className="text-gray-700">{a.note}</span>
-                    {a.tone && (
-                      <span className="ml-2 text-[10px] uppercase font-bold text-amber-800 bg-amber-200 px-1 py-0.2 rounded">
-                        {a.tone}
-                      </span>
-                    )}
                   </div>
                 </div>
                 <button

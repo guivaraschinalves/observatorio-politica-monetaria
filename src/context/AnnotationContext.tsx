@@ -1,5 +1,5 @@
 import React, { createContext, useContext, useState, useEffect } from 'react';
-import { TextAnnotation, HighlightColor, AnnotationType, AnnotationTone } from '../types/annotation';
+import { TextAnnotation, HighlightColor, AnnotationType } from '../types/annotation';
 import { loadAnnotationsFromStorage, saveAnnotationsToStorage } from '../utils/storage';
 
 interface AnnotationContextValue {
@@ -10,7 +10,6 @@ interface AnnotationContextValue {
     selectedText: string;
     type: AnnotationType;
     color?: HighlightColor;
-    tone?: AnnotationTone;
     note?: string;
   }) => void;
   removeAnnotation: (id: string) => void;
@@ -35,7 +34,6 @@ export const AnnotationProvider: React.FC<{ children: React.ReactNode }> = ({ ch
     selectedText: string;
     type: AnnotationType;
     color?: HighlightColor;
-    tone?: AnnotationTone;
     note?: string;
   }) => {
     const newAnn: TextAnnotation = {
@@ -45,7 +43,6 @@ export const AnnotationProvider: React.FC<{ children: React.ReactNode }> = ({ ch
       selectedText: params.selectedText.trim(),
       type: params.type,
       color: params.color || 'yellow',
-      tone: params.tone,
       note: params.note,
       createdAt: new Date().toISOString(),
     };

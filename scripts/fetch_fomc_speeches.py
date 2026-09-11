@@ -14,14 +14,12 @@ O que é extraído da página real (não inventado):
 O que este script DELIBERADAMENTE não tenta inventar:
 - "keyQuotes": deixado vazio — escolher a frase mais importante de um
   discurso é leitura/análise, não extração de dado.
-- "tone" (hawkish/dovish/neutro): sempre 'neutral' aqui — classificar o tom
-  também é análise. Fica como está até alguém (você) ler e classificar.
 - "topics": vazio pelo mesmo motivo.
-- "isVoter": só é preenchido com confiança para cargos que votam sempre
-  (Chair, Vice Chair, Governor, e o presidente do Fed de Nova York). Os
-  demais presidentes regionais têm direito a voto rotativo ano a ano, e essa
-  lista não está automatizada aqui — fica False por padrão pra esses casos,
-  o que é o lado mais seguro do erro (implica menos peso, não mais).
+
+Não classifica tom (hawkish/dovish) nem se quem falou é membro votante do
+Comitê no momento — isso também é análise/depende de uma escala de tempo
+(rotação anual de votantes) que não está automatizada aqui, e classificar
+errado seria pior do que não classificar.
 """
 import os
 import re
@@ -39,12 +37,6 @@ RSS_URL = "https://www.federalreserve.gov/feeds/speeches.xml"
 HEADERS = {"User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36"}
 
 MAX_DISCURSOS = 20
-
-CARGOS_QUE_SEMPRE_VOTAM = (
-    "Chair", "Vice Chair", "Governor",
-)
-# O presidente do Fed de Nova York também vota sempre (assento permanente).
-SEMPRE_VOTA_SE_CONTEM = CARGOS_QUE_SEMPRE_VOTAM + ("Federal Reserve Bank of New York",)
 
 
 def limpa_texto(s: str) -> str:
@@ -83,10 +75,6 @@ def separa_evento_local(texto_location: str):
     else:
         evento, local = texto, ""
     return evento, local
-
-
-def calcula_is_voter(cargo: str) -> bool:
-    return any(termo in cargo for termo in SEMPRE_VOTA_SE_CONTEM)
 
 
 def busca_discurso(url: str):
@@ -168,11 +156,9 @@ def main():
             "committee": "fomc",
             "speaker": info["nome"],
             "role": info["cargo"],
-            "isVoter": calcula_is_voter(info["cargo"]),
             "date": info["data_iso"],
             "event": info["evento"],
             "location": info["local"],
-            "tone": "neutral",
             "title": info["titulo"],
             "summary": info["paragrafos"][0][:280] + ("…" if len(info["paragrafos"][0]) > 280 else ""),
             "keyQuotes": [],

@@ -5,8 +5,8 @@ Este diretório contém os scripts em Python para atualização periódica dos d
 ## Atualização automática
 
 `fetch_all_copom_history.py`, `fetch_all_fomc_history.py` (comunicados), `fetch_fomc_probabilities.py`
-e `fetch_copom_probabilities.py` (probabilidades de mercado) e `fetch_fomc_speeches.py` (discursos)
-rodam sozinhos todo dia via
+e `fetch_copom_probabilities.py` (probabilidades de mercado), `fetch_fomc_speeches.py` (discursos) e
+`fetch_copom_meetings.py`/`fetch_fomc_meetings.py` (atas/minutes) rodam sozinhos todo dia via
 [`.github/workflows/atualizar-dados.yml`](../.github/workflows/atualizar-dados.yml) (GitHub Actions,
 08:00 de Brasília). Se algo mudou, o workflow comita o JSON atualizado em `main` e publica o site em
 `gh-pages` na sequência — sem precisar rodar nada manualmente. Também dá pra disparar na hora pela aba
@@ -36,14 +36,27 @@ Limitações conhecidas de cada fonte, então "sempre atualizado" tem esse limit
   `copom_calendar.json` (ver abaixo) porque o Bacen não tem API pública pra isso.
 - **Discursos do FOMC**: vêm do feed RSS oficial do Federal Reserve
   (`federalreserve.gov/feeds/speeches.xml`) — cada discurso é extraído da própria página oficial dele,
-  texto integral real, sem invenção. Não inclui análise: `tone` (hawkish/dovish) vem sempre `neutral`
-  e `keyQuotes`/`topics` vêm vazios, porque isso é leitura humana, não extração de dado — ver o
-  comentário no topo do próprio script. `isVoter` só é confiável para quem sempre vota (Chair, Vice
-  Chair, Governor, presidente do Fed de Nova York); presidentes regionais com voto rotativo saem como
-  `false` por padrão.
+  texto integral real, sem invenção. Não classifica tom (hawkish/dovish) nem quem é membro votante do
+  momento — isso é leitura/análise, não extração de dado, e fica de fora de propósito.
 - **Discursos do Copom**: ainda não automatizados. O conjunto anterior (Galípolo, Guillen) era
   fictício — texto e citações inventados atribuídos a essas pessoas — e foi removido por esse motivo,
   não só por estar desatualizado. Falta achar, do lado do Bacen, uma fonte equivalente ao feed do Fed.
+- **Atas do Copom** (`fetch_copom_meetings.py`): comunicado real (já coletado) + ata real, via
+  `copom/atas_detalhes` na API do Bacen — mesmo padrão do endpoint de comunicados, mas as atas de
+  antes de ~2016-2020 usam um HTML de formato antigo (exportado de Word) que o parser não entende, ou
+  o campo de texto vem vazio na API — essas reuniões ficam de fora, não entram com texto incompleto ou
+  chutado. A taxa Selic antes/depois de cada reunião vem da série 432 do SGS (Meta Selic oficial), não
+  de tentar achar o número certo no meio do texto do comunicado. Fica limitado às 24 reuniões mais
+  recentes (ver `MAX_REUNIOES` no script) pra não inflar demais o tamanho do site — sem isso o texto
+  das atas ia parar direto no JavaScript da página.
+- **Minutes do FOMC** (`fetch_fomc_meetings.py`): statement real (já coletado, com a lista de votos
+  "Voting for"/"Voting against" incluída) + minutes reais, direto de
+  `federalreserve.gov/monetarypolicy/fomcminutesAAAAMMDD.htm` — URL previsível a partir da data da
+  reunião. O target range de Fed Funds antes/depois de cada reunião vem das séries DFEDTARU/DFEDTARL do
+  FRED (St. Louis Fed), não de tentar interpretar frações por extenso ("4-1/4 to 4-1/2 percent") no
+  texto do statement. Também limitado a 24 reuniões pelo mesmo motivo de tamanho do bundle.
+  Curiosidade de depuração: o CSV do FRED trava/dá timeout quando o `User-Agent` da requisição se
+  apresenta como navegador — o script de propósito não manda header nenhum nessa chamada específica.
 
 ## Rodando manualmente
 Instale as dependências (ambiente virtual já configurado nesta máquina, ou `pip install -r requirements.txt`
@@ -54,7 +67,13 @@ em qualquer outro lugar):
 /home/guilherme/.venvs/dados-economicos/bin/python fetch_fomc_probabilities.py
 /home/guilherme/.venvs/dados-economicos/bin/python fetch_copom_probabilities.py
 /home/guilherme/.venvs/dados-economicos/bin/python fetch_fomc_speeches.py
+/home/guilherme/.venvs/dados-economicos/bin/python fetch_copom_meetings.py
+/home/guilherme/.venvs/dados-economicos/bin/python fetch_fomc_meetings.py
 ```
+
+`fetch_copom_meetings.py` precisa que `src/data/copom_comunicados_all.json` já exista (rode
+`fetch_all_copom_history.py` antes); `fetch_fomc_meetings.py` precisa de `fomc_statements_all.json` da
+mesma forma.
 
 ## Arquivos:
 - `fetch_all_copom_history.py`: Coleta o histórico completo de comunicados do Copom via API do Bacen
@@ -74,6 +93,10 @@ em qualquer outro lugar):
   conseguir calcular reuniões novas.
 - `fetch_fomc_speeches.py`: lê o feed RSS de discursos do Fed, extrai o texto real de cada um e regrava
   `src/data/fomc_speeches.json`. **Roda automaticamente** (ver acima).
+- `fetch_copom_meetings.py`: junta comunicado real + ata real de cada reunião do Copom e regrava
+  `src/data/copom_meetings.json` (usado pelo Leitor de Atas). **Roda automaticamente** (ver acima).
+- `fetch_fomc_meetings.py`: junta statement real + minutes reais de cada reunião do FOMC e regrava
+  `src/data/fomc_meetings.json` (usado pelo Leitor de Atas). **Roda automaticamente** (ver acima).
 - `fetch_copom.py` / `fetch_fomc.py`: verificações pontuais/exploratórias, não usadas pelo workflow.
 - `calc_probabilities.py`: protótipo inicial da ideia usada em `fetch_copom_probabilities.py`, mantido
   por referência — não é mais chamado por nada.

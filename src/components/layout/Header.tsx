@@ -1,13 +1,12 @@
 import React, { useEffect, useState } from 'react';
 import { Committee } from '../../types/monetary';
-import { GitCompare, BookOpen, TrendingUp, Mic, Edit3, Github, ExternalLink, Sun, Moon } from 'lucide-react';
+import { GitCompare, BookOpen, TrendingUp, Mic, Github, ExternalLink, Sun, Moon } from 'lucide-react';
 
 interface HeaderProps {
   committee: Committee;
   onSelectCommittee: (c: Committee) => void;
-  activeTab: 'comparator' | 'minutes' | 'probabilities' | 'speeches' | 'notes';
-  onSelectTab: (tab: 'comparator' | 'minutes' | 'probabilities' | 'speeches' | 'notes') => void;
-  totalAnnotationsCount: number;
+  activeTab: 'comparator' | 'minutes' | 'probabilities' | 'speeches';
+  onSelectTab: (tab: 'comparator' | 'minutes' | 'probabilities' | 'speeches') => void;
 }
 
 export const Header: React.FC<HeaderProps> = ({
@@ -15,7 +14,6 @@ export const Header: React.FC<HeaderProps> = ({
   onSelectCommittee,
   activeTab,
   onSelectTab,
-  totalAnnotationsCount,
 }) => {
   const [theme, setTheme] = useState<'light' | 'dark'>(() => {
     const saved = localStorage.getItem('ftm_theme');
@@ -135,9 +133,6 @@ export const Header: React.FC<HeaderProps> = ({
             >
               <BookOpen className="w-4 h-4 text-emerald-600 dark:text-emerald-400" />
               <span>Leitor de Atas / Minutas</span>
-              <span className="ml-1 px-1.5 py-0.2 bg-[var(--accent-wash)] text-[var(--brand)] rounded-md text-[10px] font-mono font-bold">
-                {committee === 'copom' ? 'RPM Bacen' : 'SEP Fed'}
-              </span>
             </button>
 
             <button
@@ -151,7 +146,7 @@ export const Header: React.FC<HeaderProps> = ({
               <TrendingUp className="w-4 h-4 text-purple-600 dark:text-purple-400" />
               <span>Probabilidades de Mercado</span>
               <span className="ml-1 px-1.5 py-0.2 bg-[var(--accent-wash)] text-[var(--brand)] rounded-md text-[10px] font-mono font-bold">
-                {committee === 'copom' ? 'DI1 B3' : 'FedWatch'}
+                {committee === 'copom' ? 'DI1 B3' : 'Fed Atlanta'}
               </span>
             </button>
 
@@ -165,27 +160,6 @@ export const Header: React.FC<HeaderProps> = ({
             >
               <Mic className="w-4 h-4 text-amber-600 dark:text-amber-400" />
               <span>Calendário & Discursos</span>
-            </button>
-
-            <button
-              onClick={() => onSelectTab('notes')}
-              className={`flex items-center space-x-2 px-3.5 py-1.5 rounded-lg text-xs font-medium whitespace-nowrap transition-all ml-auto ${
-                activeTab === 'notes'
-                  ? 'bg-[var(--brand)] text-white shadow-xs font-bold'
-                  : 'text-[var(--ink)] bg-[var(--surface)] border border-[var(--border)] hover:bg-[var(--page-bg)]'
-              }`}
-            >
-              <Edit3 className="w-3.5 h-3.5" />
-              <span>Caderno de Anotações</span>
-              {totalAnnotationsCount > 0 && (
-                <span
-                  className={`ml-1 px-1.5 py-0.2 text-[10px] font-mono font-bold rounded-full ${
-                    activeTab === 'notes' ? 'bg-black/30 text-white' : 'bg-[var(--accent-wash)] text-[var(--brand)]'
-                  }`}
-                >
-                  {totalAnnotationsCount}
-                </span>
-              )}
             </button>
           </nav>
         </div>

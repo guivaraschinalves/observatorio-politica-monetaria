@@ -13,14 +13,12 @@ export const SpeechesCalendar: React.FC<SpeechesCalendarProps> = ({
   defaultCommittee,
 }) => {
   const [filterCommittee, setFilterCommittee] = useState<string>(defaultCommittee || 'all');
-  const [filterTone, setFilterTone] = useState<string>('all');
   const [searchTerm, setSearchTerm] = useState<string>('');
   const [selectedSpeech, setSelectedSpeech] = useState<SpeechItem | null>(null);
 
   const filteredSpeeches = useMemo(() => {
     return speeches.filter((s) => {
       if (filterCommittee !== 'all' && s.committee !== filterCommittee) return false;
-      if (filterTone !== 'all' && s.tone !== filterTone) return false;
       if (searchTerm) {
         const query = searchTerm.toLowerCase();
         const matchSpeaker = s.speaker.toLowerCase().includes(query);
@@ -31,7 +29,7 @@ export const SpeechesCalendar: React.FC<SpeechesCalendarProps> = ({
       }
       return true;
     });
-  }, [speeches, filterCommittee, filterTone, searchTerm]);
+  }, [speeches, filterCommittee, searchTerm]);
 
   return (
     <div className="space-y-6">
@@ -77,21 +75,6 @@ export const SpeechesCalendar: React.FC<SpeechesCalendarProps> = ({
               <option value="fomc">🇺🇸 Apenas FOMC (Fed)</option>
             </select>
           </div>
-
-          {/* Tone Filter */}
-          <div className="flex items-center gap-1.5 text-xs">
-            <span className="text-[var(--ink-muted)] font-mono font-medium">Tom:</span>
-            <select
-              value={filterTone}
-              onChange={(e) => setFilterTone(e.target.value)}
-              className="bg-[var(--page-bg)] border border-[var(--border)] text-[var(--ink)] rounded-lg px-2.5 py-1.5 font-medium focus:outline-hidden"
-            >
-              <option value="all">Todos os Tons</option>
-              <option value="hawkish">🔴 Hawkish (Aperto)</option>
-              <option value="dovish">🟢 Dovish (Alívio)</option>
-              <option value="neutral">🔵 Neutro</option>
-            </select>
-          </div>
         </div>
       </div>
 
@@ -119,25 +102,9 @@ export const SpeechesCalendar: React.FC<SpeechesCalendarProps> = ({
               <div className="flex flex-wrap items-start justify-between gap-2">
                 <div>
                   <div className="flex items-center gap-2 mb-1">
-                    <span
-                      className={`text-[10px] font-mono font-bold px-2 py-0.5 rounded-full uppercase tracking-wider ${
-                        speech.tone === 'hawkish'
-                          ? 'bg-rose-500/15 text-rose-700 dark:text-rose-400 border border-rose-500/30'
-                          : speech.tone === 'dovish'
-                          ? 'bg-emerald-500/15 text-emerald-700 dark:text-emerald-400 border border-emerald-500/30'
-                          : 'bg-[var(--accent-wash)] text-[var(--brand)] border border-[var(--border)]'
-                      }`}
-                    >
-                      {speech.tone.toUpperCase()}
-                    </span>
                     <span className="text-xs font-semibold text-[var(--ink-secondary)]">
                       {speech.committee === 'copom' ? '🇧🇷 Copom / Bacen' : '🇺🇸 FOMC / Fed'}
                     </span>
-                    {speech.isVoter && (
-                      <span className="text-[10px] bg-amber-500/15 text-amber-700 dark:text-amber-300 px-2 py-0.5 rounded-md font-mono font-bold border border-amber-500/30">
-                        Votante
-                      </span>
-                    )}
                   </div>
                   <h3 className="text-base font-bold text-[var(--ink)] font-serif">{speech.title}</h3>
                   <div className="flex flex-wrap items-center gap-2 text-xs text-[var(--ink-muted)] mt-1">
@@ -179,16 +146,18 @@ export const SpeechesCalendar: React.FC<SpeechesCalendarProps> = ({
               )}
 
               {/* Tags */}
-              <div className="flex flex-wrap items-center gap-1.5 pt-1">
-                {speech.topics.map((topic, idx) => (
-                  <span
-                    key={idx}
-                    className="text-[11px] px-2 py-0.5 rounded bg-[var(--page-bg)] text-[var(--ink-secondary)] border border-[var(--border)] font-mono"
-                  >
-                    #{topic}
-                  </span>
-                ))}
-              </div>
+              {speech.topics.length > 0 && (
+                <div className="flex flex-wrap items-center gap-1.5 pt-1">
+                  {speech.topics.map((topic, idx) => (
+                    <span
+                      key={idx}
+                      className="text-[11px] px-2 py-0.5 rounded bg-[var(--page-bg)] text-[var(--ink-secondary)] border border-[var(--border)] font-mono"
+                    >
+                      #{topic}
+                    </span>
+                  ))}
+                </div>
+              )}
             </div>
           ))
         )}
