@@ -1,4 +1,5 @@
 import { MarketOverview } from '../types/monetary';
+import fomcMarketRaw from './fomc_market_overview.json';
 
 export const copomMarketOverview: MarketOverview = {
   committee: 'copom',
@@ -74,76 +75,7 @@ export const copomMarketOverview: MarketOverview = {
   ]
 };
 
-export const fomcMarketOverview: MarketOverview = {
-  committee: 'fomc',
-  lastUpdated: 'September 10, 2026 - 16:00 ET',
-  terminalRate: '3.75% - 4.00%',
-  terminalDate: 'December 2026',
-  totalCutsOrHikesExpectedBps: -50,
-  meetings: [
-    {
-      id: 'fomc-next-1',
-      meetingDate: 'May 06, 2026',
-      daysToMeeting: 14,
-      currentRate: '4.25% - 4.50%',
-      impliedRate: '4.18%',
-      expectedChangeBps: -18,
-      probabilities: [
-        { rateLabel: '4.25% - 4.50% (Hold)', changeBps: 0, probability: 28 },
-        { rateLabel: '4.00% - 4.25% (-25 bps cut)', changeBps: -25, probability: 69 },
-        { rateLabel: '3.75% - 4.00% (-50 bps cut)', changeBps: -50, probability: 3 }
-      ],
-      historicalProbabilities: {
-        current: 69,
-        oneDayAgo: 65,
-        oneWeekAgo: 58,
-        oneMonthAgo: 45
-      }
-    },
-    {
-      id: 'fomc-next-2',
-      meetingDate: 'June 17, 2026',
-      daysToMeeting: 56,
-      currentRate: '4.25% - 4.50%',
-      impliedRate: '4.05%',
-      expectedChangeBps: -35,
-      probabilities: [
-        { rateLabel: '4.25% - 4.50% (Hold)', changeBps: 0, probability: 11 },
-        { rateLabel: '4.00% - 4.25% (-25 bps)', changeBps: -25, probability: 52 },
-        { rateLabel: '3.75% - 4.00% (-50 bps)', changeBps: -50, probability: 37 }
-      ],
-      historicalProbabilities: {
-        current: 52,
-        oneDayAgo: 50,
-        oneWeekAgo: 46,
-        oneMonthAgo: 38
-      }
-    },
-    {
-      id: 'fomc-next-3',
-      meetingDate: 'July 29, 2026',
-      daysToMeeting: 98,
-      currentRate: '4.25% - 4.50%',
-      impliedRate: '3.94%',
-      expectedChangeBps: -48,
-      probabilities: [
-        { rateLabel: '4.00% - 4.25%', changeBps: -25, probability: 24 },
-        { rateLabel: '3.75% - 4.00%', changeBps: -50, probability: 58 },
-        { rateLabel: '3.50% - 3.75%', changeBps: -75, probability: 18 }
-      ]
-    },
-    {
-      id: 'fomc-next-4',
-      meetingDate: 'September 23, 2026',
-      daysToMeeting: 154,
-      currentRate: '4.25% - 4.50%',
-      impliedRate: '3.82%',
-      expectedChangeBps: -62,
-      probabilities: [
-        { rateLabel: '3.75% - 4.00%', changeBps: -50, probability: 48 },
-        { rateLabel: '3.50% - 3.75%', changeBps: -75, probability: 42 },
-        { rateLabel: '3.25% - 3.50%', changeBps: -100, probability: 10 }
-      ]
-    }
-  ]
-};
+// Dados reais do Market Probability Tracker do Fed de Atlanta — ver
+// scripts/fetch_fomc_probabilities.py. Atualiza sozinho todo dia (mesmo
+// workflow que atualiza os comunicados).
+export const fomcMarketOverview: MarketOverview = fomcMarketRaw as MarketOverview;

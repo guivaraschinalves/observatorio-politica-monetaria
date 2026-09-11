@@ -28,21 +28,23 @@ jobs:
       - name: Instala dependências dos scripts
         run: pip install -r scripts/requirements.txt
 
-      - name: Busca comunicados atualizados do Copom e do FOMC
+      - name: Busca comunicados e probabilidades de mercado atualizados
         run: |
           python scripts/fetch_all_copom_history.py
           python scripts/fetch_all_fomc_history.py
+          python scripts/fetch_fomc_probabilities.py
 
       - name: Comita os dados, se algo mudou
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
-          if ! git diff --quiet -- src/data/copom_comunicados_all.json src/data/fomc_statements_all.json; then
-            git add src/data/copom_comunicados_all.json src/data/fomc_statements_all.json
-            git commit -m "chore: atualiza comunicados do Copom e do FOMC [skip ci]"
+          FILES="src/data/copom_comunicados_all.json src/data/fomc_statements_all.json src/data/fomc_market_overview.json"
+          if ! git diff --quiet -- $FILES; then
+            git add $FILES
+            git commit -m "chore: atualiza comunicados e probabilidades de mercado [skip ci]"
             git push
           else
-            echo "Nenhuma reunião nova desde a última execução."
+            echo "Nada novo desde a última execução."
           fi
 
       - uses: actions/setup-node@v4

@@ -20,15 +20,18 @@ Uma plataforma analítica avançada para economistas, analistas de mercado e pes
   - Badges interativos no texto das atas do Copom (ex: `[RPM ↗ Box 1: Hiato do Produto]`, `[RPM ↗ Trajetória de Inflação e Projeções]`).
   - Ao clicar, abre-se uma gaveta lateral (*Drawer*) com os extratos, premissas de modelos, números-chave e descrição dos gráficos do RPM sem precisar sair da leitura da ata.
 
-### 3. 📊 Probabilidades de Mercado em Tempo Real
-- **Brasil (Copom)**:
-  - Precificação extraída da curva a termo de juros **DI1 da B3** e **Opções de Copom**.
-  - Probabilidade calculada para cada passo (+0, +25, +50, -25 bps) em cada reunião futura.
-  - Taxa Selic terminal implícita no ciclo e data esperada.
-- **Estados Unidos (FOMC)**:
-  - Ferramenta no padrão **CME FedWatch** alimentada pelos contratos futuros de *30-Day Fed Funds*.
-  - Distribuição percentual por faixa de juros-alvo.
+### 3. 📊 Probabilidades de Mercado
+- **Estados Unidos (FOMC)** — dado real, atualizado sozinho todo dia (ver [`scripts/README.md`](scripts/README.md)):
+  - Distribuição de probabilidade por faixa de juros-alvo, direto do *Market Probability Tracker* do
+    Fed de Atlanta (implícita nos futuros de Fed Funds — mesma ideia do CME FedWatch, calculada de
+    forma independente e aberta, já que o CME bloqueia acesso automatizado aos dados dele).
   - Comparativo histórico da probabilidade: *Hoje*, *1 Dia Atrás*, *1 Semana Atrás*, *1 Mês Atrás*.
+  - Taxa terminal implícita no ciclo e data esperada.
+- **Brasil (Copom)** — ainda com dados de exemplo, não uma fonte ao vivo:
+  - A ideia é precificar a partir da curva a termo de juros **DI1 da B3**, mas os endpoints públicos
+    que dariam esse dado sem chave/assinatura não estão respondendo no momento (ver
+    [`scripts/README.md`](scripts/README.md) para o que já foi tentado). Falta encontrar uma fonte
+    confiável antes de automatizar esse lado.
 
 ### 4. 🎙️ Calendário & Transcrições de Discursos dos Membros
 - Linha do tempo completa dos pronunciamentos públicos e testemunhos dos membros do Copom (Galípolo, Diretores) e FOMC (Powell, Governadores, Presidentes regionais).
