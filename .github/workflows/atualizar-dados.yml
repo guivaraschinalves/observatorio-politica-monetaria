@@ -1,0 +1,60 @@
+name: Atualiza dados e publica
+
+on:
+  schedule:
+    # 11:00 UTC = 08:00 no horário de Brasília, todo dia
+    - cron: "0 11 * * *"
+  workflow_dispatch: {}
+  push:
+    branches: [main]
+
+permissions:
+  contents: write
+
+concurrency:
+  group: atualizar-dados
+  cancel-in-progress: false
+
+jobs:
+  atualizar-e-publicar:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Instala dependências dos scripts
+        run: pip install -r scripts/requirements.txt
+
+      - name: Busca comunicados atualizados do Copom e do FOMC
+        run: |
+          python scripts/fetch_all_copom_history.py
+          python scripts/fetch_all_fomc_history.py
+
+      - name: Comita os dados, se algo mudou
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          if ! git diff --quiet -- src/data/copom_comunicados_all.json src/data/fomc_statements_all.json; then
+            git add src/data/copom_comunicados_all.json src/data/fomc_statements_all.json
+            git commit -m "chore: atualiza comunicados do Copom e do FOMC [skip ci]"
+            git push
+          else
+            echo "Nenhuma reunião nova desde a última execução."
+          fi
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+          cache: "npm"
+
+      - run: npm ci
+      - run: npm run build
+
+      - name: Publica no GitHub Pages (branch gh-pages)
+        uses: peaceiris/actions-gh-pages@v4
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: ./dist
