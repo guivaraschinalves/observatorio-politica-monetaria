@@ -36,10 +36,14 @@ pra fonte, metodologia e limitações de cada um):
   - Taxa terminal implícita no ciclo e data esperada.
 
 ### 4. 🎙️ Calendário & Transcrições de Discursos dos Membros
-- Linha do tempo completa dos pronunciamentos públicos e testemunhos dos membros do Copom (Galípolo, Diretores) e FOMC (Powell, Governadores, Presidentes regionais).
-- Diferenciação clara entre **membros com direito a voto** e membros não-votantes.
-- Classificação de tom de política monetária: **Hawkish** (inclinado a aperto/juros altos), **Dovish** (inclinado a alívio/cortes) ou **Neutro**.
-- Modal com a **transcrição / discurso integral**, destaques de citações-chave (*key quotes*), tópicos e links oficiais.
+- **FOMC** — dado real, atualizado sozinho todo dia: texto integral de cada discurso, direto do feed
+  oficial do Federal Reserve (`federalreserve.gov/feeds/speeches.xml`), com data, local, cargo de quem
+  falou e link pra fonte. Diferenciação entre **membros com direito a voto sempre** (Chair, Vice Chair,
+  Governor, presidente do Fed de Nova York) e os demais.
+- **Copom** — ainda sem fonte automatizada (ver [`scripts/README.md`](scripts/README.md)).
+- O que este recurso **não** faz: não classifica tom (*hawkish*/*dovish*) nem escolhe "citações-chave"
+  automaticamente — isso é leitura, não extração de dado, e ficou fora de propósito pra não fabricar
+  análise em nome de terceiros.
 - Alerta visual do **Período de Silêncio (*Blackout Period*)** em que declarações são vedadas.
 
 ### 5. 📝 Caderno Interativo de Anotações, Grifos e Riscos

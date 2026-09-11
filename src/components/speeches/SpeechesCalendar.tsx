@@ -99,7 +99,15 @@ export const SpeechesCalendar: React.FC<SpeechesCalendarProps> = ({
       <div className="space-y-4">
         {filteredSpeeches.length === 0 ? (
           <div className="bg-[var(--surface)] p-12 text-center rounded-xl border border-[var(--border)] text-[var(--ink-muted)]">
-            Nenhum discurso encontrado para os filtros selecionados.
+            {speeches.filter((s) => filterCommittee === 'all' || s.committee === filterCommittee).length === 0 ? (
+              filterCommittee === 'copom' ? (
+                'Ainda não temos uma fonte automatizada de discursos do Copom — só o FOMC está sendo coletado por enquanto.'
+              ) : (
+                'Nenhum discurso coletado ainda.'
+              )
+            ) : (
+              'Nenhum discurso encontrado para os filtros selecionados.'
+            )}
           </div>
         ) : (
           filteredSpeeches.map((speech) => (

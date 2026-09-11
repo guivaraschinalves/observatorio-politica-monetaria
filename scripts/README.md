@@ -5,16 +5,17 @@ Este diretório contém os scripts em Python para atualização periódica dos d
 ## Atualização automática
 
 `fetch_all_copom_history.py`, `fetch_all_fomc_history.py` (comunicados), `fetch_fomc_probabilities.py`
-e `fetch_copom_probabilities.py` (probabilidades de mercado) rodam sozinhos todo dia via
+e `fetch_copom_probabilities.py` (probabilidades de mercado) e `fetch_fomc_speeches.py` (discursos)
+rodam sozinhos todo dia via
 [`.github/workflows/atualizar-dados.yml`](../.github/workflows/atualizar-dados.yml) (GitHub Actions,
 08:00 de Brasília). Se algo mudou, o workflow comita o JSON atualizado em `main` e publica o site em
 `gh-pages` na sequência — sem precisar rodar nada manualmente. Também dá pra disparar na hora pela aba
 **Actions → Atualiza dados e publica → Run workflow** no GitHub.
 
-Os dois scripts de probabilidade rodam com `continue-on-error` no workflow: eles dependem de
-páginas/endpoints que não são uma API documentada (ver limitações abaixo), então se algum quebrar por
-uma mudança de formato do lado de lá, isso não trava a atualização dos comunicados nem o deploy — o
-JSON antigo continua no ar até alguém consertar o parsing.
+Os scripts de probabilidade e o de discursos rodam com `continue-on-error` no workflow: eles dependem
+de páginas/endpoints que não são uma API documentada (ver limitações abaixo), então se algum quebrar
+por uma mudança de formato do lado de lá, isso não trava a atualização dos comunicados nem o deploy —
+o JSON antigo continua no ar até alguém consertar o parsing.
 
 Limitações conhecidas de cada fonte, então "sempre atualizado" tem esse limite:
 - **Comunicados do Copom**: API pública do próprio Bacen (`bcb.gov.br/api/...`) — reflete o comunicado
@@ -33,6 +34,16 @@ Limitações conhecidas de cada fonte, então "sempre atualizado" tem esse limit
   portal público dela, mas que não tem documentação oficial (achado por engenharia reversa da SPA do
   portal). Pode quebrar se a B3 mudar esse portal. As datas das reuniões do Copom vêm de
   `copom_calendar.json` (ver abaixo) porque o Bacen não tem API pública pra isso.
+- **Discursos do FOMC**: vêm do feed RSS oficial do Federal Reserve
+  (`federalreserve.gov/feeds/speeches.xml`) — cada discurso é extraído da própria página oficial dele,
+  texto integral real, sem invenção. Não inclui análise: `tone` (hawkish/dovish) vem sempre `neutral`
+  e `keyQuotes`/`topics` vêm vazios, porque isso é leitura humana, não extração de dado — ver o
+  comentário no topo do próprio script. `isVoter` só é confiável para quem sempre vota (Chair, Vice
+  Chair, Governor, presidente do Fed de Nova York); presidentes regionais com voto rotativo saem como
+  `false` por padrão.
+- **Discursos do Copom**: ainda não automatizados. O conjunto anterior (Galípolo, Guillen) era
+  fictício — texto e citações inventados atribuídos a essas pessoas — e foi removido por esse motivo,
+  não só por estar desatualizado. Falta achar, do lado do Bacen, uma fonte equivalente ao feed do Fed.
 
 ## Rodando manualmente
 Instale as dependências (ambiente virtual já configurado nesta máquina, ou `pip install -r requirements.txt`
@@ -42,6 +53,7 @@ em qualquer outro lugar):
 /home/guilherme/.venvs/dados-economicos/bin/python fetch_all_fomc_history.py
 /home/guilherme/.venvs/dados-economicos/bin/python fetch_fomc_probabilities.py
 /home/guilherme/.venvs/dados-economicos/bin/python fetch_copom_probabilities.py
+/home/guilherme/.venvs/dados-economicos/bin/python fetch_fomc_speeches.py
 ```
 
 ## Arquivos:
@@ -60,6 +72,8 @@ em qualquer outro lugar):
   que o Bacen divulga uma vez por ano. **Atualize esta lista quando o Bacen soltar o calendário do ano
   seguinte** (normalmente no fim do ano anterior) — sem isso, `fetch_copom_probabilities.py` para de
   conseguir calcular reuniões novas.
+- `fetch_fomc_speeches.py`: lê o feed RSS de discursos do Fed, extrai o texto real de cada um e regrava
+  `src/data/fomc_speeches.json`. **Roda automaticamente** (ver acima).
 - `fetch_copom.py` / `fetch_fomc.py`: verificações pontuais/exploratórias, não usadas pelo workflow.
 - `calc_probabilities.py`: protótipo inicial da ideia usada em `fetch_copom_probabilities.py`, mantido
   por referência — não é mais chamado por nada.

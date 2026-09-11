@@ -12,3 +12,4 @@ dist-ssr
 *.sln
 *.sw?
 .feriados_anbima_tmp.xls
+__pycache__/

@@ -46,11 +46,17 @@ jobs:
         continue-on-error: true
         run: python scripts/fetch_copom_probabilities.py
 
+      # Idem: extrai de páginas HTML do Fed, não de uma API — continue-on-error
+      # pelo mesmo motivo.
+      - name: Busca discursos reais do FOMC
+        continue-on-error: true
+        run: python scripts/fetch_fomc_speeches.py
+
       - name: Comita os dados, se algo mudou
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
-          FILES="src/data/copom_comunicados_all.json src/data/fomc_statements_all.json src/data/fomc_market_overview.json src/data/copom_market_overview.json"
+          FILES="src/data/copom_comunicados_all.json src/data/fomc_statements_all.json src/data/fomc_market_overview.json src/data/copom_market_overview.json src/data/fomc_speeches.json"
           if ! git diff --quiet -- $FILES; then
             git add $FILES
             git commit -m "chore: atualiza comunicados e probabilidades de mercado [skip ci]"
