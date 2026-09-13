@@ -8,7 +8,7 @@
     {
       "id": "fomc-next-1",
       "meetingDate": "16 de Setembro de 2026",
-      "daysToMeeting": 5,
+      "daysToMeeting": 3,
       "currentRate": "3.50% – 3.75%",
       "impliedRate": "3.75% – 4.00%",
       "expectedChangeBps": 25,
@@ -39,7 +39,7 @@
     {
       "id": "fomc-next-2",
       "meetingDate": "16 de Dezembro de 2026",
-      "daysToMeeting": 96,
+      "daysToMeeting": 94,
       "currentRate": "3.50% – 3.75%",
       "impliedRate": "4.00% – 4.25%",
       "expectedChangeBps": 50,
@@ -80,7 +80,7 @@
     {
       "id": "fomc-next-3",
       "meetingDate": "17 de Março de 2027",
-      "daysToMeeting": 187,
+      "daysToMeeting": 185,
       "currentRate": "3.50% – 3.75%",
       "impliedRate": "4.25% – 4.50%",
       "expectedChangeBps": 75,
@@ -121,7 +121,7 @@
     {
       "id": "fomc-next-4",
       "meetingDate": "16 de Junho de 2027",
-      "daysToMeeting": 278,
+      "daysToMeeting": 276,
       "currentRate": "3.50% – 3.75%",
       "impliedRate": "4.25% – 4.50%",
       "expectedChangeBps": 75,
