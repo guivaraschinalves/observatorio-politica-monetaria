@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { Committee } from '../../types/monetary';
-import { GitCompare, BookOpen, TrendingUp, Mic, Github, ExternalLink, Sun, Moon, ScatterChart, Gavel, LineChart } from 'lucide-react';
+import { GitCompare, BookOpen, TrendingUp, Mic, ExternalLink, Sun, Moon, ScatterChart, Gavel, LineChart, Maximize2, Minimize2 } from 'lucide-react';
 
 type Tab = 'comparator' | 'minutes' | 'probabilities' | 'speeches' | 'dotplot' | 'dissents';
 
@@ -30,6 +30,22 @@ export const Header: React.FC<HeaderProps> = ({
 
   const toggleTheme = () => {
     setTheme((prev) => (prev === 'light' ? 'dark' : 'light'));
+  };
+
+  const [isFullscreen, setIsFullscreen] = useState(false);
+
+  useEffect(() => {
+    const sync = () => setIsFullscreen(!!document.fullscreenElement);
+    document.addEventListener('fullscreenchange', sync);
+    return () => document.removeEventListener('fullscreenchange', sync);
+  }, []);
+
+  const toggleFullscreen = () => {
+    if (document.fullscreenElement) {
+      document.exitFullscreen();
+    } else {
+      document.documentElement.requestFullscreen().catch(() => {});
+    }
   };
 
   return (
@@ -95,6 +111,14 @@ export const Header: React.FC<HeaderProps> = ({
               {theme === 'light' ? <Moon className="w-4 h-4" /> : <Sun className="w-4 h-4" />}
             </button>
 
+            <button
+              onClick={toggleFullscreen}
+              title={isFullscreen ? 'Sair da tela cheia' : 'Ver a página em tela cheia'}
+              className="p-2 rounded-lg text-[var(--ink-secondary)] hover:text-[var(--ink)] bg-[var(--page-bg)] hover:bg-[var(--border)] border border-[var(--border)] transition-colors"
+            >
+              {isFullscreen ? <Minimize2 className="w-4 h-4" /> : <Maximize2 className="w-4 h-4" />}
+            </button>
+
             <a
               href="https://guivaraschinalves.github.io/ftm-chartbook/"
               target="_blank"
@@ -103,17 +127,6 @@ export const Header: React.FC<HeaderProps> = ({
             >
               <LineChart className="w-3.5 h-3.5" />
               <span className="hidden sm:inline">Chart Book</span>
-              <ExternalLink className="w-3 h-3 text-[var(--ink-muted)]" />
-            </a>
-
-            <a
-              href="https://github.com/guivaraschinalves/observatorio-politica-monetaria"
-              target="_blank"
-              rel="noreferrer"
-              className="inline-flex items-center gap-1.5 text-xs font-medium text-[var(--ink-secondary)] hover:text-[var(--ink)] bg-[var(--page-bg)] hover:bg-[var(--border)] px-3 py-1.5 rounded-lg border border-[var(--border)] transition-colors"
-            >
-              <Github className="w-3.5 h-3.5" />
-              <span className="hidden sm:inline">GitHub</span>
               <ExternalLink className="w-3 h-3 text-[var(--ink-muted)]" />
             </a>
           </div>
