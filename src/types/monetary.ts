@@ -68,3 +68,55 @@ export interface MarketOverview {
   totalCutsOrHikesExpectedBps: number;
   meetings: MarketMeetingProbability[];
 }
+
+export interface DotPlotRange {
+  low: number;
+  high: number;
+}
+
+export interface DotPlotRelease {
+  id: string;
+  date: string; // YYYY-MM-DD
+  sourceUrl: string;
+  years: string[]; // ex: ['2026', '2027', '2028', 'Longer run']
+  median: number[];
+  centralTendency: DotPlotRange[];
+  range: DotPlotRange[];
+}
+
+export interface FomcVoteRecord {
+  id: string;
+  committee: 'fomc';
+  meetingNumber: string;
+  date: string; // YYYY-MM-DD
+  chair: string | null;
+  unanimous: boolean;
+  totalVotes: number;
+  votesFor: number;
+  votesAgainst: number;
+  governorsDissenting: number;
+  presidentsDissenting: number;
+  dissentersTighter: string[];
+  dissentersEasier: string[];
+  dissentersOther: string[];
+}
+
+export interface CopomVote {
+  name: string | null; // null quando a planilha só tem o placar agregado (antes da 167ª reunião)
+  count: number | null;
+  preferredChangeBps: number | null;
+  diffFromDecisionBps: number | null;
+}
+
+export interface CopomVoteRecord {
+  id: string;
+  committee: 'copom';
+  meetingNumber: string;
+  date: string; // YYYY-MM-DD
+  rateDecision: string | null;
+  changeBps: number | null;
+  placar: string;
+  unanimous: boolean;
+  namedVotes: boolean;
+  votes: CopomVote[];
+}

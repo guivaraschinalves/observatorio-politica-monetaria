@@ -6,15 +6,21 @@ import { copomMeetings } from './data/copomData';
 import { fomcMeetings } from './data/fomcData';
 import { copomMarketOverview, fomcMarketOverview } from './data/marketData';
 import { speechesData } from './data/speechesData';
+import { fomcDotPlotReleases } from './data/dotPlotData';
+import { copomVoteHistory, fomcVoteHistory } from './data/dissentsData';
 import { Header } from './components/layout/Header';
 import { StatementComparator } from './components/diff/StatementComparator';
 import { MinutesReader } from './components/minutes/MinutesReader';
 import { MarketProbabilitiesView } from './components/probabilities/MarketProbabilitiesView';
 import { SpeechesCalendar } from './components/speeches/SpeechesCalendar';
+import { DotPlotComparator } from './components/dotplot/DotPlotComparator';
+import { DissentsView } from './components/dissents/DissentsView';
+
+type Tab = 'comparator' | 'minutes' | 'probabilities' | 'speeches' | 'dotplot' | 'dissents';
 
 const ObservatoryContent: React.FC = () => {
   const [committee, setCommittee] = useState<Committee>('copom');
-  const [activeTab, setActiveTab] = useState<'comparator' | 'minutes' | 'probabilities' | 'speeches'>('comparator');
+  const [activeTab, setActiveTab] = useState<Tab>('comparator');
 
   const statements = committee === 'copom' ? allCopomStatements : allFomcStatements;
   const meetings = committee === 'copom' ? copomMeetings : fomcMeetings;
@@ -46,6 +52,21 @@ const ObservatoryContent: React.FC = () => {
 
         {activeTab === 'speeches' && (
           <SpeechesCalendar speeches={speechesData} defaultCommittee={committee} />
+        )}
+
+        {activeTab === 'dotplot' && (
+          committee === 'fomc' ? (
+            <DotPlotComparator releases={fomcDotPlotReleases} />
+          ) : (
+            <div className="p-8 text-center text-[var(--ink-muted)] bg-[var(--surface)] rounded-xl border border-[var(--border)]">
+              O dot plot (Summary of Economic Projections) é uma ferramenta exclusiva do FOMC — o Copom
+              não tem equivalente publicado. Troque para FOMC no topo da página.
+            </div>
+          )
+        )}
+
+        {activeTab === 'dissents' && (
+          <DissentsView committee={committee} copomVotes={copomVoteHistory} fomcVotes={fomcVoteHistory} />
         )}
       </main>
 

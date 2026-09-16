@@ -5,8 +5,10 @@ Este diretório contém os scripts em Python para atualização periódica dos d
 ## Atualização automática
 
 `fetch_all_copom_history.py`, `fetch_all_fomc_history.py` (comunicados), `fetch_fomc_probabilities.py`
-e `fetch_copom_probabilities.py` (probabilidades de mercado), `fetch_fomc_speeches.py` (discursos) e
-`fetch_copom_meetings.py`/`fetch_fomc_meetings.py` (atas/minutes) rodam sozinhos todo dia via
+e `fetch_copom_probabilities.py` (probabilidades de mercado), `fetch_fomc_speeches.py` (discursos),
+`fetch_copom_meetings.py`/`fetch_fomc_meetings.py` (atas/minutes), `fetch_copom_dissents.py`/
+`fetch_fomc_dissents.py` (histórico de votações) e `fetch_fomc_dotplot.py` (dot plot/SEP) rodam
+sozinhos todo dia via
 [`.github/workflows/atualizar-dados.yml`](../.github/workflows/atualizar-dados.yml) (GitHub Actions,
 08:00 de Brasília). Se algo mudou, o workflow comita o JSON atualizado em `main` e publica o site em
 `gh-pages` na sequência — sem precisar rodar nada manualmente. Também dá pra disparar na hora pela aba
@@ -57,6 +59,28 @@ Limitações conhecidas de cada fonte, então "sempre atualizado" tem esse limit
   texto do statement. Também limitado a 24 reuniões pelo mesmo motivo de tamanho do bundle.
   Curiosidade de depuração: o CSV do FRED trava/dá timeout quando o `User-Agent` da requisição se
   apresenta como navegador — o script de propósito não manda header nenhum nessa chamada específica.
+- **Histórico de votações do Copom** (`fetch_copom_dissents.py`): direto da planilha oficial que o
+  próprio Bacen publica e mantém
+  ([`historico-votacoes-Copom.xlsx`](https://www.bcb.gov.br/content/controleinflacao/controleinflacao_docs/votacoes-copom/historico-votacoes-Copom.xlsx)),
+  desde a 21ª reunião (1998). Votante nomeado individualmente só a partir da 167ª reunião (30/5/2012,
+  segundo a própria planilha) — antes disso só o placar agregado ("7 x 1" etc.), sem dizer quem ficou
+  em cada lado. Nada aqui é extraído de HTML/regex — é a fonte primária do Bacen.
+- **Histórico de dissidências do FOMC** (`fetch_fomc_dissents.py`): direto da planilha oficial do
+  Federal Reserve Bank of St. Louis
+  ([`fomc_dissents_data.xlsx`](https://www.stlouisfed.org/-/media/project/frbstl/stlouisfed/files/excel/fomc_dissents_data.xlsx)),
+  apêndice de dados do artigo "Making Sense of Dissents: A History of FOMC Dissents" — cobre desde
+  1936 e é atualizada por eles próprios. Substituiu uma tentativa inicial de extrair isso via regex
+  em cima do texto dos statements (frágil demais: a frase "Voting for/against" mudou de formato
+  várias vezes ao longo de 25 anos). Mesma observação do FRED sobre `User-Agent`: sem headers
+  customizados nessa chamada.
+- **Dot plot (SEP) do FOMC** (`fetch_fomc_dotplot.py`): o Fed não publica a posição de cada
+  participante no gráfico de pontos como número — só como posição num gráfico de dispersão dentro do
+  PDF, o que não dá pra extrair sem reconhecimento de imagem/vetor. O que ele publica como texto de
+  verdade, na Tabela 1 de cada PDF trimestral
+  (`federalreserve.gov/monetarypolicy/files/fomcprojtabl{AAAAMMDD}.pdf`), é a mediana, a tendência
+  central e a faixa completa da taxa de juros projetada — é isso que o script extrai (com
+  `pdfplumber`). Lista de PDFs disponíveis vem da página de calendário do FOMC, que só mantém uns 5-6
+  anos pra trás.
 
 ## Rodando manualmente
 Instale as dependências (ambiente virtual já configurado nesta máquina, ou `pip install -r requirements.txt`
@@ -69,6 +93,9 @@ em qualquer outro lugar):
 /home/guilherme/.venvs/dados-economicos/bin/python fetch_fomc_speeches.py
 /home/guilherme/.venvs/dados-economicos/bin/python fetch_copom_meetings.py
 /home/guilherme/.venvs/dados-economicos/bin/python fetch_fomc_meetings.py
+/home/guilherme/.venvs/dados-economicos/bin/python fetch_copom_dissents.py
+/home/guilherme/.venvs/dados-economicos/bin/python fetch_fomc_dissents.py
+/home/guilherme/.venvs/dados-economicos/bin/python fetch_fomc_dotplot.py
 ```
 
 `fetch_copom_meetings.py` precisa que `src/data/copom_comunicados_all.json` já exista (rode
@@ -97,8 +124,16 @@ mesma forma.
   `src/data/copom_meetings.json` (usado pelo Leitor de Atas). **Roda automaticamente** (ver acima).
 - `fetch_fomc_meetings.py`: junta statement real + minutes reais de cada reunião do FOMC e regrava
   `src/data/fomc_meetings.json` (usado pelo Leitor de Atas). **Roda automaticamente** (ver acima).
+- `fetch_copom_dissents.py`: baixa a planilha oficial de votações do Bacen e regrava
+  `src/data/copom_dissents.json` (usado na aba Dissidências). **Roda automaticamente** (ver acima).
+- `fetch_fomc_dissents.py`: baixa a planilha oficial de dissidências do Fed de St. Louis e regrava
+  `src/data/fomc_dissents.json` (usado na aba Dissidências). **Roda automaticamente** (ver acima).
+- `fetch_fomc_dotplot.py`: extrai a mediana/tendência central/faixa da taxa de juros de cada release
+  trimestral do SEP e regrava `src/data/fomc_dotplot.json` (usado na aba Dot Plot). **Roda
+  automaticamente** (ver acima).
 - `fetch_copom.py` / `fetch_fomc.py`: verificações pontuais/exploratórias, não usadas pelo workflow.
 - `calc_probabilities.py`: protótipo inicial da ideia usada em `fetch_copom_probabilities.py`, mantido
   por referência — não é mais chamado por nada.
 - `requirements.txt`: dependências Python dos scripts acima (`requests`, `beautifulsoup4`, `pandas`,
-  `xlrd` — esse último só pra ler a planilha de feriados da ANBIMA, que vem em `.xls` antigo).
+  `xlrd` — só pra ler a planilha de feriados da ANBIMA, que vem em `.xls` antigo —, `openpyxl` — pras
+  planilhas `.xlsx` de votações — e `pdfplumber` — pros PDFs do dot plot).

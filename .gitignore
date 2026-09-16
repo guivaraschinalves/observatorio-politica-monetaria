@@ -12,4 +12,7 @@ dist-ssr
 *.sln
 *.sw?
 .feriados_anbima_tmp.xls
+.copom_votes_tmp.xlsx
+.fomc_dissents_tmp.xlsx
+.sep_tmp.pdf
 __pycache__/

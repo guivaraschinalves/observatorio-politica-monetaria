@@ -1,4 +1,4 @@
-import React, { useState, useRef } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import { useAnnotations } from '../../context/AnnotationContext';
 import { FloatingToolbar } from './FloatingToolbar';
 import { HighlightColor, AnnotationType } from '../../types/annotation';
@@ -25,6 +25,32 @@ export const TextAnnotatorWrapper: React.FC<TextAnnotatorWrapperProps> = ({
     text: string;
     position: { top: number; left: number };
   } | null>(null);
+
+  // Tooltip do grifo/risco: controlado por estado em vez de :hover puro em
+  // CSS. Com :hover, mover o mouse do texto grifado até o botão de lixeira
+  // (que fica alguns pixels acima, fora da caixa do texto) passa por um vão
+  // sem nenhum dos dois elementos — o CSS já esconde o tooltip nesse
+  // instante, então o clique nunca chega a acontecer. O pequeno atraso ao
+  // sair (e cancelável ao voltar a entrar, seja no texto ou no próprio
+  // tooltip) fecha essa lacuna.
+  const [tooltipAbertoId, setTooltipAbertoId] = useState<string | null>(null);
+  const timerFecharTooltip = useRef<ReturnType<typeof setTimeout> | null>(null);
+
+  const cancelaFechamentoTooltip = () => {
+    if (timerFecharTooltip.current) {
+      clearTimeout(timerFecharTooltip.current);
+      timerFecharTooltip.current = null;
+    }
+  };
+  const abreTooltip = (id: string) => {
+    cancelaFechamentoTooltip();
+    setTooltipAbertoId(id);
+  };
+  const agendaFechamentoTooltip = () => {
+    cancelaFechamentoTooltip();
+    timerFecharTooltip.current = setTimeout(() => setTooltipAbertoId(null), 200);
+  };
+  useEffect(() => cancelaFechamentoTooltip, []);
 
   const handleMouseUp = () => {
     const selection = window.getSelection();
@@ -126,11 +152,18 @@ export const TextAnnotatorWrapper: React.FC<TextAnnotatorWrapperProps> = ({
         newElements.push(
           <span
             key={`ann-${ann.id}-${elIdx}`}
-            className={`group/mark relative inline cursor-pointer transition-colors ${styleClass}`}
+            className={`relative inline cursor-pointer transition-colors ${styleClass}`}
+            onMouseEnter={() => abreTooltip(ann.id)}
+            onMouseLeave={agendaFechamentoTooltip}
           >
             {match}
-            {/* Hover tooltip with delete & note details */}
-            <span className="invisible group-hover/mark:visible absolute -top-8 left-0 z-30 bg-gray-900 text-white text-[11px] px-2 py-1 rounded shadow-lg flex items-center gap-1.5 whitespace-nowrap">
+            {/* Tooltip com nota e botão de remover — visibilidade via estado, não :hover */}
+            <span
+              hidden={tooltipAbertoId !== ann.id}
+              onMouseEnter={() => abreTooltip(ann.id)}
+              onMouseLeave={agendaFechamentoTooltip}
+              className="absolute -top-8 left-0 z-30 bg-gray-900 text-white text-[11px] px-2 py-1 rounded shadow-lg flex items-center gap-1.5 whitespace-nowrap"
+            >
               {ann.note ? (
                 <span className="max-w-xs truncate font-normal text-blue-200">"{ann.note}"</span>
               ) : (

@@ -60,11 +60,25 @@ jobs:
           python scripts/fetch_copom_meetings.py
           python scripts/fetch_fomc_meetings.py
 
+      # Planilhas oficiais (Bacen e Fed de St. Louis) — mais estáveis que HTML,
+      # mas ainda assim fora do nosso controle, então continue-on-error aqui
+      # também.
+      - name: Busca histórico de votações (Copom e FOMC)
+        continue-on-error: true
+        run: |
+          python scripts/fetch_copom_dissents.py
+          python scripts/fetch_fomc_dissents.py
+
+      # PDFs do Fed, parseados por texto — mesmo motivo de continue-on-error.
+      - name: Busca dot plot (SEP) do FOMC
+        continue-on-error: true
+        run: python scripts/fetch_fomc_dotplot.py
+
       - name: Comita os dados, se algo mudou
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
-          FILES="src/data/copom_comunicados_all.json src/data/fomc_statements_all.json src/data/fomc_market_overview.json src/data/copom_market_overview.json src/data/fomc_speeches.json src/data/copom_meetings.json src/data/fomc_meetings.json"
+          FILES="src/data/copom_comunicados_all.json src/data/fomc_statements_all.json src/data/fomc_market_overview.json src/data/copom_market_overview.json src/data/fomc_speeches.json src/data/copom_meetings.json src/data/fomc_meetings.json src/data/copom_dissents.json src/data/fomc_dissents.json src/data/fomc_dotplot.json"
           if ! git diff --quiet -- $FILES; then
             git add $FILES
             git commit -m "chore: atualiza comunicados e probabilidades de mercado [skip ci]"

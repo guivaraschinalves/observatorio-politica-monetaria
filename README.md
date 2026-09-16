@@ -56,6 +56,20 @@ pra fonte, metodologia e limitações de cada um):
 - Tudo fica salvo localmente no navegador (`localStorage`) — nunca se perde ao recarregar a página, mas
   também não sai desse navegador (não há caderno/exportação centralizada das anotações).
 
+### 6. 🎯 Dot Plot (SEP) do FOMC
+- Compara dois releases quaisquer do *Summary of Economic Projections* — mediana, tendência central e
+  faixa completa da taxa de juros projetada, ano a ano. Dado real, direto dos PDFs trimestrais que o
+  Fed publica (não é o gráfico de pontos em si, que só existe como imagem — é o resumo estatístico da
+  mesma informação, em número). Exclusivo do FOMC; o Copom não tem equivalente.
+
+### 7. ⚖️ Dissidências
+- Histórico completo de votação de cada reunião, dos dois comitês, com filtro pra ver só as reuniões
+  com dissidência:
+  - **Copom**: desde a 21ª reunião (1998), via planilha oficial do Bacen. Votante nomeado individualmente
+    a partir da 167ª reunião (2012); antes disso, só o placar agregado.
+  - **FOMC**: desde 1936, via planilha oficial do Fed de St. Louis (dissidentes por nome quando
+    registrado, direção do voto — a favor de aperto ou de alívio).
+
 ---
 
 ## 🛠️ Stack Tecnológico
@@ -67,7 +81,8 @@ pra fonte, metodologia e limitações de cada um):
   - [Lucide React](https://lucide.dev/) (iconografia financeira e editorial)
   - [diff (jsdiff)](https://github.com/kpdecker/jsdiff) (motor de diff de alta performance)
 - **Backend & Data Pipeline (Python)**:
-  - Python 3.13 com `httpx`, `requests`, `beautifulsoup4`, `pandas` no diretório `scripts/`.
+  - Python com `requests`, `beautifulsoup4`, `pandas`, `pdfplumber` no diretório `scripts/` (ver
+    [`scripts/requirements.txt`](scripts/requirements.txt)).
   - Conectores para API do Banco Central do Brasil e portal do Federal Reserve.
 
 ---

@@ -1,12 +1,14 @@
 import React, { useEffect, useState } from 'react';
 import { Committee } from '../../types/monetary';
-import { GitCompare, BookOpen, TrendingUp, Mic, Github, ExternalLink, Sun, Moon } from 'lucide-react';
+import { GitCompare, BookOpen, TrendingUp, Mic, Github, ExternalLink, Sun, Moon, ScatterChart, Gavel } from 'lucide-react';
+
+type Tab = 'comparator' | 'minutes' | 'probabilities' | 'speeches' | 'dotplot' | 'dissents';
 
 interface HeaderProps {
   committee: Committee;
   onSelectCommittee: (c: Committee) => void;
-  activeTab: 'comparator' | 'minutes' | 'probabilities' | 'speeches';
-  onSelectTab: (tab: 'comparator' | 'minutes' | 'probabilities' | 'speeches') => void;
+  activeTab: Tab;
+  onSelectTab: (tab: Tab) => void;
 }
 
 export const Header: React.FC<HeaderProps> = ({
@@ -160,6 +162,32 @@ export const Header: React.FC<HeaderProps> = ({
             >
               <Mic className="w-4 h-4 text-amber-600 dark:text-amber-400" />
               <span>Calendário & Discursos</span>
+            </button>
+
+            {committee === 'fomc' && (
+              <button
+                onClick={() => onSelectTab('dotplot')}
+                className={`flex items-center space-x-2 px-3.5 py-1.5 rounded-lg text-xs font-medium whitespace-nowrap transition-all ${
+                  activeTab === 'dotplot'
+                    ? 'bg-[var(--surface)] text-[var(--brand)] shadow-xs border border-[var(--border)] font-bold'
+                    : 'text-[var(--ink-secondary)] hover:text-[var(--ink)] hover:bg-[var(--surface)]'
+                }`}
+              >
+                <ScatterChart className="w-4 h-4 text-sky-600 dark:text-sky-400" />
+                <span>Dot Plot</span>
+              </button>
+            )}
+
+            <button
+              onClick={() => onSelectTab('dissents')}
+              className={`flex items-center space-x-2 px-3.5 py-1.5 rounded-lg text-xs font-medium whitespace-nowrap transition-all ${
+                activeTab === 'dissents'
+                  ? 'bg-[var(--surface)] text-[var(--brand)] shadow-xs border border-[var(--border)] font-bold'
+                  : 'text-[var(--ink-secondary)] hover:text-[var(--ink)] hover:bg-[var(--surface)]'
+              }`}
+            >
+              <Gavel className="w-4 h-4 text-orange-600 dark:text-orange-400" />
+              <span>Dissidências</span>
             </button>
           </nav>
         </div>

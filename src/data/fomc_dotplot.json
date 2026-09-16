@@ -1,0 +1,1268 @@
+[
+  {
+    "id": "sep-2026-06-17",
+    "date": "2026-06-17",
+    "sourceUrl": "https://www.federalreserve.gov/monetarypolicy/files/fomcprojtabl20260617.pdf",
+    "years": [
+      "2026",
+      "2027",
+      "2028",
+      "Longer run"
+    ],
+    "median": [
+      3.8,
+      3.6,
+      3.4,
+      3.1
+    ],
+    "centralTendency": [
+      {
+        "low": 3.6,
+        "high": 4.1
+      },
+      {
+        "low": 3.1,
+        "high": 3.9
+      },
+      {
+        "low": 3.1,
+        "high": 3.6
+      },
+      {
+        "low": 3.0,
+        "high": 3.5
+      }
+    ],
+    "range": [
+      {
+        "low": 3.4,
+        "high": 4.4
+      },
+      {
+        "low": 2.9,
+        "high": 4.4
+      },
+      {
+        "low": 2.9,
+        "high": 3.9
+      },
+      {
+        "low": 2.9,
+        "high": 3.9
+      }
+    ]
+  },
+  {
+    "id": "sep-2026-03-18",
+    "date": "2026-03-18",
+    "sourceUrl": "https://www.federalreserve.gov/monetarypolicy/files/fomcprojtabl20260318.pdf",
+    "years": [
+      "2026",
+      "2027",
+      "2028",
+      "Longer run"
+    ],
+    "median": [
+      3.4,
+      3.1,
+      3.1,
+      3.1
+    ],
+    "centralTendency": [
+      {
+        "low": 3.1,
+        "high": 3.6
+      },
+      {
+        "low": 2.9,
+        "high": 3.6
+      },
+      {
+        "low": 2.9,
+        "high": 3.6
+      },
+      {
+        "low": 2.9,
+        "high": 3.5
+      }
+    ],
+    "range": [
+      {
+        "low": 2.6,
+        "high": 3.6
+      },
+      {
+        "low": 2.4,
+        "high": 3.9
+      },
+      {
+        "low": 2.6,
+        "high": 3.9
+      },
+      {
+        "low": 2.6,
+        "high": 3.9
+      }
+    ]
+  },
+  {
+    "id": "sep-2025-12-10",
+    "date": "2025-12-10",
+    "sourceUrl": "https://www.federalreserve.gov/monetarypolicy/files/fomcprojtabl20251210.pdf",
+    "years": [
+      "2025",
+      "2026",
+      "2027",
+      "2028",
+      "Longer run"
+    ],
+    "median": [
+      3.6,
+      3.4,
+      3.1,
+      3.1,
+      3.0
+    ],
+    "centralTendency": [
+      {
+        "low": 3.6,
+        "high": 3.9
+      },
+      {
+        "low": 2.9,
+        "high": 3.6
+      },
+      {
+        "low": 2.9,
+        "high": 3.6
+      },
+      {
+        "low": 2.8,
+        "high": 3.6
+      },
+      {
+        "low": 2.8,
+        "high": 3.5
+      }
+    ],
+    "range": [
+      {
+        "low": 3.4,
+        "high": 3.9
+      },
+      {
+        "low": 2.1,
+        "high": 3.9
+      },
+      {
+        "low": 2.4,
+        "high": 3.9
+      },
+      {
+        "low": 2.6,
+        "high": 3.9
+      },
+      {
+        "low": 2.6,
+        "high": 3.9
+      }
+    ]
+  },
+  {
+    "id": "sep-2025-09-17",
+    "date": "2025-09-17",
+    "sourceUrl": "https://www.federalreserve.gov/monetarypolicy/files/fomcprojtabl20250917.pdf",
+    "years": [
+      "2025",
+      "2026",
+      "2027",
+      "2028",
+      "Longer run"
+    ],
+    "median": [
+      3.6,
+      3.4,
+      3.1,
+      3.1,
+      3.0
+    ],
+    "centralTendency": [
+      {
+        "low": 3.6,
+        "high": 4.1
+      },
+      {
+        "low": 2.9,
+        "high": 3.6
+      },
+      {
+        "low": 2.9,
+        "high": 3.6
+      },
+      {
+        "low": 2.8,
+        "high": 3.6
+      },
+      {
+        "low": 2.8,
+        "high": 3.5
+      }
+    ],
+    "range": [
+      {
+        "low": 2.9,
+        "high": 4.4
+      },
+      {
+        "low": 2.6,
+        "high": 3.9
+      },
+      {
+        "low": 2.4,
+        "high": 3.9
+      },
+      {
+        "low": 2.6,
+        "high": 3.9
+      },
+      {
+        "low": 2.6,
+        "high": 3.9
+      }
+    ]
+  },
+  {
+    "id": "sep-2025-06-18",
+    "date": "2025-06-18",
+    "sourceUrl": "https://www.federalreserve.gov/monetarypolicy/files/fomcprojtabl20250618.pdf",
+    "years": [
+      "2025",
+      "2026",
+      "2027",
+      "Longer run"
+    ],
+    "median": [
+      3.9,
+      3.6,
+      3.4,
+      3.0
+    ],
+    "centralTendency": [
+      {
+        "low": 3.9,
+        "high": 4.4
+      },
+      {
+        "low": 3.1,
+        "high": 3.9
+      },
+      {
+        "low": 2.9,
+        "high": 3.6
+      },
+      {
+        "low": 2.6,
+        "high": 3.6
+      }
+    ],
+    "range": [
+      {
+        "low": 3.6,
+        "high": 4.4
+      },
+      {
+        "low": 2.6,
+        "high": 4.1
+      },
+      {
+        "low": 2.6,
+        "high": 3.9
+      },
+      {
+        "low": 2.5,
+        "high": 3.9
+      }
+    ]
+  },
+  {
+    "id": "sep-2025-03-19",
+    "date": "2025-03-19",
+    "sourceUrl": "https://www.federalreserve.gov/monetarypolicy/files/fomcprojtabl20250319.pdf",
+    "years": [
+      "2025",
+      "2026",
+      "2027",
+      "Longer run"
+    ],
+    "median": [
+      3.9,
+      3.4,
+      3.1,
+      3.0
+    ],
+    "centralTendency": [
+      {
+        "low": 3.9,
+        "high": 4.4
+      },
+      {
+        "low": 3.1,
+        "high": 3.9
+      },
+      {
+        "low": 2.9,
+        "high": 3.6
+      },
+      {
+        "low": 2.6,
+        "high": 3.6
+      }
+    ],
+    "range": [
+      {
+        "low": 3.6,
+        "high": 4.4
+      },
+      {
+        "low": 2.9,
+        "high": 4.1
+      },
+      {
+        "low": 2.6,
+        "high": 3.9
+      },
+      {
+        "low": 2.5,
+        "high": 3.9
+      }
+    ]
+  },
+  {
+    "id": "sep-2024-12-18",
+    "date": "2024-12-18",
+    "sourceUrl": "https://www.federalreserve.gov/monetarypolicy/files/fomcprojtabl20241218.pdf",
+    "years": [
+      "2024",
+      "2025",
+      "2026",
+      "2027",
+      "Longer run"
+    ],
+    "median": [
+      4.4,
+      3.9,
+      3.4,
+      3.1,
+      3.0
+    ],
+    "centralTendency": [
+      {
+        "low": 4.4,
+        "high": 4.6
+      },
+      {
+        "low": 3.6,
+        "high": 4.1
+      },
+      {
+        "low": 3.1,
+        "high": 3.6
+      },
+      {
+        "low": 2.9,
+        "high": 3.6
+      },
+      {
+        "low": 2.8,
+        "high": 3.6
+      }
+    ],
+    "range": [
+      {
+        "low": 4.4,
+        "high": 4.6
+      },
+      {
+        "low": 3.1,
+        "high": 4.4
+      },
+      {
+        "low": 2.4,
+        "high": 3.9
+      },
+      {
+        "low": 2.4,
+        "high": 3.9
+      },
+      {
+        "low": 2.4,
+        "high": 3.9
+      }
+    ]
+  },
+  {
+    "id": "sep-2024-09-18",
+    "date": "2024-09-18",
+    "sourceUrl": "https://www.federalreserve.gov/monetarypolicy/files/fomcprojtabl20240918.pdf",
+    "years": [
+      "2024",
+      "2025",
+      "2026",
+      "2027",
+      "Longer run"
+    ],
+    "median": [
+      4.4,
+      3.4,
+      2.9,
+      2.9,
+      2.9
+    ],
+    "centralTendency": [
+      {
+        "low": 4.4,
+        "high": 4.6
+      },
+      {
+        "low": 3.1,
+        "high": 3.6
+      },
+      {
+        "low": 2.6,
+        "high": 3.6
+      },
+      {
+        "low": 2.6,
+        "high": 3.6
+      },
+      {
+        "low": 2.5,
+        "high": 3.5
+      }
+    ],
+    "range": [
+      {
+        "low": 4.1,
+        "high": 4.9
+      },
+      {
+        "low": 2.9,
+        "high": 4.1
+      },
+      {
+        "low": 2.4,
+        "high": 3.9
+      },
+      {
+        "low": 2.4,
+        "high": 3.9
+      },
+      {
+        "low": 2.4,
+        "high": 3.8
+      }
+    ]
+  },
+  {
+    "id": "sep-2024-06-12",
+    "date": "2024-06-12",
+    "sourceUrl": "https://www.federalreserve.gov/monetarypolicy/files/fomcprojtabl20240612.pdf",
+    "years": [
+      "2024",
+      "2025",
+      "2026",
+      "Longer run"
+    ],
+    "median": [
+      5.1,
+      4.1,
+      3.1,
+      2.8
+    ],
+    "centralTendency": [
+      {
+        "low": 4.9,
+        "high": 5.4
+      },
+      {
+        "low": 3.9,
+        "high": 4.4
+      },
+      {
+        "low": 2.9,
+        "high": 3.6
+      },
+      {
+        "low": 2.5,
+        "high": 3.5
+      }
+    ],
+    "range": [
+      {
+        "low": 4.9,
+        "high": 5.4
+      },
+      {
+        "low": 2.9,
+        "high": 5.4
+      },
+      {
+        "low": 2.4,
+        "high": 4.9
+      },
+      {
+        "low": 2.4,
+        "high": 3.8
+      }
+    ]
+  },
+  {
+    "id": "sep-2024-03-20",
+    "date": "2024-03-20",
+    "sourceUrl": "https://www.federalreserve.gov/monetarypolicy/files/fomcprojtabl20240320.pdf",
+    "years": [
+      "2024",
+      "2025",
+      "2026",
+      "Longer run"
+    ],
+    "median": [
+      4.6,
+      3.9,
+      3.1,
+      2.6
+    ],
+    "centralTendency": [
+      {
+        "low": 4.6,
+        "high": 5.1
+      },
+      {
+        "low": 3.4,
+        "high": 4.1
+      },
+      {
+        "low": 2.6,
+        "high": 3.4
+      },
+      {
+        "low": 2.5,
+        "high": 3.1
+      }
+    ],
+    "range": [
+      {
+        "low": 4.4,
+        "high": 5.4
+      },
+      {
+        "low": 2.6,
+        "high": 5.4
+      },
+      {
+        "low": 2.4,
+        "high": 4.9
+      },
+      {
+        "low": 2.4,
+        "high": 3.8
+      }
+    ]
+  },
+  {
+    "id": "sep-2023-12-13",
+    "date": "2023-12-13",
+    "sourceUrl": "https://www.federalreserve.gov/monetarypolicy/files/fomcprojtabl20231213.pdf",
+    "years": [
+      "2023",
+      "2024",
+      "2025",
+      "2026",
+      "Longer run"
+    ],
+    "median": [
+      5.4,
+      4.6,
+      3.6,
+      2.9,
+      2.5
+    ],
+    "centralTendency": [
+      {
+        "low": 5.4,
+        "high": 5.4
+      },
+      {
+        "low": 4.4,
+        "high": 4.9
+      },
+      {
+        "low": 3.1,
+        "high": 3.9
+      },
+      {
+        "low": 2.5,
+        "high": 3.1
+      },
+      {
+        "low": 2.5,
+        "high": 3.0
+      }
+    ],
+    "range": [
+      {
+        "low": 5.4,
+        "high": 5.4
+      },
+      {
+        "low": 3.9,
+        "high": 5.4
+      },
+      {
+        "low": 2.4,
+        "high": 5.4
+      },
+      {
+        "low": 2.4,
+        "high": 4.9
+      },
+      {
+        "low": 2.4,
+        "high": 3.8
+      }
+    ]
+  },
+  {
+    "id": "sep-2023-09-20",
+    "date": "2023-09-20",
+    "sourceUrl": "https://www.federalreserve.gov/monetarypolicy/files/fomcprojtabl20230920.pdf",
+    "years": [
+      "2023",
+      "2024",
+      "2025",
+      "2026",
+      "Longer run"
+    ],
+    "median": [
+      5.6,
+      5.1,
+      3.9,
+      2.9,
+      2.5
+    ],
+    "centralTendency": [
+      {
+        "low": 5.4,
+        "high": 5.6
+      },
+      {
+        "low": 4.6,
+        "high": 5.4
+      },
+      {
+        "low": 3.4,
+        "high": 4.9
+      },
+      {
+        "low": 2.5,
+        "high": 4.1
+      },
+      {
+        "low": 2.5,
+        "high": 3.3
+      }
+    ],
+    "range": [
+      {
+        "low": 5.4,
+        "high": 5.6
+      },
+      {
+        "low": 4.4,
+        "high": 6.1
+      },
+      {
+        "low": 2.6,
+        "high": 5.6
+      },
+      {
+        "low": 2.4,
+        "high": 4.9
+      },
+      {
+        "low": 2.4,
+        "high": 3.8
+      }
+    ]
+  },
+  {
+    "id": "sep-2023-06-14",
+    "date": "2023-06-14",
+    "sourceUrl": "https://www.federalreserve.gov/monetarypolicy/files/fomcprojtabl20230614.pdf",
+    "years": [
+      "2023",
+      "2024",
+      "2025",
+      "Longer run"
+    ],
+    "median": [
+      5.6,
+      4.6,
+      3.4,
+      2.5
+    ],
+    "centralTendency": [
+      {
+        "low": 5.4,
+        "high": 5.6
+      },
+      {
+        "low": 4.4,
+        "high": 5.1
+      },
+      {
+        "low": 2.9,
+        "high": 4.1
+      },
+      {
+        "low": 2.5,
+        "high": 2.8
+      }
+    ],
+    "range": [
+      {
+        "low": 5.1,
+        "high": 6.1
+      },
+      {
+        "low": 3.6,
+        "high": 5.9
+      },
+      {
+        "low": 2.4,
+        "high": 5.6
+      },
+      {
+        "low": 2.4,
+        "high": 3.6
+      }
+    ]
+  },
+  {
+    "id": "sep-2023-03-22",
+    "date": "2023-03-22",
+    "sourceUrl": "https://www.federalreserve.gov/monetarypolicy/files/fomcprojtabl20230322.pdf",
+    "years": [
+      "2023",
+      "2024",
+      "2025",
+      "Longer run"
+    ],
+    "median": [
+      5.1,
+      4.3,
+      3.1,
+      2.5
+    ],
+    "centralTendency": [
+      {
+        "low": 5.1,
+        "high": 5.6
+      },
+      {
+        "low": 3.9,
+        "high": 5.1
+      },
+      {
+        "low": 2.9,
+        "high": 3.9
+      },
+      {
+        "low": 2.4,
+        "high": 2.6
+      }
+    ],
+    "range": [
+      {
+        "low": 4.9,
+        "high": 5.9
+      },
+      {
+        "low": 3.4,
+        "high": 5.6
+      },
+      {
+        "low": 2.4,
+        "high": 5.6
+      },
+      {
+        "low": 2.3,
+        "high": 3.6
+      }
+    ]
+  },
+  {
+    "id": "sep-2022-12-14",
+    "date": "2022-12-14",
+    "sourceUrl": "https://www.federalreserve.gov/monetarypolicy/files/fomcprojtabl20221214.pdf",
+    "years": [
+      "2022",
+      "2023",
+      "2024",
+      "2025",
+      "Longer run"
+    ],
+    "median": [
+      4.4,
+      5.1,
+      4.1,
+      3.1,
+      2.5
+    ],
+    "centralTendency": [
+      {
+        "low": 4.4,
+        "high": 4.4
+      },
+      {
+        "low": 5.1,
+        "high": 5.4
+      },
+      {
+        "low": 3.9,
+        "high": 4.9
+      },
+      {
+        "low": 2.6,
+        "high": 3.9
+      },
+      {
+        "low": 2.3,
+        "high": 2.5
+      }
+    ],
+    "range": [
+      {
+        "low": 4.4,
+        "high": 4.4
+      },
+      {
+        "low": 4.9,
+        "high": 5.6
+      },
+      {
+        "low": 3.1,
+        "high": 5.6
+      },
+      {
+        "low": 2.4,
+        "high": 5.6
+      },
+      {
+        "low": 2.3,
+        "high": 3.3
+      }
+    ]
+  },
+  {
+    "id": "sep-2022-09-21",
+    "date": "2022-09-21",
+    "sourceUrl": "https://www.federalreserve.gov/monetarypolicy/files/fomcprojtabl20220921.pdf",
+    "years": [
+      "2022",
+      "2023",
+      "2024",
+      "2025",
+      "Longer run"
+    ],
+    "median": [
+      4.4,
+      4.6,
+      3.9,
+      2.9,
+      2.5
+    ],
+    "centralTendency": [
+      {
+        "low": 4.1,
+        "high": 4.4
+      },
+      {
+        "low": 4.4,
+        "high": 4.9
+      },
+      {
+        "low": 3.4,
+        "high": 4.4
+      },
+      {
+        "low": 2.4,
+        "high": 3.4
+      },
+      {
+        "low": 2.3,
+        "high": 2.5
+      }
+    ],
+    "range": [
+      {
+        "low": 3.9,
+        "high": 4.6
+      },
+      {
+        "low": 3.9,
+        "high": 4.9
+      },
+      {
+        "low": 2.6,
+        "high": 4.6
+      },
+      {
+        "low": 2.4,
+        "high": 4.6
+      },
+      {
+        "low": 2.3,
+        "high": 3.0
+      }
+    ]
+  },
+  {
+    "id": "sep-2022-06-15",
+    "date": "2022-06-15",
+    "sourceUrl": "https://www.federalreserve.gov/monetarypolicy/files/fomcprojtabl20220615.pdf",
+    "years": [
+      "2022",
+      "2023",
+      "2024",
+      "Longer run"
+    ],
+    "median": [
+      3.4,
+      3.8,
+      3.4,
+      2.5
+    ],
+    "centralTendency": [
+      {
+        "low": 3.1,
+        "high": 3.6
+      },
+      {
+        "low": 3.6,
+        "high": 4.1
+      },
+      {
+        "low": 2.9,
+        "high": 3.6
+      },
+      {
+        "low": 2.3,
+        "high": 2.5
+      }
+    ],
+    "range": [
+      {
+        "low": 3.1,
+        "high": 3.9
+      },
+      {
+        "low": 2.9,
+        "high": 4.4
+      },
+      {
+        "low": 2.1,
+        "high": 4.1
+      },
+      {
+        "low": 2.0,
+        "high": 3.0
+      }
+    ]
+  },
+  {
+    "id": "sep-2022-03-16",
+    "date": "2022-03-16",
+    "sourceUrl": "https://www.federalreserve.gov/monetarypolicy/files/fomcprojtabl20220316.pdf",
+    "years": [
+      "2022",
+      "2023",
+      "2024",
+      "Longer run"
+    ],
+    "median": [
+      1.9,
+      2.8,
+      2.8,
+      2.4
+    ],
+    "centralTendency": [
+      {
+        "low": 1.6,
+        "high": 2.4
+      },
+      {
+        "low": 2.4,
+        "high": 3.1
+      },
+      {
+        "low": 2.4,
+        "high": 3.4
+      },
+      {
+        "low": 2.3,
+        "high": 2.5
+      }
+    ],
+    "range": [
+      {
+        "low": 1.4,
+        "high": 3.1
+      },
+      {
+        "low": 2.1,
+        "high": 3.6
+      },
+      {
+        "low": 2.1,
+        "high": 3.6
+      },
+      {
+        "low": 2.0,
+        "high": 3.0
+      }
+    ]
+  },
+  {
+    "id": "sep-2021-12-15",
+    "date": "2021-12-15",
+    "sourceUrl": "https://www.federalreserve.gov/monetarypolicy/files/fomcprojtabl20211215.pdf",
+    "years": [
+      "2021",
+      "2022",
+      "2023",
+      "2024",
+      "Longer run"
+    ],
+    "median": [
+      0.1,
+      0.9,
+      1.6,
+      2.1,
+      2.5
+    ],
+    "centralTendency": [
+      {
+        "low": 0.1,
+        "high": 0.1
+      },
+      {
+        "low": 0.6,
+        "high": 0.9
+      },
+      {
+        "low": 1.4,
+        "high": 1.9
+      },
+      {
+        "low": 1.9,
+        "high": 2.9
+      },
+      {
+        "low": 2.3,
+        "high": 2.5
+      }
+    ],
+    "range": [
+      {
+        "low": 0.1,
+        "high": 0.1
+      },
+      {
+        "low": 0.4,
+        "high": 1.1
+      },
+      {
+        "low": 1.1,
+        "high": 2.1
+      },
+      {
+        "low": 1.9,
+        "high": 3.1
+      },
+      {
+        "low": 2.0,
+        "high": 3.0
+      }
+    ]
+  },
+  {
+    "id": "sep-2021-09-22",
+    "date": "2021-09-22",
+    "sourceUrl": "https://www.federalreserve.gov/monetarypolicy/files/fomcprojtabl20210922.pdf",
+    "years": [
+      "2021",
+      "2022",
+      "2023",
+      "2024",
+      "Longer run"
+    ],
+    "median": [
+      0.1,
+      0.3,
+      1.0,
+      1.8,
+      2.5
+    ],
+    "centralTendency": [
+      {
+        "low": 0.1,
+        "high": 0.1
+      },
+      {
+        "low": 0.1,
+        "high": 0.4
+      },
+      {
+        "low": 0.4,
+        "high": 1.1
+      },
+      {
+        "low": 0.9,
+        "high": 2.1
+      },
+      {
+        "low": 2.3,
+        "high": 2.5
+      }
+    ],
+    "range": [
+      {
+        "low": 0.1,
+        "high": 0.1
+      },
+      {
+        "low": 0.1,
+        "high": 0.6
+      },
+      {
+        "low": 0.1,
+        "high": 1.6
+      },
+      {
+        "low": 0.6,
+        "high": 2.6
+      },
+      {
+        "low": 2.0,
+        "high": 3.0
+      }
+    ]
+  },
+  {
+    "id": "sep-2021-06-16",
+    "date": "2021-06-16",
+    "sourceUrl": "https://www.federalreserve.gov/monetarypolicy/files/fomcprojtabl20210616.pdf",
+    "years": [
+      "2021",
+      "2022",
+      "2023",
+      "Longer run"
+    ],
+    "median": [
+      0.1,
+      0.1,
+      0.6,
+      2.5
+    ],
+    "centralTendency": [
+      {
+        "low": 0.1,
+        "high": 0.1
+      },
+      {
+        "low": 0.1,
+        "high": 0.4
+      },
+      {
+        "low": 0.1,
+        "high": 1.1
+      },
+      {
+        "low": 2.3,
+        "high": 2.5
+      }
+    ],
+    "range": [
+      {
+        "low": 0.1,
+        "high": 0.1
+      },
+      {
+        "low": 0.1,
+        "high": 0.6
+      },
+      {
+        "low": 0.1,
+        "high": 1.6
+      },
+      {
+        "low": 2.0,
+        "high": 3.0
+      }
+    ]
+  },
+  {
+    "id": "sep-2021-03-17",
+    "date": "2021-03-17",
+    "sourceUrl": "https://www.federalreserve.gov/monetarypolicy/files/fomcprojtabl20210317.pdf",
+    "years": [
+      "2021",
+      "2022",
+      "2023",
+      "Longer run"
+    ],
+    "median": [
+      0.1,
+      0.1,
+      0.1,
+      2.5
+    ],
+    "centralTendency": [
+      {
+        "low": 0.1,
+        "high": 0.1
+      },
+      {
+        "low": 0.1,
+        "high": 0.4
+      },
+      {
+        "low": 0.1,
+        "high": 0.9
+      },
+      {
+        "low": 2.3,
+        "high": 2.5
+      }
+    ],
+    "range": [
+      {
+        "low": 0.1,
+        "high": 0.1
+      },
+      {
+        "low": 0.1,
+        "high": 0.6
+      },
+      {
+        "low": 0.1,
+        "high": 1.1
+      },
+      {
+        "low": 2.0,
+        "high": 3.0
+      }
+    ]
+  }
+]
