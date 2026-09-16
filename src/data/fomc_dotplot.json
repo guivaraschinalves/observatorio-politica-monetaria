@@ -1,5 +1,68 @@
 [
   {
+    "id": "sep-2026-09-16",
+    "date": "2026-09-16",
+    "sourceUrl": "https://www.federalreserve.gov/monetarypolicy/files/fomcprojtabl20260916.pdf",
+    "years": [
+      "2026",
+      "2027",
+      "2028",
+      "2029",
+      "Longer run"
+    ],
+    "median": [
+      4.1,
+      4.1,
+      3.9,
+      3.6,
+      3.2
+    ],
+    "centralTendency": [
+      {
+        "low": 4.1,
+        "high": 4.4
+      },
+      {
+        "low": 3.6,
+        "high": 4.4
+      },
+      {
+        "low": 3.1,
+        "high": 4.1
+      },
+      {
+        "low": 3.1,
+        "high": 3.6
+      },
+      {
+        "low": 3.0,
+        "high": 3.6
+      }
+    ],
+    "range": [
+      {
+        "low": 3.9,
+        "high": 4.4
+      },
+      {
+        "low": 3.1,
+        "high": 4.4
+      },
+      {
+        "low": 3.1,
+        "high": 4.1
+      },
+      {
+        "low": 2.9,
+        "high": 3.9
+      },
+      {
+        "low": 2.9,
+        "high": 3.9
+      }
+    ]
+  },
+  {
     "id": "sep-2026-06-17",
     "date": "2026-06-17",
     "sourceUrl": "https://www.federalreserve.gov/monetarypolicy/files/fomcprojtabl20260617.pdf",

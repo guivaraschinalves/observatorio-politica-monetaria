@@ -22,9 +22,15 @@ o JSON antigo continua no ar até alguém consertar o parsing.
 Limitações conhecidas de cada fonte, então "sempre atualizado" tem esse limite:
 - **Comunicados do Copom**: API pública do próprio Bacen (`bcb.gov.br/api/...`) — reflete o comunicado
   assim que ele é publicado.
-- **Comunicados do FOMC**: depende do CSV de um repositório comunitário
+- **Comunicados do FOMC**: a base é o CSV de um repositório comunitário
   ([`vtasca/fed-statement-scraping`](https://github.com/vtasca/fed-statement-scraping)), que não é
-  oficial do Fed — pode demorar alguns dias após uma reunião até esse repositório ser atualizado.
+  oficial do Fed — pode demorar dias/semanas após uma reunião até esse repositório ser atualizado (já
+  aconteceu de faltar uma reunião no meio do histórico, não só a mais recente). Pra não deixar a
+  reunião mais nova de fora nesse meio-tempo, `fetch_all_fomc_history.py` complementa checando
+  `fomccalendars.htm` por reuniões com statement já publicado no site oficial mas ainda ausentes do
+  CSV, e busca o texto direto de `federalreserve.gov/newsevents/pressreleases/monetary{YYYYMMDD}a.htm`
+  nesses casos — mesmo padrão de URL previsível que `fetch_fomc_dotplot.py` já usa pro SEP. Se auto-
+  corrige sozinho: no dia em que o CSV alcançar essas reuniões, elas voltam a vir de lá.
 - **Probabilidades do FOMC**: vêm do *Market Probability Tracker* do Fed de Atlanta (dado público,
   atualizado por eles todo dia útil), extraído de variáveis JavaScript embutidas na página (não é uma
   API JSON separada) — se o Fed de Atlanta reestruturar a página, o parsing quebra e precisa de ajuste.
@@ -119,7 +125,8 @@ mesma forma.
 - `fetch_all_copom_history.py`: Coleta o histórico completo de comunicados do Copom via API do Bacen
   e regrava `src/data/copom_comunicados_all.json`. **Roda automaticamente** (ver acima).
 - `fetch_all_fomc_history.py`: Reconstrói `src/data/fomc_statements_all.json` a partir do dataset de
-  statements do FOMC. **Roda automaticamente** (ver acima).
+  statements do FOMC, complementado com as reuniões recentes que ainda não chegaram nesse dataset (ver
+  limitação acima). **Roda automaticamente** (ver acima).
 - `fetch_fomc_probabilities.py`: Extrai a distribuição de probabilidades por reunião do Market
   Probability Tracker do Fed de Atlanta e regrava `src/data/fomc_market_overview.json`. **Roda
   automaticamente** (ver acima).
