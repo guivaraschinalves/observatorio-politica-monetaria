@@ -1,6 +1,6 @@
 {
   "committee": "fomc",
-  "lastUpdated": "14 de Setembro de 2026 (Fed de Atlanta, Market Probability Tracker)",
+  "lastUpdated": "15 de Setembro de 2026 (Fed de Atlanta, Market Probability Tracker)",
   "terminalRate": "4.50% – 4.75%",
   "terminalDate": "15 de Setembro de 2027",
   "totalCutsOrHikesExpectedBps": 100,
@@ -16,33 +16,33 @@
         {
           "rateLabel": "4.25% – 4.50% (+75bps)",
           "changeBps": 75,
-          "probability": 30.2
+          "probability": 30.7
         },
         {
           "rateLabel": "4.00% – 4.25% (+50bps)",
           "changeBps": 50,
-          "probability": 27.2
+          "probability": 28.3
         },
         {
           "rateLabel": "3.75% – 4.00% (+25bps)",
           "changeBps": 25,
-          "probability": 17.6
+          "probability": 16.6
         },
         {
           "rateLabel": "4.50% – 4.75% (+100bps)",
           "changeBps": 100,
-          "probability": 14.0
+          "probability": 14.9
         },
         {
-          "rateLabel": "3.50% – 3.75% (sem alteração)",
+          "rateLabel": "< 3.75% (corte, ou mantém)",
           "changeBps": 0,
-          "probability": 4.0
+          "probability": 4.1
         }
       ],
       "historicalProbabilities": {
-        "current": 30.2,
-        "oneDayAgo": 27.8,
-        "oneWeekAgo": 20.3,
+        "current": 30.7,
+        "oneDayAgo": 30.2,
+        "oneWeekAgo": 20.2,
         "oneMonthAgo": 14.0
       }
     },
@@ -62,28 +62,28 @@
         {
           "rateLabel": "4.50% – 4.75% (+100bps)",
           "changeBps": 100,
-          "probability": 18.7
+          "probability": 18.3
         },
         {
           "rateLabel": "4.00% – 4.25% (+50bps)",
           "changeBps": 50,
-          "probability": 14.4
+          "probability": 15.1
         },
         {
           "rateLabel": "4.75% – 5.00% (+125bps)",
           "changeBps": 125,
-          "probability": 11.8
+          "probability": 12.2
         },
         {
           "rateLabel": "3.75% – 4.00% (+25bps)",
           "changeBps": 25,
-          "probability": 10.3
+          "probability": 10.5
         }
       ],
       "historicalProbabilities": {
         "current": 19.0,
-        "oneDayAgo": 18.8,
-        "oneWeekAgo": 18.0,
+        "oneDayAgo": 19.0,
+        "oneWeekAgo": 17.9,
         "oneMonthAgo": 13.6
       }
     },
@@ -92,40 +92,40 @@
       "meetingDate": "16 de Junho de 2027",
       "daysToMeeting": 273,
       "currentRate": "3.50% – 3.75%",
-      "impliedRate": "4.25% – 4.50%",
-      "expectedChangeBps": 75,
+      "impliedRate": "4.50% – 4.75%",
+      "expectedChangeBps": 100,
       "probabilities": [
-        {
-          "rateLabel": "4.25% – 4.50% (+75bps)",
-          "changeBps": 75,
-          "probability": 15.1
-        },
         {
           "rateLabel": "4.50% – 4.75% (+100bps)",
           "changeBps": 100,
-          "probability": 15.0
+          "probability": 15.5
         },
         {
-          "rateLabel": "4.00% – 4.25% (+50bps)",
-          "changeBps": 50,
-          "probability": 12.1
+          "rateLabel": "4.25% – 4.50% (+75bps)",
+          "changeBps": 75,
+          "probability": 14.4
         },
         {
           "rateLabel": "4.75% – 5.00% (+125bps)",
           "changeBps": 125,
-          "probability": 11.8
+          "probability": 12.8
         },
         {
-          "rateLabel": "3.75% – 4.00% (+25bps)",
-          "changeBps": 25,
+          "rateLabel": "4.00% – 4.25% (+50bps)",
+          "changeBps": 50,
+          "probability": 11.3
+        },
+        {
+          "rateLabel": "5.00% – 5.25% (+150bps)",
+          "changeBps": 150,
           "probability": 8.3
         }
       ],
       "historicalProbabilities": {
-        "current": 15.1,
-        "oneDayAgo": 14.4,
-        "oneWeekAgo": 14.6,
-        "oneMonthAgo": 12.2
+        "current": 15.5,
+        "oneDayAgo": 15.0,
+        "oneWeekAgo": 11.8,
+        "oneMonthAgo": 9.2
       }
     },
     {
@@ -139,33 +139,33 @@
         {
           "rateLabel": "4.50% – 4.75% (+100bps)",
           "changeBps": 100,
-          "probability": 12.8
+          "probability": 13.1
         },
         {
           "rateLabel": "4.25% – 4.50% (+75bps)",
           "changeBps": 75,
-          "probability": 12.6
+          "probability": 12.8
         },
         {
           "rateLabel": "4.75% – 5.00% (+125bps)",
           "changeBps": 125,
-          "probability": 11.1
+          "probability": 11.3
         },
         {
           "rateLabel": "4.00% – 4.25% (+50bps)",
           "changeBps": 50,
-          "probability": 10.8
+          "probability": 10.7
         },
         {
-          "rateLabel": "3.75% – 4.00% (+25bps)",
-          "changeBps": 25,
-          "probability": 8.3
+          "rateLabel": "5.00% – 5.25% (+150bps)",
+          "changeBps": 150,
+          "probability": 8.2
         }
       ],
       "historicalProbabilities": {
-        "current": 12.8,
-        "oneDayAgo": 12.5,
-        "oneWeekAgo": 10.8,
+        "current": 13.1,
+        "oneDayAgo": 12.8,
+        "oneWeekAgo": 10.5,
         "oneMonthAgo": 7.7
       }
     }
