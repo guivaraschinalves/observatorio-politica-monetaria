@@ -1,5 +1,61 @@
 [
   {
+    "id": "copom-dissent-281",
+    "committee": "copom",
+    "meetingNumber": "281ª Reunião",
+    "date": "2026-09-16",
+    "rateDecision": "13.75%",
+    "changeBps": -25,
+    "placar": "Unanimidade",
+    "unanimous": true,
+    "namedVotes": true,
+    "chair": "Gabriel Muricca Galípolo",
+    "votes": [
+      {
+        "name": "Gabriel Muricca Galípolo",
+        "count": 1,
+        "preferredChangeBps": null,
+        "diffFromDecisionBps": 0
+      },
+      {
+        "name": "Ailton de Aquino Santos",
+        "count": 1,
+        "preferredChangeBps": null,
+        "diffFromDecisionBps": 0
+      },
+      {
+        "name": "Gilneu Francisco Astolfi Vivan",
+        "count": 1,
+        "preferredChangeBps": null,
+        "diffFromDecisionBps": 0
+      },
+      {
+        "name": "Izabela Moreira Correa",
+        "count": 1,
+        "preferredChangeBps": null,
+        "diffFromDecisionBps": 0
+      },
+      {
+        "name": "Nilton José Schneider David",
+        "count": 1,
+        "preferredChangeBps": null,
+        "diffFromDecisionBps": 0
+      },
+      {
+        "name": "Paulo Picchetti",
+        "count": 1,
+        "preferredChangeBps": null,
+        "diffFromDecisionBps": 0
+      },
+      {
+        "name": "Rodrigo Alves Teixeira",
+        "count": 1,
+        "preferredChangeBps": null,
+        "diffFromDecisionBps": 0
+      }
+    ]
+  },
+  {
     "id": "copom-dissent-280",
     "committee": "copom",
     "meetingNumber": "280ª Reunião",

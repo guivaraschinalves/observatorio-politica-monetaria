@@ -80,7 +80,13 @@ Limitações conhecidas de cada fonte, então "sempre atualizado" tem esse limit
   presidenciais colada à mão no próprio script (`MANDATOS_PRESIDENCIA`) — a página do Bacen com essa
   galeria (`bcb.gov.br/acessoinformacao/galeriaexpresidentes`) é uma SPA sem conteúdo em HTML puro pra
   buscar automaticamente, então usei a tabela da Wikipédia como fonte, conferida contra o Bacen.
-  Atualize essa lista à mão se um novo presidente assumir.
+  Atualize essa lista à mão se um novo presidente assumir. **Fallback pra reunião recém-decidida**: a
+  planilha oficial do Bacen demora dias/semanas pra incorporar a reunião mais nova — `monta_fallback_recentes()`
+  cobre esse vão lendo `copom_comunicados_all.json` (já teria sido atualizado por
+  `fetch_all_copom_history.py` antes) e extraindo placar/votantes direto da frase padrão "Votaram por
+  essa decisão os seguintes membros do Comitê: ...", mesmo princípio do fallback do FOMC. Só cobre o
+  caso unânime (o mais comum na era Galípolo); um dissenso com fraseado diferente fica sem fallback até
+  a planilha real chegar, que sobrescreve o registro do fallback automaticamente na próxima execução.
 - **Histórico de dissidências do FOMC** (`fetch_fomc_dissents.py`): a planilha oficial do Federal
   Reserve Bank of St. Louis
   ([`fomc_dissents_data.xlsx`](https://www.stlouisfed.org/-/media/project/frbstl/stlouisfed/files/excel/fomc_dissents_data.xlsx)),

@@ -14,10 +14,63 @@ já que a página do Bacen é só uma SPA sem conteúdo em HTML puro pra extrair
 """
 import os
 import json
+import re
 from datetime import date
 
 import requests
 import pandas as pd
+
+COMUNICADOS_PATH = os.path.join(os.path.dirname(os.path.abspath(__file__)), "..", "src", "data", "copom_comunicados_all.json")
+
+TAXA_DECIDIDA_RE = re.compile(r"taxa b[aá]sica de juros para\s+([\d,]+)%", re.IGNORECASE)
+VOTARAM_RE = re.compile(r"Votaram por essa decis[aã]o os seguintes membros do Comit[eê]:\s*(.+?)\.", re.IGNORECASE | re.DOTALL)
+NOME_RE = re.compile(r"([A-ZÀ-Ý][^,;]+?)(?:\s*\(presidente\))?(?:,| e |$)")
+
+
+def monta_fallback_recentes(reunioes_existentes):
+    """Comunicados mais recentes que a última reunião já presente na
+    planilha oficial do Bacen (que costuma demorar dias/semanas pra
+    incorporar a reunião mais nova) — extrai placar e votantes direto do
+    texto do comunicado, no mesmo padrão do fallback já usado para o FOMC em
+    fetch_fomc_dissents.py. Só cobre o caso unânime, mais comum na era
+    Galípolo ("Votaram por essa decisão os seguintes membros do Comitê:
+    fulano, beltrano e sicrano.") — um dissenso com fraseado diferente fica
+    sem fallback até a planilha oficial ser atualizada, que sobrescreve isso
+    automaticamente na próxima execução.
+    """
+    if not os.path.exists(COMUNICADOS_PATH):
+        return []
+    comunicados = json.load(open(COMUNICADOS_PATH, encoding="utf-8"))
+    novos = []
+    for c in comunicados:
+        numero = c.get("number")
+        if numero is None or numero in reunioes_existentes:
+            continue
+        texto = " ".join(c.get("paragraphs", []))
+        m_taxa = TAXA_DECIDIDA_RE.search(texto)
+        m_votaram = VOTARAM_RE.search(texto)
+        if not m_taxa or not m_votaram:
+            continue
+        decisao = float(m_taxa.group(1).replace(",", "."))
+        nomes = [n.strip() for n in NOME_RE.findall(m_votaram.group(1)) if n.strip()]
+        if not nomes:
+            continue
+        presidente = nomes[0]
+        votos = [{"name": nome, "count": 1, "preferredChangeBps": None, "diffFromDecisionBps": 0} for nome in nomes]
+        novos.append({
+            "id": f"copom-dissent-{numero}",
+            "committee": "copom",
+            "meetingNumber": f"{numero}ª Reunião",
+            "date": c["date"],
+            "rateDecision": f"{decisao:.2f}%",
+            "changeBps": None,
+            "placar": "Unanimidade",
+            "unanimous": True,
+            "namedVotes": True,
+            "chair": presidente,
+            "votes": votos,
+        })
+    return novos
 
 # (data de início, nome) — cobre só o período em que já temos reuniões
 # (desde 1998). O mandato de Roberto Campos Neto aparece fragmentado no
@@ -156,6 +209,24 @@ def main():
         })
 
     resultados.sort(key=lambda r: r["date"], reverse=True)
+
+    # Fallback: comunicados mais novos que a planilha oficial ainda não
+    # incorporou (ela costuma demorar dias/semanas após cada reunião) — ver
+    # monta_fallback_recentes() acima. Autocorrige sozinho: quando a planilha
+    # alcançar essas reuniões, elas somem do fallback (já estarão em
+    # reunioes_existentes) e passam a vir da fonte oficial de novo.
+    reunioes_existentes = set(df["Reuniao"].unique().tolist())
+    novos = monta_fallback_recentes(reunioes_existentes)
+    if novos:
+        anterior = resultados[0] if resultados else None
+        for n in novos:
+            if anterior and anterior.get("rateDecision"):
+                taxa_anterior = float(anterior["rateDecision"].rstrip("%").replace(",", "."))
+                taxa_nova = float(n["rateDecision"].rstrip("%").replace(",", "."))
+                n["changeBps"] = round((taxa_nova - taxa_anterior) * 100)
+        resultados = novos + resultados
+        resultados.sort(key=lambda r: r["date"], reverse=True)
+        print(f"    +{len(novos)} reunião(ões) recente(s) via fallback do texto do comunicado (planilha oficial ainda não atualizou).")
 
     with open(OUTPUT_PATH, "w", encoding="utf-8") as f:
         json.dump(resultados, f, ensure_ascii=False, indent=2)
