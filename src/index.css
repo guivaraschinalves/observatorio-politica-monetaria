@@ -109,3 +109,42 @@ html, body {
 ::-webkit-scrollbar-thumb:hover {
   background: var(--ink-muted);
 }
+
+/* Slider de duas pontas do gráfico de Dissidências (dois <input type="range">
+   sobrepostos): a trilha nativa fica invisível/sem clique, só o polegar
+   responde ao mouse, pra não atrapalhar o polegar do outro input por baixo. */
+.dissent-range {
+  height: 16px;
+  cursor: pointer;
+}
+.dissent-range::-webkit-slider-runnable-track {
+  background: transparent;
+  height: 16px;
+}
+.dissent-range::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  pointer-events: auto;
+  width: 14px;
+  height: 14px;
+  border-radius: 9999px;
+  background: var(--brand);
+  border: 2px solid var(--surface);
+  box-shadow: 0 0 0 1px var(--border);
+  margin-top: 1px;
+  cursor: pointer;
+}
+.dissent-range::-moz-range-track {
+  background: transparent;
+  height: 16px;
+}
+.dissent-range::-moz-range-thumb {
+  pointer-events: auto;
+  width: 14px;
+  height: 14px;
+  border-radius: 9999px;
+  background: var(--brand);
+  border: 2px solid var(--surface);
+  box-shadow: 0 0 0 1px var(--border);
+  cursor: pointer;
+}

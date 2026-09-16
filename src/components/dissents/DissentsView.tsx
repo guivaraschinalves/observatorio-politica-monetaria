@@ -1,4 +1,4 @@
-import React, { useEffect, useMemo, useRef, useState } from 'react';
+import React, { useEffect, useMemo, useState } from 'react';
 import { Committee, CopomVoteRecord, FomcVoteRecord } from '../../types/monetary';
 import { Gavel, X } from 'lucide-react';
 
@@ -42,18 +42,77 @@ interface Barra {
 }
 
 const ALTURA_GRAFICO = 420; // px — "mais comprido" pedido foi altura, não largura
-const LARGURA_BARRA = 4;
-const GAP_BARRA = 3;
-const PASSO = LARGURA_BARRA + GAP_BARRA;
+
+// Slider de duas pontas (nativo, dois <input type="range"> empilhados) pra
+// escolher a janela [início, fim] do histórico mostrada no gráfico acima.
+const SliderFaixa: React.FC<{
+  max: number;
+  valor: [number, number];
+  onChange: (v: [number, number]) => void;
+  rotulo: (idx: number) => string;
+}> = ({ max, valor, onChange, rotulo }) => {
+  const [inicio, fim] = valor;
+  const trackStyle: React.CSSProperties = {
+    WebkitAppearance: 'none',
+    appearance: 'none',
+    background: 'transparent',
+    pointerEvents: 'none',
+    position: 'absolute',
+    left: 0,
+    right: 0,
+    top: 0,
+    margin: 0,
+  };
+  return (
+    <div className="space-y-1.5">
+      <div className="relative h-5 flex items-center">
+        <div className="absolute left-0 right-0 h-1 rounded-full bg-[var(--border)]" />
+        <div
+          className="absolute h-1 rounded-full bg-[var(--brand)]"
+          style={{
+            left: `${max > 0 ? (inicio / max) * 100 : 0}%`,
+            right: `${max > 0 ? 100 - (fim / max) * 100 : 0}%`,
+          }}
+        />
+        <input
+          type="range"
+          min={0}
+          max={max}
+          value={inicio}
+          onChange={(e) => onChange([Math.min(Number(e.target.value), fim), fim])}
+          className="dissent-range"
+          style={trackStyle}
+        />
+        <input
+          type="range"
+          min={0}
+          max={max}
+          value={fim}
+          onChange={(e) => onChange([inicio, Math.max(Number(e.target.value), inicio)])}
+          className="dissent-range"
+          style={trackStyle}
+        />
+      </div>
+      <div className="flex justify-between text-[11px] font-mono text-[var(--ink-muted)]">
+        <span>{rotulo(inicio)}</span>
+        <span>{rotulo(fim)}</span>
+      </div>
+    </div>
+  );
+};
 
 const GraficoBarras: React.FC<{ barras: Barra[]; onClickBarra: (id: string) => void }> = ({ barras, onClickBarra }) => {
-  const scrollRef = useRef<HTMLDivElement>(null);
+  const ultimoIndice = Math.max(0, barras.length - 1);
+  const [janela, setJanela] = useState<[number, number]>([0, ultimoIndice]);
 
+  // Reseta a janela pro histórico inteiro quando troca de comitê (o
+  // componente todo é remontado nesse caso, mas o length também muda se o
+  // dado for recarregado).
   useEffect(() => {
-    if (scrollRef.current) {
-      scrollRef.current.scrollLeft = scrollRef.current.scrollWidth;
-    }
+    setJanela([0, Math.max(0, barras.length - 1)]);
   }, [barras.length]);
+
+  const visiveis = useMemo(() => barras.slice(janela[0], janela[1] + 1), [barras, janela]);
 
   const presidentesNaOrdem = useMemo(() => {
     const vistos: string[] = [];
@@ -63,11 +122,12 @@ const GraficoBarras: React.FC<{ barras: Barra[]; onClickBarra: (id: string) => v
     return vistos;
   }, [barras]);
 
-  const maxValor = useMemo(() => Math.max(1, ...barras.map((b) => b.valor)), [barras]);
+  const maxValor = useMemo(() => Math.max(1, ...visiveis.map((b) => b.valor)), [visiveis]);
 
-  // Eixo Y: 0, e mais 3 marcações redondas até o máximo real do conjunto.
+  // Eixo Y: 0, e mais marcações redondas até o máximo real da janela visível
+  // — reescala sozinho quando o usuário dá zoom num período.
   const marcacoesY = useMemo(() => {
-    const passos = [1, 2, 5, 10, 20, 25, 50, 100];
+    const passos = [1, 2, 5, 10, 20, 25, 50, 100, 200];
     const passo = passos.find((p) => p * 4 >= maxValor) || passos[passos.length - 1];
     const valores: number[] = [];
     for (let v = 0; v <= maxValor + 0.001; v += passo) valores.push(v);
@@ -76,11 +136,11 @@ const GraficoBarras: React.FC<{ barras: Barra[]; onClickBarra: (id: string) => v
   }, [maxValor]);
   const escalaMax = marcacoesY[marcacoesY.length - 1] || 1;
 
-  // Eixo X: um traço por ano em que há reunião; texto só numa amostra pra
-  // não empilhar números (mais espaçado quanto mais anos no histórico).
+  // Eixo X: um traço por ano em que há reunião dentro da janela visível,
+  // posicionado em % da largura (o layout das barras é responsivo via flex).
   const marcacoesX = useMemo(() => {
     const primeiraDoAno = new Map<number, number>();
-    barras.forEach((b, idx) => {
+    visiveis.forEach((b, idx) => {
       if (!primeiraDoAno.has(b.ano)) primeiraDoAno.set(b.ano, idx);
     });
     const anos = Array.from(primeiraDoAno.keys()).sort((a, b) => a - b);
@@ -90,7 +150,11 @@ const GraficoBarras: React.FC<{ barras: Barra[]; onClickBarra: (id: string) => v
       idx: primeiraDoAno.get(ano)!,
       comRotulo: i % passoRotulo === 0,
     }));
-  }, [barras]);
+  }, [visiveis]);
+
+  // Gap entre barras encolhe quando há muitas na janela, senão elas somem
+  // (860 reuniões numa tela de ~1000px não sobra espaço pra gap fixo).
+  const gapPx = visiveis.length > 150 ? 0 : visiveis.length > 60 ? 1 : 3;
 
   return (
     <div className="space-y-3">
@@ -108,7 +172,7 @@ const GraficoBarras: React.FC<{ barras: Barra[]; onClickBarra: (id: string) => v
         </div>
       )}
 
-      <div className="flex bg-[var(--surface)] rounded-xl border border-[var(--border)] p-4">
+      <div className="flex items-start bg-[var(--surface)] rounded-xl border border-[var(--border)] p-4 pt-7">
         {/* Eixo Y */}
         <div className="relative shrink-0 w-8 text-right pr-2" style={{ height: ALTURA_GRAFICO }}>
           {marcacoesY.map((v) => (
@@ -123,56 +187,72 @@ const GraficoBarras: React.FC<{ barras: Barra[]; onClickBarra: (id: string) => v
           <div className="absolute -bottom-4 right-2 text-[9px] text-[var(--ink-muted)] whitespace-nowrap">votos</div>
         </div>
 
-        <div ref={scrollRef} className="overflow-x-auto flex-1 border-l border-[var(--border)] pl-2">
-          <div style={{ width: barras.length * PASSO }}>
-            <div className="relative flex items-end" style={{ height: ALTURA_GRAFICO }}>
-              {/* linhas-guia do eixo Y */}
-              {marcacoesY.map((v) => (
-                <div
-                  key={v}
-                  className="absolute left-0 right-0 border-t border-dashed border-[var(--border)]"
-                  style={{ bottom: `${(v / escalaMax) * ALTURA_GRAFICO}px` }}
-                />
-              ))}
-              {barras.map((b) => (
-                <button
-                  key={b.id}
-                  onClick={() => onClickBarra(b.id)}
-                  title={`${b.label} — ${b.valor} voto(s) contrário(s)`}
-                  className="shrink-0 rounded-t-sm transition-opacity hover:opacity-70 relative"
-                  style={{
-                    width: LARGURA_BARRA,
-                    marginRight: GAP_BARRA,
-                    height: `${Math.max((b.valor / escalaMax) * 100, 1.5)}%`,
-                    background: b.cor,
-                    opacity: b.valor > 0 ? 1 : 0.35,
-                  }}
-                />
-              ))}
-            </div>
+        <div className="flex-1 min-w-0 border-l border-[var(--border)] pl-2">
+          <div className="relative flex items-end w-full" style={{ height: ALTURA_GRAFICO, gap: gapPx }}>
+            {/* linhas-guia do eixo Y */}
+            {marcacoesY.map((v) => (
+              <div
+                key={v}
+                className="absolute left-0 right-0 border-t border-dashed border-[var(--border)]"
+                style={{ bottom: `${(v / escalaMax) * ALTURA_GRAFICO}px` }}
+              />
+            ))}
+            {visiveis.map((b) => (
+              <button
+                key={b.id}
+                onClick={() => onClickBarra(b.id)}
+                title={`${b.label} — ${b.valor} voto(s) contrário(s)`}
+                className="flex-1 min-w-0 rounded-t-sm transition-opacity hover:opacity-70 relative"
+                style={{
+                  height: `${Math.max((b.valor / escalaMax) * 100, 1.5)}%`,
+                  background: b.cor,
+                  opacity: b.valor > 0 ? 1 : 0.35,
+                }}
+              />
+            ))}
+          </div>
 
-            {/* Eixo X */}
-            <div className="relative h-5 mt-1">
-              {marcacoesX.map(({ ano, idx, comRotulo }) => (
-                <div
-                  key={ano}
-                  className="absolute top-0 border-l border-[var(--border)]"
-                  style={{ left: idx * PASSO, height: comRotulo ? 6 : 3 }}
-                />
-              ))}
-              {marcacoesX.filter((m) => m.comRotulo).map(({ ano, idx }) => (
-                <div
-                  key={ano}
-                  className="absolute top-1.5 text-[10px] font-mono text-[var(--ink-muted)] -translate-x-1/2"
-                  style={{ left: idx * PASSO }}
-                >
-                  {ano}
-                </div>
-              ))}
-            </div>
+          {/* Eixo X */}
+          <div className="relative h-5 mt-1 w-full">
+            {marcacoesX.map(({ ano, idx, comRotulo }) => (
+              <div
+                key={ano}
+                className="absolute top-0 border-l border-[var(--border)]"
+                style={{ left: `${(idx / visiveis.length) * 100}%`, height: comRotulo ? 6 : 3 }}
+              />
+            ))}
+            {marcacoesX.filter((m) => m.comRotulo).map(({ ano, idx }) => (
+              <div
+                key={ano}
+                className="absolute top-1.5 text-[10px] font-mono text-[var(--ink-muted)] -translate-x-1/2"
+                style={{ left: `${(idx / visiveis.length) * 100}%` }}
+              >
+                {ano}
+              </div>
+            ))}
           </div>
         </div>
       </div>
+
+      {barras.length > 1 && (
+        <div className="bg-[var(--surface)] rounded-xl border border-[var(--border)] p-3 space-y-1">
+          <div className="flex items-center justify-between">
+            <span className="text-[11px] text-[var(--ink-muted)]">
+              Mostrando {visiveis.length} de {barras.length} reuniões — arraste as pontas pra dar zoom no período.
+            </span>
+            {(janela[0] !== 0 || janela[1] !== ultimoIndice) && (
+              <button
+                onClick={() => setJanela([0, ultimoIndice])}
+                className="text-[11px] font-semibold text-[var(--brand)] hover:underline shrink-0 ml-2"
+              >
+                Ver tudo
+              </button>
+            )}
+          </div>
+          <SliderFaixa max={ultimoIndice} valor={janela} onChange={setJanela} rotulo={(idx) => String(barras[idx]?.ano ?? '')} />
+        </div>
+      )}
+
       <p className="text-[11px] text-[var(--ink-muted)]">
         Cada barra é uma reunião, da mais antiga (esquerda) à mais recente (direita) — altura proporcional ao
         número de votos contrários à decisão. Clique numa barra pra ver os detalhes daquela reunião.
