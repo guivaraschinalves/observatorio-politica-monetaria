@@ -39,6 +39,22 @@ export const DotPlotComparator: React.FC<DotPlotComparatorProps> = ({ releases }
 
   const pct = (v: number) => ((v - escala.min) / (escala.max - escala.min)) * 100;
 
+  // Marcações do eixo: passo "redondo" (0.25/0.5/1/2 p.p.) mais próximo de
+  // dividir a escala em uns 5 traços, pra não depender de passar o mouse
+  // pra saber a que número cada posição da barra corresponde.
+  const marcacoes = useMemo(() => {
+    if (!releaseA || !releaseB) return [];
+    const alvo = (escala.max - escala.min) / 5;
+    const passos = [0.25, 0.5, 1, 2, 2.5, 5, 10];
+    const passo = passos.find((p) => p >= alvo) || passos[passos.length - 1];
+    const inicio = Math.ceil(escala.min / passo) * passo;
+    const valores: number[] = [];
+    for (let v = inicio; v <= escala.max; v += passo) {
+      valores.push(Math.round(v * 100) / 100);
+    }
+    return valores;
+  }, [escala, releaseA, releaseB]);
+
   if (releases.length === 0) {
     return <div className="p-8 text-center text-[var(--ink-muted)]">Nenhum dot plot disponível.</div>;
   }
@@ -57,15 +73,18 @@ export const DotPlotComparator: React.FC<DotPlotComparatorProps> = ({ releases }
       </div>
       <div className="relative h-3 rounded-full bg-[var(--page-bg)] border border-[var(--border)]">
         <div
-          className="absolute inset-y-0 rounded-full opacity-25"
+          className="absolute inset-y-0 rounded-full opacity-25 cursor-help"
+          title={`Faixa completa: ${range.low.toFixed(2)}% – ${range.high.toFixed(2)}%`}
           style={{ left: `${pct(range.low)}%`, width: `${pct(range.high) - pct(range.low)}%`, background: cor }}
         />
         <div
-          className="absolute inset-y-0 rounded-full opacity-60"
+          className="absolute inset-y-0 rounded-full opacity-60 cursor-help"
+          title={`Tendência central: ${ct.low.toFixed(2)}% – ${ct.high.toFixed(2)}%`}
           style={{ left: `${pct(ct.low)}%`, width: `${pct(ct.high) - pct(ct.low)}%`, background: cor }}
         />
         <div
-          className="absolute top-1/2 -translate-y-1/2 -translate-x-1/2 w-2 h-2 rounded-full ring-2 ring-[var(--surface)]"
+          className="absolute top-1/2 -translate-y-1/2 -translate-x-1/2 w-2 h-2 rounded-full ring-2 ring-[var(--surface)] cursor-help"
+          title={`Mediana: ${median.toFixed(2)}%`}
           style={{ left: `${pct(median)}%`, background: cor }}
         />
       </div>
@@ -119,6 +138,19 @@ export const DotPlotComparator: React.FC<DotPlotComparatorProps> = ({ releases }
       </p>
 
       <div className="bg-[var(--surface)] rounded-xl border border-[var(--border)] p-6 space-y-6">
+        {anosComuns.length > 0 && (
+          <div className="relative h-4 text-[10px] font-mono text-[var(--ink-muted)] -mb-1">
+            {marcacoes.map((v) => (
+              <span
+                key={v}
+                className="absolute -translate-x-1/2 border-l border-[var(--border)] pl-1"
+                style={{ left: `${pct(v)}%` }}
+              >
+                {v.toFixed(2)}%
+              </span>
+            ))}
+          </div>
+        )}
         {anosComuns.length === 0 ? (
           <div className="text-sm text-[var(--ink-muted)]">
             Essas duas reuniões não têm nenhum ano de projeção em comum.
@@ -170,7 +202,7 @@ export const DotPlotComparator: React.FC<DotPlotComparatorProps> = ({ releases }
         <a href={releaseB.sourceUrl} target="_blank" rel="noreferrer" className="underline hover:text-[var(--brand)]">
           SEP {releaseLabel(releaseB)}
         </a>
-        {' — Federal Reserve. Faixa clara = intervalo completo; faixa forte = tendência central; ponto = mediana.'}
+        {' — Federal Reserve. Faixa clara = intervalo completo; faixa forte = tendência central; ponto = mediana. Passe o mouse em qualquer trecho da barra pra ver o número exato.'}
       </p>
     </div>
   );
