@@ -1,5 +1,17 @@
 [
   {
+    "id": "fomc-dissent-2026-09-16",
+    "committee": "fomc",
+    "meetingNumber": "FOMC 16 set 2026",
+    "date": "2026-09-16",
+    "chair": "Warsh",
+    "unanimous": true,
+    "totalVotes": 12,
+    "votesFor": 12,
+    "votesAgainst": 0,
+    "dissenters": []
+  },
+  {
     "id": "fomc-dissent-2026-07-29",
     "committee": "fomc",
     "meetingNumber": "FOMC 29 jul 2026",

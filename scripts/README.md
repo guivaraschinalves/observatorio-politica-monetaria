@@ -7,8 +7,8 @@ Este diretório contém os scripts em Python para atualização periódica dos d
 `fetch_all_copom_history.py`, `fetch_all_fomc_history.py` (comunicados), `fetch_fomc_probabilities.py`
 e `fetch_copom_probabilities.py` (probabilidades de mercado), `fetch_fomc_speeches.py` (discursos),
 `fetch_copom_meetings.py`/`fetch_fomc_meetings.py` (atas/minutes), `fetch_copom_dissents.py`/
-`fetch_fomc_dissents.py` (histórico de votações) e `fetch_fomc_dotplot.py` (dot plot/SEP) rodam
-sozinhos todo dia via
+`fetch_fomc_dissents.py` (histórico de votações), `fetch_fomc_dotplot.py` (dot plot/SEP) e
+`fetch_fomc_implementation_notes.py` (nota de implementação) rodam sozinhos todo dia via
 [`.github/workflows/atualizar-dados.yml`](../.github/workflows/atualizar-dados.yml) (GitHub Actions,
 08:00 de Brasília). Se algo mudou, o workflow comita o JSON atualizado em `main` e publica o site em
 `gh-pages` na sequência — sem precisar rodar nada manualmente. Também dá pra disparar na hora pela aba
@@ -30,7 +30,10 @@ Limitações conhecidas de cada fonte, então "sempre atualizado" tem esse limit
   `fomccalendars.htm` por reuniões com statement já publicado no site oficial mas ainda ausentes do
   CSV, e busca o texto direto de `federalreserve.gov/newsevents/pressreleases/monetary{YYYYMMDD}a.htm`
   nesses casos — mesmo padrão de URL previsível que `fetch_fomc_dotplot.py` já usa pro SEP. Se auto-
-  corrige sozinho: no dia em que o CSV alcançar essas reuniões, elas voltam a vir de lá.
+  corrige sozinho: no dia em que o CSV alcançar essas reuniões, elas voltam a vir de lá. Também filtra
+  duas linhas de rodapé do site do Fed que o CSV às vezes inclui junto com o texto real ("For media
+  inquiries..." e o link "Implementation Note issued ...") — como só apareciam nalgumas reuniões,
+  viravam ruído falso ("removido"/"adicionado") no comparador.
 - **Probabilidades do FOMC**: vêm do *Market Probability Tracker* do Fed de Atlanta (dado público,
   atualizado por eles todo dia útil), extraído de variáveis JavaScript embutidas na página (não é uma
   API JSON separada) — se o Fed de Atlanta reestruturar a página, o parsing quebra e precisa de ajuste.
@@ -100,6 +103,14 @@ Limitações conhecidas de cada fonte, então "sempre atualizado" tem esse limit
   central e a faixa completa da taxa de juros projetada — é isso que o script extrai (com
   `pdfplumber`). Lista de PDFs disponíveis vem da página de calendário do FOMC, que só mantém uns 5-6
   anos pra trás.
+- **Nota de Implementação do FOMC** (`fetch_fomc_implementation_notes.py`): documento operacional
+  separado do comunicado, com os parâmetros técnicos de verdade — taxa do IORB (juros sobre reservas),
+  taxas das operações compromissadas (repo/RRP), taxa de redesconto (primary credit) e a diretriz
+  formal ao Desk de Nova York. URL previsível
+  (`federalreserve.gov/newsevents/pressreleases/monetary{AAAAMMDD}a1.htm` — igual à do comunicado, só
+  com "1" no final), descoberta checando toda reunião de `fomc_statements_all.json` e ignorando 404.
+  Só existe como release separada desde 2016; reuniões mais antigas ficam de fora, não fabricadas.
+  Aparece no Comparador de Comunicados como uma segunda opção de documento, exclusiva do FOMC.
 
 ## Rodando manualmente
 Instale as dependências (ambiente virtual já configurado nesta máquina, ou `pip install -r requirements.txt`
@@ -115,6 +126,7 @@ em qualquer outro lugar):
 /home/guilherme/.venvs/dados-economicos/bin/python fetch_copom_dissents.py
 /home/guilherme/.venvs/dados-economicos/bin/python fetch_fomc_dissents.py
 /home/guilherme/.venvs/dados-economicos/bin/python fetch_fomc_dotplot.py
+/home/guilherme/.venvs/dados-economicos/bin/python fetch_fomc_implementation_notes.py
 ```
 
 `fetch_copom_meetings.py` precisa que `src/data/copom_comunicados_all.json` já exista (rode
@@ -151,6 +163,9 @@ mesma forma.
 - `fetch_fomc_dotplot.py`: extrai a mediana/tendência central/faixa da taxa de juros de cada release
   trimestral do SEP e regrava `src/data/fomc_dotplot.json` (usado na aba Dot Plot). **Roda
   automaticamente** (ver acima).
+- `fetch_fomc_implementation_notes.py`: busca a nota de implementação de cada reunião (desde 2016) e
+  regrava `src/data/fomc_implementation_notes.json` (opção "Nota de Implementação" no Comparador de
+  Comunicados). **Roda automaticamente** (ver acima).
 - `fetch_copom.py` / `fetch_fomc.py`: verificações pontuais/exploratórias, não usadas pelo workflow.
 - `calc_probabilities.py`: protótipo inicial da ideia usada em `fetch_copom_probabilities.py`, mantido
   por referência — não é mais chamado por nada.

@@ -24,6 +24,17 @@ URL = 'https://raw.githubusercontent.com/vtasca/fed-statement-scraping/master/co
 CALENDAR_URL = "https://www.federalreserve.gov/monetarypolicy/fomccalendars.htm"
 HEADERS = {"User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36"}
 
+# Rodapé do site do Fed que o CSV de terceiros às vezes inclui junto com o
+# texto real do statement ("For media inquiries, please email... or call
+# 202-452-2955." e o link "Implementation Note issued <data>") — não é parte
+# do comunicado, e como só aparece em algumas reuniões (a nota de
+# implementação nem sempre existe) virava ruído falso no comparador de
+# statements, marcado como "removido" numa reunião só por estar ausente na
+# outra. Filtrado aqui e no fallback abaixo, pros dois caminhos ficarem
+# sempre consistentes.
+BOILERPLATE_RE = re.compile(r"^(for media inquiries|implementation note issued)\b", re.IGNORECASE)
+
+
 def clean_fomc_text(raw_text):
     if not isinstance(raw_text, str) or not raw_text.strip():
         return []
@@ -33,7 +44,7 @@ def clean_fomc_text(raw_text):
     paragraphs = []
     for line in lines:
         cleaned = re.sub(r'\s+', ' ', line).strip()
-        if cleaned and len(cleaned) > 15:
+        if cleaned and len(cleaned) > 15 and not BOILERPLATE_RE.match(cleaned):
             # Skip boilerplate disclaimers if any
             paragraphs.append(cleaned)
     return paragraphs
@@ -77,7 +88,7 @@ def busca_statements_recentes_direto_do_fed(datas_existentes):
             baixo = texto.lower()
             if "media inquiries" in baixo or "last update" in baixo:
                 break
-            if len(texto) > 15:
+            if len(texto) > 15 and not BOILERPLATE_RE.match(texto):
                 paragraphs.append(texto)
         if not paragraphs:
             continue

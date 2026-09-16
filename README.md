@@ -12,6 +12,9 @@ Uma plataforma analítica avançada para economistas, analistas de mercado e pes
   - Modos de visualização flexíveis: **Unificado (Inline)** e **Lado a Lado (Split View)**.
   - Métricas automáticas de alteração: total de palavras adicionadas, palavras excluídas e rastreamento de mudanças no *Forward Guidance*.
   - Seletor dinâmico de reuniões históricas para comparar quaisquer duas reuniões.
+  - **FOMC**: também dá pra comparar a **Nota de Implementação** de cada reunião (desde 2016) em vez
+    do comunicado — o documento com os parâmetros técnicos de verdade (taxa do IORB, repo/RRP, taxa de
+    redesconto, diretriz ao Desk de Nova York).
 
 ### 2. 📜 Leitor de Atas
 - Dado real, atualizado sozinho todo dia (ver [`scripts/README.md`](scripts/README.md)): comunicado +

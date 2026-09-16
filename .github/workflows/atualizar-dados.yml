@@ -74,11 +74,17 @@ jobs:
         continue-on-error: true
         run: python scripts/fetch_fomc_dotplot.py
 
+      # Checa até ~230 páginas do site do Fed (uma por reunião) — mesmo
+      # motivo de continue-on-error das outras fontes HTML.
+      - name: Busca notas de implementação do FOMC
+        continue-on-error: true
+        run: python scripts/fetch_fomc_implementation_notes.py
+
       - name: Comita os dados, se algo mudou
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
-          FILES="src/data/copom_comunicados_all.json src/data/fomc_statements_all.json src/data/fomc_market_overview.json src/data/copom_market_overview.json src/data/fomc_speeches.json src/data/copom_meetings.json src/data/fomc_meetings.json src/data/copom_dissents.json src/data/fomc_dissents.json src/data/fomc_dotplot.json"
+          FILES="src/data/copom_comunicados_all.json src/data/fomc_statements_all.json src/data/fomc_market_overview.json src/data/copom_market_overview.json src/data/fomc_speeches.json src/data/copom_meetings.json src/data/fomc_meetings.json src/data/copom_dissents.json src/data/fomc_dissents.json src/data/fomc_dotplot.json src/data/fomc_implementation_notes.json"
           if ! git diff --quiet -- $FILES; then
             git add $FILES
             git commit -m "chore: atualiza comunicados e probabilidades de mercado [skip ci]"

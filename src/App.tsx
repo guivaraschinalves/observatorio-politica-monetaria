@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { Committee } from './types/monetary';
 import { AnnotationProvider } from './context/AnnotationContext';
 import { allCopomStatements, allFomcStatements } from './data/allStatements';
+import { fomcImplementationNotes } from './data/implementationNotesData';
 import { copomMeetings } from './data/copomData';
 import { fomcMeetings } from './data/fomcData';
 import { copomMarketOverview, fomcMarketOverview } from './data/marketData';
@@ -17,12 +18,19 @@ import { DotPlotComparator } from './components/dotplot/DotPlotComparator';
 import { DissentsView } from './components/dissents/DissentsView';
 
 type Tab = 'comparator' | 'minutes' | 'probabilities' | 'speeches' | 'dotplot' | 'dissents';
+type FomcDocType = 'statement' | 'implementation';
 
 const ObservatoryContent: React.FC = () => {
   const [committee, setCommittee] = useState<Committee>('copom');
   const [activeTab, setActiveTab] = useState<Tab>('comparator');
+  const [fomcDocType, setFomcDocType] = useState<FomcDocType>('statement');
 
-  const statements = committee === 'copom' ? allCopomStatements : allFomcStatements;
+  const statements =
+    committee === 'copom'
+      ? allCopomStatements
+      : fomcDocType === 'implementation'
+        ? fomcImplementationNotes
+        : allFomcStatements;
   const meetings = committee === 'copom' ? copomMeetings : fomcMeetings;
   const marketOverview = committee === 'copom' ? copomMarketOverview : fomcMarketOverview;
 
@@ -39,7 +47,34 @@ const ObservatoryContent: React.FC = () => {
       {/* Main Container */}
       <main className="flex-1 max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-8">
         {activeTab === 'comparator' && (
-          <StatementComparator statements={statements} committee={committee} />
+          <div className="space-y-4">
+            {committee === 'fomc' && (
+              <div className="flex items-center gap-0.5 bg-[var(--surface)] border border-[var(--border)] rounded-lg p-0.5 w-fit">
+                <button
+                  onClick={() => setFomcDocType('statement')}
+                  className={`px-3 py-1.5 text-xs font-medium rounded-md transition-colors ${
+                    fomcDocType === 'statement'
+                      ? 'bg-[var(--accent-wash)] text-[var(--brand)]'
+                      : 'text-[var(--ink-muted)] hover:text-[var(--ink)]'
+                  }`}
+                >
+                  Comunicado
+                </button>
+                <button
+                  onClick={() => setFomcDocType('implementation')}
+                  title="Nota operacional publicada junto com o comunicado: taxa do IORB, repo/RRP, taxa de redesconto e a diretriz ao Desk de Nova York"
+                  className={`px-3 py-1.5 text-xs font-medium rounded-md transition-colors ${
+                    fomcDocType === 'implementation'
+                      ? 'bg-[var(--accent-wash)] text-[var(--brand)]'
+                      : 'text-[var(--ink-muted)] hover:text-[var(--ink)]'
+                  }`}
+                >
+                  Nota de Implementação
+                </button>
+              </div>
+            )}
+            <StatementComparator statements={statements} committee={committee} />
+          </div>
         )}
 
         {activeTab === 'minutes' && (

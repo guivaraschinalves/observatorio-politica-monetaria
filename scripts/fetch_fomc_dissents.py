@@ -20,10 +20,20 @@ Pra isso, cruza com src/data/fomc_statements_all.json (o texto real do
 Quando nada disso bate — boa parte das dissidências de 2008-2015 foram sobre
 orientação futura (forward guidance) ou compra de ativos, não sobre um nível
 específico de juros —, o campo fica sem número (null), não um chute.
+
+Essa planilha do St. Louis Fed também atualiza com atraso (igual o CSV de
+comunicados que fetch_all_fomc_history.py usa) — pode não ter ainda a
+reunião mais recente. Pra essa não ficar de fora, complementa lendo o placar
+geral ("approved ... by a N – M vote") e, se houver, o "Voting against"
+direto do texto do statement (o mesmo `fomc_statements_all.json`, que já tem
+seu próprio fallback pra reunião recente via site oficial do Fed) — sem
+posição do Chair na planilha ainda, herda o último Chair conhecido. Se
+autocorrige quando a planilha alcançar essa reunião.
 """
 import os
 import re
 import json
+from datetime import datetime
 
 import requests
 import pandas as pd
@@ -51,6 +61,7 @@ VOTANDO_CONTRA_RE = re.compile(r"Voting against[^.]*?(?:was|were):?\s*(.+?)(?:\s
 # pedaço do próximo nome pra dentro dela.
 QUEM_RE = re.compile(r"who .+?(?:meeting|time)\b")
 NOME_RE = re.compile(r"[A-Z][a-zA-Z.]+ (?:[A-Z]\. )?[A-Z][a-zA-Z]+")
+VOTO_GERAL_RE = re.compile(r"by a (\d+)\s*[–—-]\s*(\d+) vote", re.IGNORECASE)
 
 
 def formata_data(d) -> str:
@@ -160,6 +171,41 @@ def monta_indice_magnitudes(statements):
     return indice
 
 
+def monta_fallback_recentes(statements, datas_existentes, indice_magnitudes, ultimo_chair):
+    novos = []
+    for s in statements:
+        if s["date"] in datas_existentes:
+            continue
+        texto_completo = " ".join(s["paragraphs"])
+        m_voto = VOTO_GERAL_RE.search(texto_completo)
+        if not m_voto:
+            continue
+        votes_for, votes_against = int(m_voto.group(1)), int(m_voto.group(2))
+
+        magnitudes = indice_magnitudes.get(s["date"], {})
+        dissidentes = []
+        m_against = VOTANDO_CONTRA_RE.search(texto_completo)
+        if m_against:
+            for nome in NOME_RE.findall(m_against.group(1)):
+                sobrenome = nome.strip().split()[-1]
+                dissidentes.append({"name": sobrenome, "magnitudeBps": magnitudes.get(sobrenome)})
+
+        d = datetime.strptime(s["date"], "%Y-%m-%d").date()
+        novos.append({
+            "id": f"fomc-dissent-{s['date']}",
+            "committee": "fomc",
+            "meetingNumber": f"FOMC {formata_data(d)}",
+            "date": s["date"],
+            "chair": ultimo_chair,
+            "unanimous": votes_against == 0,
+            "totalVotes": votes_for + votes_against,
+            "votesFor": votes_for,
+            "votesAgainst": votes_against,
+            "dissenters": dissidentes,
+        })
+    return novos
+
+
 def main():
     print("[+] Buscando a planilha de dissidências do FOMC (St. Louis Fed)...")
     r = requests.get(XLSX_URL, timeout=60)
@@ -214,6 +260,14 @@ def main():
         })
 
     resultados.sort(key=lambda r: r["date"], reverse=True)
+
+    datas_existentes = {r["date"] for r in resultados}
+    ultimo_chair = resultados[0]["chair"] if resultados else None
+    extras = monta_fallback_recentes(statements, datas_existentes, indice_magnitudes, ultimo_chair)
+    if extras:
+        print(f"    +{len(extras)} reunião(ões) recente(s) direto do texto do statement (ainda não na planilha do St. Louis Fed).")
+        resultados = extras + resultados
+        resultados.sort(key=lambda r: r["date"], reverse=True)
 
     with open(OUTPUT_PATH, "w", encoding="utf-8") as f:
         json.dump(resultados, f, ensure_ascii=False, indent=2)
