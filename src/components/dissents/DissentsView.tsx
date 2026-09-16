@@ -35,10 +35,16 @@ function useCoresPorPresidente(nomes: (string | null)[]): Map<string, string> {
 interface Barra {
   id: string;
   label: string;
-  altura: number; // 0 a 1
+  ano: number;
+  valor: number; // número real de votos contrários (não normalizado)
   cor: string;
   presidente: string | null;
 }
+
+const ALTURA_GRAFICO = 420; // px — "mais comprido" pedido foi altura, não largura
+const LARGURA_BARRA = 4;
+const GAP_BARRA = 3;
+const PASSO = LARGURA_BARRA + GAP_BARRA;
 
 const GraficoBarras: React.FC<{ barras: Barra[]; onClickBarra: (id: string) => void }> = ({ barras, onClickBarra }) => {
   const scrollRef = useRef<HTMLDivElement>(null);
@@ -57,6 +63,35 @@ const GraficoBarras: React.FC<{ barras: Barra[]; onClickBarra: (id: string) => v
     return vistos;
   }, [barras]);
 
+  const maxValor = useMemo(() => Math.max(1, ...barras.map((b) => b.valor)), [barras]);
+
+  // Eixo Y: 0, e mais 3 marcações redondas até o máximo real do conjunto.
+  const marcacoesY = useMemo(() => {
+    const passos = [1, 2, 5, 10, 20, 25, 50, 100];
+    const passo = passos.find((p) => p * 4 >= maxValor) || passos[passos.length - 1];
+    const valores: number[] = [];
+    for (let v = 0; v <= maxValor + 0.001; v += passo) valores.push(v);
+    if (valores[valores.length - 1] < maxValor) valores.push(valores[valores.length - 1] + passo);
+    return valores;
+  }, [maxValor]);
+  const escalaMax = marcacoesY[marcacoesY.length - 1] || 1;
+
+  // Eixo X: um traço por ano em que há reunião; texto só numa amostra pra
+  // não empilhar números (mais espaçado quanto mais anos no histórico).
+  const marcacoesX = useMemo(() => {
+    const primeiraDoAno = new Map<number, number>();
+    barras.forEach((b, idx) => {
+      if (!primeiraDoAno.has(b.ano)) primeiraDoAno.set(b.ano, idx);
+    });
+    const anos = Array.from(primeiraDoAno.keys()).sort((a, b) => a - b);
+    const passoRotulo = anos.length > 40 ? 10 : anos.length > 15 ? 5 : 1;
+    return anos.map((ano, i) => ({
+      ano,
+      idx: primeiraDoAno.get(ano)!,
+      comRotulo: i % passoRotulo === 0,
+    }));
+  }, [barras]);
+
   return (
     <div className="space-y-3">
       {presidentesNaOrdem.length > 0 && (
@@ -73,21 +108,69 @@ const GraficoBarras: React.FC<{ barras: Barra[]; onClickBarra: (id: string) => v
         </div>
       )}
 
-      <div ref={scrollRef} className="overflow-x-auto bg-[var(--surface)] rounded-xl border border-[var(--border)] p-4">
-        <div className="flex items-end gap-[3px] h-32" style={{ minWidth: barras.length * 7 }}>
-          {barras.map((b) => (
-            <button
-              key={b.id}
-              onClick={() => onClickBarra(b.id)}
-              title={b.label}
-              className="w-1 shrink-0 rounded-t-sm transition-opacity hover:opacity-70"
-              style={{
-                height: `${Math.max(b.altura, 0.04) * 100}%`,
-                background: b.cor,
-                opacity: b.altura > 0 ? 1 : 0.35,
-              }}
-            />
+      <div className="flex bg-[var(--surface)] rounded-xl border border-[var(--border)] p-4">
+        {/* Eixo Y */}
+        <div className="relative shrink-0 w-8 text-right pr-2" style={{ height: ALTURA_GRAFICO }}>
+          {marcacoesY.map((v) => (
+            <div
+              key={v}
+              className="absolute right-2 -translate-y-1/2 text-[10px] font-mono text-[var(--ink-muted)]"
+              style={{ bottom: `${(v / escalaMax) * ALTURA_GRAFICO}px` }}
+            >
+              {v}
+            </div>
           ))}
+          <div className="absolute -bottom-4 right-2 text-[9px] text-[var(--ink-muted)] whitespace-nowrap">votos</div>
+        </div>
+
+        <div ref={scrollRef} className="overflow-x-auto flex-1 border-l border-[var(--border)] pl-2">
+          <div style={{ width: barras.length * PASSO }}>
+            <div className="relative flex items-end" style={{ height: ALTURA_GRAFICO }}>
+              {/* linhas-guia do eixo Y */}
+              {marcacoesY.map((v) => (
+                <div
+                  key={v}
+                  className="absolute left-0 right-0 border-t border-dashed border-[var(--border)]"
+                  style={{ bottom: `${(v / escalaMax) * ALTURA_GRAFICO}px` }}
+                />
+              ))}
+              {barras.map((b) => (
+                <button
+                  key={b.id}
+                  onClick={() => onClickBarra(b.id)}
+                  title={`${b.label} — ${b.valor} voto(s) contrário(s)`}
+                  className="shrink-0 rounded-t-sm transition-opacity hover:opacity-70 relative"
+                  style={{
+                    width: LARGURA_BARRA,
+                    marginRight: GAP_BARRA,
+                    height: `${Math.max((b.valor / escalaMax) * 100, 1.5)}%`,
+                    background: b.cor,
+                    opacity: b.valor > 0 ? 1 : 0.35,
+                  }}
+                />
+              ))}
+            </div>
+
+            {/* Eixo X */}
+            <div className="relative h-5 mt-1">
+              {marcacoesX.map(({ ano, idx, comRotulo }) => (
+                <div
+                  key={ano}
+                  className="absolute top-0 border-l border-[var(--border)]"
+                  style={{ left: idx * PASSO, height: comRotulo ? 6 : 3 }}
+                />
+              ))}
+              {marcacoesX.filter((m) => m.comRotulo).map(({ ano, idx }) => (
+                <div
+                  key={ano}
+                  className="absolute top-1.5 text-[10px] font-mono text-[var(--ink-muted)] -translate-x-1/2"
+                  style={{ left: idx * PASSO }}
+                >
+                  {ano}
+                </div>
+              ))}
+            </div>
+          </div>
         </div>
       </div>
       <p className="text-[11px] text-[var(--ink-muted)]">
@@ -193,15 +276,12 @@ const CopomDissents: React.FC<{ votes: CopomVoteRecord[] }> = ({ votes }) => {
   const [selecionadoId, setSelecionadoId] = useState<string | null>(null);
   const ordenadas = useMemo(() => [...votes].sort((a, b) => a.date.localeCompare(b.date)), [votes]);
   const cores = useCoresPorPresidente(useMemo(() => ordenadas.map((v) => v.chair), [ordenadas]));
-  const maxDissenso = useMemo(
-    () => Math.max(1, ...ordenadas.map((v) => v.votes.filter((x) => x.diffFromDecisionBps).length)),
-    [ordenadas]
-  );
 
   const barras: Barra[] = ordenadas.map((v) => ({
     id: v.id,
     label: `${v.meetingNumber} (${formatDate(v.date)}) — ${v.placar}`,
-    altura: v.votes.filter((x) => x.diffFromDecisionBps).length / maxDissenso,
+    ano: Number(v.date.slice(0, 4)),
+    valor: v.votes.filter((x) => x.diffFromDecisionBps).length,
     cor: v.chair ? cores.get(v.chair) || 'var(--ink-muted)' : 'var(--ink-muted)',
     presidente: v.chair,
   }));
@@ -224,12 +304,12 @@ const FomcDissents: React.FC<{ votes: FomcVoteRecord[] }> = ({ votes }) => {
   const [selecionadoId, setSelecionadoId] = useState<string | null>(null);
   const ordenadas = useMemo(() => [...votes].sort((a, b) => a.date.localeCompare(b.date)), [votes]);
   const cores = useCoresPorPresidente(useMemo(() => ordenadas.map((v) => v.chair), [ordenadas]));
-  const maxDissenso = useMemo(() => Math.max(1, ...ordenadas.map((v) => v.votesAgainst)), [ordenadas]);
 
   const barras: Barra[] = ordenadas.map((v) => ({
     id: v.id,
     label: `${formatDate(v.date)} — ${v.votesFor}x${v.votesAgainst}`,
-    altura: v.votesAgainst / maxDissenso,
+    ano: Number(v.date.slice(0, 4)),
+    valor: v.votesAgainst,
     cor: v.chair ? cores.get(v.chair) || 'var(--ink-muted)' : 'var(--ink-muted)',
     presidente: v.chair,
   }));

@@ -66,7 +66,12 @@ Limitações conhecidas de cada fonte, então "sempre atualizado" tem esse limit
   segundo a própria planilha) — antes disso só o placar agregado ("7 x 1" etc.), sem dizer quem ficou
   em cada lado. Nada aqui é extraído de HTML/regex — é a fonte primária do Bacen. O campo `chair` usa
   o primeiro votante listado em cada reunião (a planilha lista o presidente do Copom primeiro —
-  conferido contra o histórico real: Tombini, Goldfajn, Campos Neto, Galípolo aparecem nas datas certas).
+  conferido contra o histórico real: Tombini, Goldfajn, Campos Neto, Galípolo aparecem nas datas
+  certas). Pras reuniões sem votante nomeado (antes de 2012), completa com uma lista de mandatos
+  presidenciais colada à mão no próprio script (`MANDATOS_PRESIDENCIA`) — a página do Bacen com essa
+  galeria (`bcb.gov.br/acessoinformacao/galeriaexpresidentes`) é uma SPA sem conteúdo em HTML puro pra
+  buscar automaticamente, então usei a tabela da Wikipédia como fonte, conferida contra o Bacen.
+  Atualize essa lista à mão se um novo presidente assumir.
 - **Histórico de dissidências do FOMC** (`fetch_fomc_dissents.py`): a planilha oficial do Federal
   Reserve Bank of St. Louis
   ([`fomc_dissents_data.xlsx`](https://www.stlouisfed.org/-/media/project/frbstl/stlouisfed/files/excel/fomc_dissents_data.xlsx)),
