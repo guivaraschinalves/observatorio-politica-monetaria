@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { Committee } from '../../types/monetary';
-import { GitCompare, BookOpen, TrendingUp, Mic, Github, ExternalLink, Sun, Moon, ScatterChart, Gavel } from 'lucide-react';
+import { GitCompare, BookOpen, TrendingUp, Mic, Github, ExternalLink, Sun, Moon, ScatterChart, Gavel, LineChart } from 'lucide-react';
 
 type Tab = 'comparator' | 'minutes' | 'probabilities' | 'speeches' | 'dotplot' | 'dissents';
 
@@ -94,6 +94,17 @@ export const Header: React.FC<HeaderProps> = ({
             >
               {theme === 'light' ? <Moon className="w-4 h-4" /> : <Sun className="w-4 h-4" />}
             </button>
+
+            <a
+              href="https://guivaraschinalves.github.io/ftm-chartbook/"
+              target="_blank"
+              rel="noreferrer"
+              className="inline-flex items-center gap-1.5 text-xs font-medium text-[var(--ink-secondary)] hover:text-[var(--ink)] bg-[var(--page-bg)] hover:bg-[var(--border)] px-3 py-1.5 rounded-lg border border-[var(--border)] transition-colors"
+            >
+              <LineChart className="w-3.5 h-3.5" />
+              <span className="hidden sm:inline">Chart Book</span>
+              <ExternalLink className="w-3 h-3 text-[var(--ink-muted)]" />
+            </a>
 
             <a
               href="https://github.com/guivaraschinalves/observatorio-politica-monetaria"
