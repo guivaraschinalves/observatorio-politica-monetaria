@@ -64,15 +64,23 @@ Limitações conhecidas de cada fonte, então "sempre atualizado" tem esse limit
   ([`historico-votacoes-Copom.xlsx`](https://www.bcb.gov.br/content/controleinflacao/controleinflacao_docs/votacoes-copom/historico-votacoes-Copom.xlsx)),
   desde a 21ª reunião (1998). Votante nomeado individualmente só a partir da 167ª reunião (30/5/2012,
   segundo a própria planilha) — antes disso só o placar agregado ("7 x 1" etc.), sem dizer quem ficou
-  em cada lado. Nada aqui é extraído de HTML/regex — é a fonte primária do Bacen.
-- **Histórico de dissidências do FOMC** (`fetch_fomc_dissents.py`): direto da planilha oficial do
-  Federal Reserve Bank of St. Louis
+  em cada lado. Nada aqui é extraído de HTML/regex — é a fonte primária do Bacen. O campo `chair` usa
+  o primeiro votante listado em cada reunião (a planilha lista o presidente do Copom primeiro —
+  conferido contra o histórico real: Tombini, Goldfajn, Campos Neto, Galípolo aparecem nas datas certas).
+- **Histórico de dissidências do FOMC** (`fetch_fomc_dissents.py`): a planilha oficial do Federal
+  Reserve Bank of St. Louis
   ([`fomc_dissents_data.xlsx`](https://www.stlouisfed.org/-/media/project/frbstl/stlouisfed/files/excel/fomc_dissents_data.xlsx)),
-  apêndice de dados do artigo "Making Sense of Dissents: A History of FOMC Dissents" — cobre desde
-  1936 e é atualizada por eles próprios. Substituiu uma tentativa inicial de extrair isso via regex
-  em cima do texto dos statements (frágil demais: a frase "Voting for/against" mudou de formato
-  várias vezes ao longo de 25 anos). Mesma observação do FRED sobre `User-Agent`: sem headers
-  customizados nessa chamada.
+  apêndice do artigo "Making Sense of Dissents: A History of FOMC Dissents" — cobre desde 1936 e é
+  atualizada por eles próprios —, dá nome (sobrenome) e direção de cada dissidente, mas não o tamanho
+  do passo que cada um preferia. Pra isso, o script cruza com o texto de
+  `fomc_statements_all.json` (o "Voting against ... who preferred/supported ...") e tenta extrair um
+  número: direto quando o texto diz "by X percentage point(s)"/"X basis points", por comparação com a
+  decisão de fato quando o texto usa um alvo absoluto ("to/at W to Z percent"), ou 0 quando é
+  "no change"/"maintain". Boa parte das dissidências de 2008-2015 foram sobre orientação futura ou
+  compra de ativos, não sobre um nível de juros específico — nesses casos o campo fica `null`, não um
+  chute. Cobertura é boa nos anos recentes (~90% desde 2024) e cai bastante quanto mais raro/antigo o
+  formato da frase. Mesma observação do FRED sobre `User-Agent`: sem headers customizados nessa
+  chamada.
 - **Dot plot (SEP) do FOMC** (`fetch_fomc_dotplot.py`): o Fed não publica a posição de cada
   participante no gráfico de pontos como número — só como posição num gráfico de dispersão dentro do
   PDF, o que não dá pra extrair sem reconhecimento de imagem/vetor. O que ele publica como texto de

@@ -63,12 +63,16 @@ pra fonte, metodologia e limitações de cada um):
   mesma informação, em número). Exclusivo do FOMC; o Copom não tem equivalente.
 
 ### 7. ⚖️ Dissidências
-- Histórico completo de votação de cada reunião, dos dois comitês, com filtro pra ver só as reuniões
-  com dissidência:
+- Histórico completo de votação de cada reunião, dos dois comitês, em gráfico de barras (uma barra por
+  reunião, altura = número de votos contrários, cor = quem era o presidente/chair no momento — clique
+  numa barra pra ver o detalhe daquela reunião):
   - **Copom**: desde a 21ª reunião (1998), via planilha oficial do Bacen. Votante nomeado individualmente
-    a partir da 167ª reunião (2012); antes disso, só o placar agregado.
-  - **FOMC**: desde 1936, via planilha oficial do Fed de St. Louis (dissidentes por nome quando
-    registrado, direção do voto — a favor de aperto ou de alívio).
+    a partir da 167ª reunião (2012); antes disso, só o placar agregado. Quando nomeado, mostra quantos
+    p.p. cada dissidente preferia (verde se queria mais alta, vermelho se queria mais baixa).
+  - **FOMC**: desde 1936, via planilha oficial do Fed de St. Louis. Nome de quem dissentiu quando
+    registrado; o tamanho do passo que cada um preferia é extraído do texto do statement quando
+    possível (boa cobertura desde 2024, mais esparsa em décadas passadas — ver
+    [`scripts/README.md`](scripts/README.md)).
 
 ---
 

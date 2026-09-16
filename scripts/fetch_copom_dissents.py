@@ -95,6 +95,12 @@ def main():
         decisao = num(primeira["DecisaoSelic"])
         variacao = num(primeira["VariacaoSelic"])
 
+        # A planilha lista o presidente do Copom como primeiro votante de
+        # cada reunião (conferido contra o histórico real de presidentes do
+        # Bacen) — só existe quando a reunião tem votante nomeado (167ª em
+        # diante).
+        presidente = str(primeira["Votante"]).strip() if tem_nomes and pd.notna(primeira["Votante"]) else None
+
         resultados.append({
             "id": f"copom-dissent-{reuniao}",
             "committee": "copom",
@@ -105,6 +111,7 @@ def main():
             "placar": placar,
             "unanimous": unanime,
             "namedVotes": bool(tem_nomes),
+            "chair": presidente,
             "votes": votos,
         })
 

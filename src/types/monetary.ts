@@ -84,6 +84,11 @@ export interface DotPlotRelease {
   range: DotPlotRange[];
 }
 
+export interface FomcDissenter {
+  name: string; // sobrenome, como vem na planilha do Fed de St. Louis
+  magnitudeBps: number | null; // null quando não dá pra extrair do texto do statement
+}
+
 export interface FomcVoteRecord {
   id: string;
   committee: 'fomc';
@@ -94,11 +99,7 @@ export interface FomcVoteRecord {
   totalVotes: number;
   votesFor: number;
   votesAgainst: number;
-  governorsDissenting: number;
-  presidentsDissenting: number;
-  dissentersTighter: string[];
-  dissentersEasier: string[];
-  dissentersOther: string[];
+  dissenters: FomcDissenter[];
 }
 
 export interface CopomVote {
@@ -118,5 +119,6 @@ export interface CopomVoteRecord {
   placar: string;
   unanimous: boolean;
   namedVotes: boolean;
+  chair: string | null;
   votes: CopomVote[];
 }

@@ -7,25 +7,29 @@ Review, 2014), mantida atualizada por eles até hoje.
 
 https://www.stlouisfed.org/-/media/project/frbstl/stlouisfed/files/excel/fomc_dissents_data.xlsx
 
-Isso substitui a ideia inicial de tentar extrair quem dissentiu e por que a
-partir de regex em cima do texto dos statements — essa planilha é a fonte
-primária, oficial, e cobre 90 anos (o texto dos statements com "Voting
-for/against" só existe de 2002 pra cá, mesmo assim com formato inconsistente
-demais pra confiar 100% num parser caseiro).
+Essa planilha dá o nome (sobrenome) de quem dissentiu e a direção (a favor de
+aperto/alívio/outro motivo), mas não o tamanho do passo que cada um preferia.
+Pra isso, cruza com src/data/fomc_statements_all.json (o texto real do
+"Voting against ... who preferred/supported ...") e tenta extrair um número:
+- "by X percentage point(s)" / "by/of X basis points" → direto.
+- "to/at W to Z percent" (alvo absoluto) → compara com a decisão de fato
+  daquela mesma reunião (extraída do "Committee decided to ... at/to A to B
+  percent" no mesmo texto) pra achar a diferença.
+- "no change"/"maintain the existing/current target range" (sem número) → 0.
 
-Uma limitação real dela: nas décadas mais antigas (até uns anos 1970-80) ela
-só registra CONTAGEM de dissidentes, sem nome — a coluna de nomes começa a
-vir preenchida quando a documentação da época passou a registrar isso.
+Quando nada disso bate — boa parte das dissidências de 2008-2015 foram sobre
+orientação futura (forward guidance) ou compra de ativos, não sobre um nível
+específico de juros —, o campo fica sem número (null), não um chute.
 """
 import os
 import re
 import json
-from datetime import datetime
 
 import requests
 import pandas as pd
 
 SCRIPT_DIR = os.path.dirname(os.path.abspath(__file__))
+STATEMENTS_PATH = os.path.join(SCRIPT_DIR, "..", "src", "data", "fomc_statements_all.json")
 OUTPUT_PATH = os.path.join(SCRIPT_DIR, "..", "src", "data", "fomc_dissents.json")
 TMP_XLSX_PATH = os.path.join(SCRIPT_DIR, "..", ".fomc_dissents_tmp.xlsx")
 
@@ -34,10 +38,19 @@ TMP_XLSX_PATH = os.path.join(SCRIPT_DIR, "..", ".fomc_dissents_tmp.xlsx")
 # navegador; com o UA-padrão do `requests` funciona de primeira.
 XLSX_URL = "https://www.stlouisfed.org/-/media/project/frbstl/stlouisfed/files/excel/fomc_dissents_data.xlsx"
 
-MESES = [
-    "jan", "fev", "mar", "abr", "mai", "jun",
-    "jul", "ago", "set", "out", "nov", "dez",
-]
+MESES = ["jan", "fev", "mar", "abr", "mai", "jun", "jul", "ago", "set", "out", "nov", "dez"]
+
+DECISAO_RE = re.compile(
+    r"decided to \w+ the target range for the federal funds rate (?:at|to) ([\d\-/]+) to ([\d\-/]+) percent",
+    re.IGNORECASE,
+)
+VOTANDO_CONTRA_RE = re.compile(r"Voting against[^.]*?(?:was|were):?\s*(.+?)(?:\s*Absent|$)", re.IGNORECASE)
+# Para no primeiro "meeting"/"time" (fecho natural dessas frases no corpus),
+# em vez de parar só em "." — um "." dentro de uma inicial do meio do nome
+# seguinte (ex. "Beth M. Hammack") cortava a cláusula errado e vazava um
+# pedaço do próximo nome pra dentro dela.
+QUEM_RE = re.compile(r"who .+?(?:meeting|time)\b")
+NOME_RE = re.compile(r"[A-Z][a-zA-Z.]+ (?:[A-Z]\. )?[A-Z][a-zA-Z]+")
 
 
 def formata_data(d) -> str:
@@ -56,6 +69,97 @@ def num_ou_zero(v):
     return int(v)
 
 
+def parse_percentual(s: str):
+    s = s.strip()
+    m = re.match(r"^(\d+)-(\d+)/(\d+)$", s)
+    if m:
+        inteiro, num, den = (int(x) for x in m.groups())
+        return inteiro + num / den
+    m = re.match(r"^(\d+)/(\d+)$", s)
+    if m:
+        num, den = (int(x) for x in m.groups())
+        return num / den
+    m = re.match(r"^(\d+(?:\.\d+)?)$", s)
+    if m:
+        return float(m.group(1))
+    return None
+
+
+def extrai_decisao_bps(texto_completo: str):
+    m = DECISAO_RE.search(texto_completo)
+    if not m:
+        return None
+    a, b = parse_percentual(m.group(1)), parse_percentual(m.group(2))
+    if a is None or b is None:
+        return None
+    return round((a + b) / 2 * 100)
+
+
+def extrai_magnitude_bps(clausula: str, decisao_bps):
+    sinal = -1 if re.search(r"lower|decrease|reduc|cut", clausula, re.IGNORECASE) else 1
+
+    m = re.search(r"by (\d+(?:/\d+)?)\s*percentage point", clausula, re.IGNORECASE)
+    if m:
+        v = parse_percentual(m.group(1))
+        if v is not None:
+            return round(sinal * v * 100)
+
+    m = re.search(r"(\d+)\s*basis points?", clausula, re.IGNORECASE)
+    if m:
+        return sinal * int(m.group(1))
+
+    if re.search(r"no change|maintain(?:ing|ed)? (?:the|existing|current)? ?target", clausula, re.IGNORECASE) and not re.search(r"\d", clausula):
+        return 0
+
+    if decisao_bps is not None:
+        m = re.search(r"(?:to|at) (\d[\d\-/]*) to (\d[\d\-/]*) percent", clausula, re.IGNORECASE)
+        if m:
+            a, b = parse_percentual(m.group(1)), parse_percentual(m.group(2))
+            if a is not None and b is not None:
+                alvo_bps = round((a + b) / 2 * 100)
+                return alvo_bps - decisao_bps
+
+    return None
+
+
+def monta_indice_magnitudes(statements):
+    """{data_iso: {sobrenome: magnitude_bps}} — só pras reuniões com frase de
+    votação reconhecível no texto do statement.
+
+    Isola primeiro só o trecho "Voting against ... " (pra não pegar um "who"
+    de qualquer outra parte do texto) e depois anda clausula por clausula,
+    em ordem, atribuindo a cada uma só os nomes que aparecem ENTRE o fim da
+    clausula anterior e o início dela — sem isso, o texto de uma clausula
+    "vaza" pra trás e atribui o motivo errado a quem já foi processado
+    numa clausula anterior (ex.: "A, quem preferia X; e B e C, quem
+    preferiam Y" atribuindo Y também para A)."""
+    indice = {}
+    for s in statements:
+        texto_completo = " ".join(s["paragraphs"])
+        m_against = VOTANDO_CONTRA_RE.search(texto_completo)
+        if not m_against:
+            continue
+        against_texto = m_against.group(1)
+        decisao_bps = extrai_decisao_bps(texto_completo)
+
+        por_sobrenome = {}
+        cursor = 0
+        for m_clausula in QUEM_RE.finditer(against_texto):
+            clausula = m_clausula.group()
+            trecho_antes = against_texto[cursor:m_clausula.start()]
+            cursor = m_clausula.end()
+
+            magnitude = extrai_magnitude_bps(clausula, decisao_bps)
+            if magnitude is None:
+                continue
+            for nome in NOME_RE.findall(trecho_antes):
+                sobrenome = nome.strip().split()[-1]
+                por_sobrenome[sobrenome] = magnitude
+        if por_sobrenome:
+            indice[s["date"]] = por_sobrenome
+    return indice
+
+
 def main():
     print("[+] Buscando a planilha de dissidências do FOMC (St. Louis Fed)...")
     r = requests.get(XLSX_URL, timeout=60)
@@ -71,6 +175,11 @@ def main():
     df = df.dropna(subset=["FOMC Meeting"])
     print(f"    {len(df)} reuniões na planilha.")
 
+    with open(STATEMENTS_PATH, encoding="utf-8") as f:
+        statements = json.load(f)
+    indice_magnitudes = monta_indice_magnitudes(statements)
+    print(f"    magnitude do dissenso resolvida em {len(indice_magnitudes)} reuniões (via texto do statement).")
+
     resultados = []
     for _, row in df.iterrows():
         data = row["FOMC Meeting"]
@@ -78,6 +187,18 @@ def main():
             continue
         data_iso = data.date().isoformat() if hasattr(data, "date") else str(data)[:10]
         dissentiu = str(row["Dissent (Y or N)"]).strip().upper() == "Y"
+
+        magnitudes = indice_magnitudes.get(data_iso, {})
+        dissidentes = []
+        for sobrenome in (
+            separa_nomes(row.get("Dissenters Tighter"))
+            + separa_nomes(row.get("Dissenters Easier"))
+            + separa_nomes(row.get("Dissenters Other/Indeterminate"))
+        ):
+            dissidentes.append({
+                "name": sobrenome,
+                "magnitudeBps": magnitudes.get(sobrenome),
+            })
 
         resultados.append({
             "id": f"fomc-dissent-{data_iso}",
@@ -89,11 +210,7 @@ def main():
             "totalVotes": num_ou_zero(row.get("FOMC Votes")),
             "votesFor": num_ou_zero(row.get("Votes for Action")),
             "votesAgainst": num_ou_zero(row.get("Votes Against Action")),
-            "governorsDissenting": num_ou_zero(row.get("Number Governors Dissenting")),
-            "presidentsDissenting": num_ou_zero(row.get("Number Presidents Dissenting")),
-            "dissentersTighter": separa_nomes(row.get("Dissenters Tighter")),
-            "dissentersEasier": separa_nomes(row.get("Dissenters Easier")),
-            "dissentersOther": separa_nomes(row.get("Dissenters Other/Indeterminate")),
+            "dissenters": dissidentes,
         })
 
     resultados.sort(key=lambda r: r["date"], reverse=True)
@@ -102,8 +219,10 @@ def main():
         json.dump(resultados, f, ensure_ascii=False, indent=2)
 
     com_dissenso = sum(1 for r in resultados if not r["unanimous"])
+    with_mag = sum(1 for r in resultados for d in r["dissenters"] if d["magnitudeBps"] is not None)
+    total_diss = sum(len(r["dissenters"]) for r in resultados)
     print(f"[✓] Sucesso! {len(resultados)} reuniões do FOMC salvas em {OUTPUT_PATH}")
-    print(f"    {com_dissenso} com dissidência, desde {resultados[-1]['date']}.")
+    print(f"    {com_dissenso} com dissidência, desde {resultados[-1]['date']}. Magnitude resolvida em {with_mag}/{total_diss} dissidentes.")
 
 
 if __name__ == "__main__":
