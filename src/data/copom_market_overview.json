@@ -3,24 +3,24 @@
   "lastUpdated": "16 de Setembro de 2026 (curva de DI1 — B3)",
   "terminalRate": "13.62%",
   "terminalDate": "17 de Março de 2027",
-  "totalCutsOrHikesExpectedBps": -38,
+  "totalCutsOrHikesExpectedBps": -13,
   "meetings": [
     {
       "id": "copom-next-1",
       "meetingDate": "4 de Novembro de 2026",
       "daysToMeeting": 49,
-      "currentRate": "14.00%",
+      "currentRate": "13.75%",
       "impliedRate": "13.53%",
-      "expectedChangeBps": -47,
+      "expectedChangeBps": -22,
       "probabilities": [
         {
-          "rateLabel": "13.50% — -50bps (corte)",
-          "changeBps": -50,
+          "rateLabel": "13.50% — -25bps (corte)",
+          "changeBps": -25,
           "probability": 88.4
         },
         {
-          "rateLabel": "13.75% — -25bps (corte)",
-          "changeBps": -25,
+          "rateLabel": "13.75% — Mantém",
+          "changeBps": 0,
           "probability": 11.6
         }
       ],
