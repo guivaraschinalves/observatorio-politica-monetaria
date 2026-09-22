@@ -1,5 +1,188 @@
 [
   {
+    "id": "copom-281",
+    "committee": "copom",
+    "meetingNumber": "281ª Reunião",
+    "date": "2026-09-16",
+    "rateDecision": "13.75%",
+    "changeBps": -25,
+    "previousRate": "14.00%",
+    "voteSplit": "Unânime (7 votos)",
+    "summary": "O Copom decidiu reduzir a taxa básica de juros para 13,75% a.a., e entende que essa decisão é compatível com a estratégia de convergência da inflação para o redor da meta ao longo do horizonte relevante. Sem prejuízo de seu objetivo fundamental de assegurar a estabilidade de preços, essa decisão também implica suavização das flutuações do nível de atividade econômica e fomento do pleno emprego.",
+    "keyGuidance": "O cenário atual, caracterizado por significativo aumento da incerteza, desancoragem das expectativas e riscos elevados em torno do cenário base, demanda serenidade e cautela na condução da política monetária. O Comitê seguirá acompanhando a evolução do cenário de forma a manter a restrição adequada para assegurar a convergência da inflação à meta.",
+    "statement": [
+      {
+        "id": "c281-p0",
+        "text": "​O ambiente externo permanece incerto em função da indefinição acerca dos conflitos armados no Oriente Médio e da incerteza sobre a política monetária em algumas economias avançadas. Tal cenário exige cautela por parte de países emergentes em ambiente marcado por elevação da volatilidade de preços de ativos e commodities."
+      },
+      {
+        "id": "c281-p1",
+        "text": "Em relação ao cenário doméstico, o conjunto dos indicadores divulgados desde a última reunião mostra uma moderação gradual da atividade econômica, principalmente em setores mais cíclicos, embora ainda em patamar resiliente, e mercado de trabalho aquecido. Nas divulgações mais recentes, a inflação cheia e a média das medidas subjacentes desaceleraram, situando-se abaixo do limite superior do intervalo de tolerância, porém ainda acima da meta."
+      },
+      {
+        "id": "c281-p2",
+        "text": "As expectativas de inflação para 2026 e 2027 apuradas pela pesquisa Focus permanecem em valores acima da meta, situando-se em 4,9% e 4,3%, respectivamente. A projeção de inflação do Copom para o primeiro trimestre de 2028, atual horizonte relevante de política monetária, situa-se em 3,2% no cenário de referência (Tabela 1)."
+      },
+      {
+        "id": "c281-p3",
+        "text": "Os riscos para a inflação, tanto de alta quanto de baixa, permanecem mais elevados que o usual, com assimetria altista. Entre os riscos de alta para o cenário inflacionário e as expectativas de inflação, destacam-se (i) uma desancoragem das expectativas de inflação por período mais prolongado, com horizontes mais longos incorporando impactos potenciais de segunda ordem de choques de oferta, relacionados ao petróleo e seus derivados, e a efeitos climáticos sobre a produtividade agrícola e custos de energia; (ii) uma maior resiliência na inflação de serviços do que a projetada em função de um hiato do produto mais positivo; (iii) uma conjunção de políticas econômicas externa e interna que tenham impacto inflacionário maior que o esperado, por exemplo, por meio de uma taxa de câmbio persistentemente mais depreciada; e (iv) estímulos à demanda agregada, em particular ao componente de consumo, que tenham como resultado o crescimento da atividade econômica acima do produto potencial, enfraquecendo parte dos canais usuais de transmissão da política monetária. Entre os riscos de baixa, ressaltam-se (i) uma eventual desaceleração da atividade econômica doméstica mais acentuada do que a projetada, tendo impactos sobre o cenário de inflação; (ii) uma desaceleração global mais pronunciada decorrente dos choques de comércio e do petróleo, e de um cenário de maior incerteza; e (iii) uma redução nos preços das commodities com efeitos desinflacionários."
+      },
+      {
+        "id": "c281-p4",
+        "text": "O Comitê segue acompanhando como os desenvolvimentos da política fiscal doméstica impactam a política monetária e os ativos financeiros, reforçando a postura de cautela em cenário de maior incerteza. Os indicadores correntes de atividade mantêm-se consistentes com uma trajetória de desaceleração no acumulado de 2026. O Comitê monitora com atenção a desancoragem das expectativas de inflação para prazos mais longos na medida em que esta contribui para a determinação dos preços e aumenta o custo de desinflação."
+      },
+      {
+        "id": "c281-p5",
+        "text": "Em decorrência da dinâmica dos riscos associados à evolução dos preços, o Comitê reafirma que a magnitude total do ciclo de calibração será estabelecida à luz de novas informações visando assegurar a convergência da inflação à meta."
+      },
+      {
+        "id": "c281-p6",
+        "text": "O Copom decidiu reduzir a taxa básica de juros para 13,75% a.a., e entende que essa decisão é compatível com a estratégia de convergência da inflação para o redor da meta ao longo do horizonte relevante. Sem prejuízo de seu objetivo fundamental de assegurar a estabilidade de preços, essa decisão também implica suavização das flutuações do nível de atividade econômica e fomento do pleno emprego."
+      },
+      {
+        "id": "c281-p7",
+        "text": "O cenário atual, caracterizado por significativo aumento da incerteza, desancoragem das expectativas e riscos elevados em torno do cenário base, demanda serenidade e cautela na condução da política monetária. O Comitê seguirá acompanhando a evolução do cenário de forma a manter a restrição adequada para assegurar a convergência da inflação à meta."
+      },
+      {
+        "id": "c281-p8",
+        "text": "Votaram por essa decisão os seguintes membros do Comitê: Gabriel Muricca Galípolo (presidente), Ailton de Aquino Santos, Gilneu Francisco Astolfi Vivan, Izabela Moreira Correa, Nilton José Schneider David, Paulo Picchetti, e Rodrigo Alves Teixeira."
+      },
+      {
+        "id": "c281-p9",
+        "text": "Tabela 1"
+      },
+      {
+        "id": "c281-p10",
+        "text": "Projeções de inflação no cenário de referência"
+      },
+      {
+        "id": "c281-p11",
+        "text": "Variação do IPCA acumulada em quatro trimestres (%)"
+      },
+      {
+        "id": "c281-p12",
+        "text": "No cenário de referência, a trajetória para a taxa de juros é extraída da pesquisa Focus e a taxa de câmbio parte de R$5,15/US$, evoluindo segundo a paridade do poder de compra (PPC). O preço do petróleo segue aproximadamente a curva futura pelos próximos seis meses e passa a aumentar 2% ao ano posteriormente. Além disso, adota-se a hipótese de bandeira tarifária “amarela\" em dezembro de 2026 e de 2027. O valor para o câmbio foi obtido pelo procedimento usual."
+      }
+    ],
+    "minutes": [
+      {
+        "id": "m281-s0-p0",
+        "section": "A) Atualização da conjuntura econômica e do cenário do Copom1",
+        "text": "1. O ambiente externo permanece incerto em função da indefinição acerca dos conflitos armados no Oriente Médio e da incerteza sobre a política monetária em algumas economias avançadas. Tal cenário exige cautela por parte de países emergentes em ambiente marcado por elevação da volatilidade de preços de ativos e commodities."
+      },
+      {
+        "id": "m281-s0-p1",
+        "section": "A) Atualização da conjuntura econômica e do cenário do Copom1",
+        "text": "2. Em relação ao cenário doméstico, o conjunto dos indicadores divulgados desde a última reunião mostra uma moderação gradual da atividade econômica, principalmente em setores mais cíclicos, embora ainda em patamar resiliente e mercado de trabalho aquecido. Nas divulgações mais recentes, a inflação cheia e a média de medidas subjacentes desaceleraram, situando-se abaixo do limite superior do intervalo de tolerância, porém ainda acima da meta."
+      },
+      {
+        "id": "m281-s0-p2",
+        "section": "A) Atualização da conjuntura econômica e do cenário do Copom1",
+        "text": "3. As expectativas de inflação para 2026 e 2027 apuradas pela pesquisa Focus permanecem em valores acima da meta, situando-se em 4,9% e 4,3%, respectivamente. A projeção de inflação do Copom para o primeiro trimestre de 2028, atual horizonte relevante de política monetária, situa-se em 3,2% no cenário de referência (Tabela 1)."
+      },
+      {
+        "id": "m281-s1-p0",
+        "section": "B) Cenários e análise de riscos",
+        "text": "4. A incerteza com relação ao cenário externo segue em níveis elevados. A continuidade de indefinições em relação aos desdobramentos das tensões geopolíticas e seus efeitos sobre preços de commodities e insumos alteraram expectativas sobre a condução da política monetária nas principais economias avançadas."
+      },
+      {
+        "id": "m281-s1-p1",
+        "section": "B) Cenários e análise de riscos",
+        "text": "5. A atividade econômica doméstica manteve trajetória de moderação, tal como antecipado pelo Comitê. A leitura mais recente do PIB, referente ao segundo trimestre de 2026, confirmou a desaceleração apontada por outros indicadores e revelou que o movimento foi mais intenso nas atividades econômicas e nos componentes da demanda mais sensíveis ao ciclo econômico. O Comitê relembra que o arrefecimento da demanda agregada é um elemento essencial do processo de reequilíbrio entre oferta e demanda da economia e convergência da inflação à meta."
+      },
+      {
+        "id": "m281-s1-p2",
+        "section": "B) Cenários e análise de riscos",
+        "text": "6. A evolução do mercado de crédito bancário com recursos livres também é consistente com um quadro de desaceleração do crescimento, em meio a uma política monetária restritiva. Nota-se, em particular, redução nas modalidades de mais longo prazo, mais sensíveis à política monetária que as modalidades de curto prazo ou emergenciais, mais onerosas. Estas continuaram crescendo, porém com desaceleração na margem. Por outro lado, os créditos com recursos direcionados mantiveram trajetória de expansão para pessoas físicas, na linha do crédito imobiliário, e para empresas, sustentados pelas operações com fundos garantidores."
+      },
+      {
+        "id": "m281-s1-p3",
+        "section": "B) Cenários e análise de riscos",
+        "text": "7. O Comitê segue acompanhando detidamente o mercado de trabalho. A taxa de desemprego mantém-se em patamares historicamente baixos, enquanto o crescimento da taxa de ocupação vem apresentando desaceleração. Os rendimentos médios desaceleraram na margem, mesmo em termos nominais, mas ainda crescem em termos reais a uma taxa superior à da produtividade do trabalho. O Comitê segue atento ao debate sobre as dimensões corrente e estrutural do mercado de trabalho, enfatizando a necessidade do aprofundamento dessa análise para a avaliação dos padrões de transmissão dos níveis de ocupação para os rendimentos do trabalho e, finalmente, para os preços dos diversos setores da economia."
+      },
+      {
+        "id": "m281-s1-p4",
+        "section": "B) Cenários e análise de riscos",
+        "text": "8. A política fiscal tem um impacto de curto prazo, majoritariamente por meio de estímulo à demanda agregada, e uma dimensão mais estrutural, que tem potencial de afetar a percepção sobre a sustentabilidade da dívida e impactar o prêmio a termo da curva de juros. Uma política fiscal que atue de forma contracíclica e contribua para a redução do prêmio de risco favorece a convergência da inflação à meta. O Comitê reafirma a visão de que o esmorecimento no esforço de reformas estruturais e disciplina fiscal, o aumento de crédito direcionado e as incertezas sobre a estabilização da dívida pública têm o potencial de elevar a taxa de juros neutra da economia, com impactos deletérios sobre a potência da política monetária e, consequentemente, sobre o custo de desinflação em termos de atividade. O Comitê mantém a firme convicção de que as políticas devem ser previsíveis, críveis e anticíclicas. Em particular, o debate do Comitê reforça, novamente, a necessidade de políticas fiscal e monetária harmoniosas."
+      },
+      {
+        "id": "m281-s1-p5",
+        "section": "B) Cenários e análise de riscos",
+        "text": "9. As leituras mais recentes apontam para queda da inflação ao consumidor, tanto no índice cheio quanto na média das medidas subjacentes. Pelas duas métricas, o índice acumulado em 12 meses situa-se abaixo do limite superior do intervalo de tolerância, porém ainda acima da meta. Ainda sob a mesma perspectiva das variações acumuladas em 12 meses, nas divulgações mais recentes as variações de preços aos produtores aceleraram, tanto em bens intermediários quanto em bens de consumo."
+      },
+      {
+        "id": "m281-s1-p6",
+        "section": "B) Cenários e análise de riscos",
+        "text": "10. As expectativas de inflação, medidas por diferentes instrumentos e obtidas de diferentes grupos de agentes permanecem acima da meta de inflação em todos os horizontes. Foi ressaltado que o custo de desinflação sobre o nível de atividade ao longo do tempo é maior em ambientes com expectativas desancoradas. O Comitê monitora com atenção a desancoragem das expectativas de inflação para prazos mais longos e tem debatido as possíveis causas desse movimento das expectativas. O Comitê avalia que perseverança, firmeza e serenidade na condução da política monetária contribuirão para a reancoragem das expectativas, importante para a convergência da inflação à meta com menor custo. A principal conclusão obtida, e compartilhada por todos os membros do Comitê, foi a de que, em um ambiente de expectativas desancoradas, como é o caso do atual, exige-se uma restrição monetária maior e por mais tempo do que outrora seria apropriado."
+      },
+      {
+        "id": "m281-s1-p7",
+        "section": "B) Cenários e análise de riscos",
+        "text": "11. O Comitê se debruçou então sobre as projeções. No cenário de referência, a trajetória para a taxa de juros é extraída da pesquisa Focus e a taxa de câmbio parte de R$5,15/US$2, evoluindo segundo a paridade do poder de compra (PPC). O preço do petróleo segue aproximadamente a curva futura pelos próximos seis meses e passa a aumentar 2% ao ano posteriormente, conforme governança usual. Dada a curva de futuros do Brent observada, essa governança se traduziu em trajetória decrescente ao longo da segunda metade do ano. Além disso, adota-se a hipótese de bandeira tarifária “amarela” para tarifas de energia elétrica em dezembro de 2026. O Comitê continuará acompanhando os dados para calibrar e refinar os impactos das medidas de estímulo à demanda e dos choques de oferta."
+      },
+      {
+        "id": "m281-s1-p8",
+        "section": "B) Cenários e análise de riscos",
+        "text": "12. No cenário de referência, as projeções para a inflação acumulada em quatro trimestres para 2026, 2027, e para o primeiro trimestre de 2028, atual horizonte relevante de política monetária, são, respectivamente, 5,2%, 3,9%, e 3,2%."
+      },
+      {
+        "id": "m281-s1-p9",
+        "section": "B) Cenários e análise de riscos",
+        "text": "13. Os riscos para a inflação, tanto de alta quanto de baixa, permanecem mais elevados que o usual, com assimetria altista. Entre os riscos de alta para o cenário inflacionário e as expectativas de inflação, destacam-se (i) uma desancoragem das expectativas de inflação por período mais prolongado, com horizontes mais longos incorporando impactos potenciais de segunda ordem de choques de oferta, relacionados ao petróleo e seus derivados, e a efeitos climáticos sobre a produtividade agrícola e custos de energia; (ii) uma maior resiliência na inflação de serviços do que a projetada em função de um hiato do produto mais positivo; (iii) uma conjunção de políticas econômicas externa e interna que tenham impacto inflacionário maior que o esperado, por exemplo, por meio de uma taxa de câmbio persistentemente mais depreciada; e (iv) estímulos à demanda agregada, em particular ao componente de consumo, que tenham como resultado o crescimento da atividade econômica acima do produto potencial, enfraquecendo parte dos canais usuais de transmissão da política monetária. Entre os riscos de baixa, ressaltam-se (i) uma eventual desaceleração da atividade econômica doméstica mais acentuada do que a projetada, tendo impactos sobre o cenário de inflação; (ii) uma desaceleração global mais pronunciada decorrente dos choques de comércio e do petróleo, e de um cenário de maior incerteza; e (iii) uma redução nos preços das commodities com efeitos desinflacionários."
+      },
+      {
+        "id": "m281-s2-p0",
+        "section": "C) Discussão sobre a condução da política monetária",
+        "text": "14. O Copom passou então à discussão da condução da política monetária, considerando o conjunto de projeções analisado, assim como o balanço de riscos para a inflação prospectiva."
+      },
+      {
+        "id": "m281-s2-p1",
+        "section": "C) Discussão sobre a condução da política monetária",
+        "text": "15. O Comitê avalia que as evidências de transmissão da política monetária contracionista para a atividade econômica têm se acumulado gradualmente. Embora a política monetária esteja contribuindo de forma determinante para o processo de desinflação, a inflação permanece pressionada pela demanda, exigindo que a política monetária mantenha caráter restritivo."
+      },
+      {
+        "id": "m281-s2-p2",
+        "section": "C) Discussão sobre a condução da política monetária",
+        "text": "16. Choques de oferta têm exercido influência relevante tanto sobre a trajetória recente da inflação quanto sobre sua trajetória prospectiva. O Copom avalia que que não deve reagir aos efeitos primários de choques dessa natureza, mas que é necessário monitorar com atenção eventuais efeitos de segunda ordem, e reagir com firmeza caso esses efeitos se materializem."
+      },
+      {
+        "id": "m281-s2-p3",
+        "section": "C) Discussão sobre a condução da política monetária",
+        "text": "17. No contexto atual de incerteza em níveis historicamente elevados, com riscos assimétricos na direção altista para os preços, o Comitê reitera que a magnitude do ciclo de calibração será ajustada à luz da evolução do cenário, de forma a manter a restrição adequada para assegurar a convergência da inflação à meta."
+      },
+      {
+        "id": "m281-s3-p0",
+        "section": "D) Decisão de política monetária",
+        "text": "18. O Copom decidiu reduzir a taxa básica de juros para 13,75% a.a., e entende que essa decisão é compatível com a estratégia de convergência da inflação para o redor da meta ao longo do horizonte relevante. Sem prejuízo de seu objetivo fundamental de assegurar a estabilidade de preços, essa decisão também implica suavização das flutuações do nível de atividade econômica e fomento do pleno emprego."
+      },
+      {
+        "id": "m281-s3-p1",
+        "section": "D) Decisão de política monetária",
+        "text": "19. O cenário atual, caracterizado por significativo aumento da incerteza, desancoragem das expectativas e riscos elevados em torno do cenário base, demanda serenidade e cautela na condução da política monetária. O Comitê seguirá incorporando novas informações e acompanhando a evolução do cenário de forma a manter a restrição adequada para assegurar a convergência da inflação à meta."
+      },
+      {
+        "id": "m281-s3-p2",
+        "section": "D) Decisão de política monetária",
+        "text": "20. Votaram por essa decisão os seguintes membros do Comitê: Gabriel Muricca Galípolo (presidente), Ailton de Aquino Santos, Gilneu Francisco Astolfi Vivan, Izabela Moreira Correa, Nilton José Schneider David, Paulo Picchetti, e Rodrigo Alves Teixeira."
+      },
+      {
+        "id": "m281-s3-p3",
+        "section": "D) Decisão de política monetária",
+        "text": "Tabela 1"
+      },
+      {
+        "id": "m281-s3-p4",
+        "section": "D) Decisão de política monetária",
+        "text": "Projeções de inflação no cenário de referência"
+      },
+      {
+        "id": "m281-s3-p5",
+        "section": "D) Decisão de política monetária",
+        "text": "Variação do IPCA acumulada em quatro trimestres (%)"
+      }
+    ]
+  },
+  {
     "id": "copom-280",
     "committee": "copom",
     "meetingNumber": "280ª Reunião",
@@ -4427,197 +4610,6 @@
         "id": "m258-s3-p3",
         "section": "D) Decisão de política monetária",
         "text": "28. Votaram por uma redução de 0,50 ponto percentual os seguintes membros do Comitê: Roberto de Oliveira Campos Neto (presidente), Ailton de Aquino Santos, Carolina de Assis Barros, Diogo Abry Guillen, Fernanda Magalhães Rumenos Guardado, Gabriel Muricca Galípolo, Maurício Costa de Moura, Otávio Ribeiro Damaso e Renato Dias de Brito Gomes."
-      }
-    ]
-  },
-  {
-    "id": "copom-257",
-    "committee": "copom",
-    "meetingNumber": "257ª Reunião",
-    "date": "2023-09-20",
-    "rateDecision": "12.75%",
-    "changeBps": -50,
-    "previousRate": "13.25%",
-    "voteSplit": "Ver votação na ata",
-    "summary": "Considerando a evolução do processo de desinflação, os cenários avaliados, o balanço de riscos e o amplo conjunto de informações disponíveis, o Copom decidiu reduzir a taxa básica de juros em 0,50 ponto percentual, para 12,75% a.a., e entende que essa decisão é compatível com a estratégia de convergência da inflação para o redor da meta ao longo do horizonte relevante, que inclui o ano de 2024 e, em grau menor, o de 2025. Sem prejuízo de seu objetivo fundamental de assegurar a estabilidade de preços, essa decisão também implica suavização das flutuações do nível de atividade econômica e fomento do pleno emprego.",
-    "keyGuidance": "Em se confirmando o cenário esperado, os membros do Comitê, unanimemente, anteveem redução de mesma magnitude nas próximas reuniões e avaliam que esse é o ritmo apropriado para manter a política monetária contracionista necessária para o processo desinflacionário. O Comitê ressalta ainda que a magnitude total do ciclo de flexibilização ao longo do tempo dependerá da evolução da dinâmica inflacionária, em especial dos componentes mais sensíveis à política monetária e à atividade econômica, das expectativas de inflação, em particular as de maior prazo, de suas projeções de inflação, do hiato do produto e do balanço de riscos.",
-    "statement": [
-      {
-        "id": "c257-p0",
-        "text": "O ambiente externo mostra-se mais incerto, com a continuidade do processo de desinflação, a despeito de núcleos de inflação ainda elevados e resiliência nos mercados de trabalho de diversos países. Os bancos centrais das principais economias permanecem determinados em promover a convergência das taxas de inflação para suas metas. O Comitê notou a elevação das taxas de juros de longo prazo dos Estados Unidos e a perspectiva de menor crescimento na China, ambos exigindo maior atenção por parte de países emergentes."
-      },
-      {
-        "id": "c257-p1",
-        "text": "Em relação ao cenário doméstico, observou-se maior resiliência da atividade econômica do que anteriormente esperado, mas o Copom segue antecipando um cenário de desaceleração da economia nos próximos trimestres. Como antecipado, ocorreu uma elevação da inflação cheia ao consumidor acumulada em doze meses no período recente. As medidas mais recentes de inflação subjacente apresentaram queda, mas ainda se situam acima da meta para a inflação. As expectativas de inflação para 2023, 2024 e 2025 apuradas pela pesquisa Focus encontram-se em torno de 4,9%, 3,9% e 3,5%, respectivamente."
-      },
-      {
-        "id": "c257-p2",
-        "text": "As projeções de inflação do Copom em seu cenário de referência* situam-se em 5,0% em 2023, 3,5% em 2024 e 3,1% em 2025. As projeções para a inflação de preços administrados são de 10,5% em 2023, 4,5% em 2024 e 3,6% em 2025."
-      },
-      {
-        "id": "c257-p3",
-        "text": "O Comitê ressalta que, em seus cenários para a inflação, permanecem fatores de risco em ambas as direções. Entre os riscos de alta para o cenário inflacionário e as expectativas de inflação, destacam-se (i) uma maior persistência das pressões inflacionárias globais; e (ii) uma maior resiliência na inflação de serviços do que a projetada em função de um hiato do produto mais apertado. Entre os riscos de baixa, ressaltam-se (i) uma desaceleração da atividade econômica global mais acentuada do que a projetada; e (ii) os impactos do aperto monetário sincronizado sobre a desinflação global se mostrarem mais fortes do que o esperado."
-      },
-      {
-        "id": "c257-p4",
-        "text": "Tendo em conta a importância da execução das metas fiscais já estabelecidas para a ancoragem das expectativas de inflação e, consequentemente, para a condução da política monetária, o Comitê reforça a importância da firme persecução dessas metas."
-      },
-      {
-        "id": "c257-p5",
-        "text": "Considerando a evolução do processo de desinflação, os cenários avaliados, o balanço de riscos e o amplo conjunto de informações disponíveis, o Copom decidiu reduzir a taxa básica de juros em 0,50 ponto percentual, para 12,75% a.a., e entende que essa decisão é compatível com a estratégia de convergência da inflação para o redor da meta ao longo do horizonte relevante, que inclui o ano de 2024 e, em grau menor, o de 2025. Sem prejuízo de seu objetivo fundamental de assegurar a estabilidade de preços, essa decisão também implica suavização das flutuações do nível de atividade econômica e fomento do pleno emprego."
-      },
-      {
-        "id": "c257-p6",
-        "text": "A conjuntura atual, caracterizada por um estágio do processo desinflacionário que tende a ser mais lento e por expectativas de inflação com reancoragem parcial, demanda serenidade e moderação na condução da política monetária. O Comitê reforça a necessidade de perseverar com uma política monetária contracionista até que se consolide não apenas o processo de desinflação como também a ancoragem das expectativas em torno de suas metas."
-      },
-      {
-        "id": "c257-p7",
-        "text": "Em se confirmando o cenário esperado, os membros do Comitê, unanimemente, anteveem redução de mesma magnitude nas próximas reuniões e avaliam que esse é o ritmo apropriado para manter a política monetária contracionista necessária para o processo desinflacionário. O Comitê ressalta ainda que a magnitude total do ciclo de flexibilização ao longo do tempo dependerá da evolução da dinâmica inflacionária, em especial dos componentes mais sensíveis à política monetária e à atividade econômica, das expectativas de inflação, em particular as de maior prazo, de suas projeções de inflação, do hiato do produto e do balanço de riscos."
-      },
-      {
-        "id": "c257-p8",
-        "text": "Votaram por uma redução de 0,50 ponto percentual os seguintes membros do Comitê: Roberto de Oliveira Campos Neto (presidente), Ailton de Aquino Santos, Carolina de Assis Barros, Diogo Abry Guillen, Fernanda Magalhães Rumenos Guardado, Gabriel Muricca Galípolo, Maurício Costa de Moura, Otávio Ribeiro Damaso e Renato Dias de Brito Gomes."
-      },
-      {
-        "id": "c257-p9",
-        "text": "* No cenário de referência, a trajetória para a taxa de juros é extraída da pesquisa Focus e a taxa de câmbio parte de USD/BRL 4,90, evoluindo segundo a paridade do poder de compra (PPC). O preço do petróleo segue aproximadamente a curva futura pelos próximos seis meses e passa a aumentar 2% ao ano posteriormente. Além disso, adota-se a hipótese de bandeira tarifária \"verde\" em dezembro de 2023, de 2024 e de 2025. O valor para o câmbio é obtido pelo procedimento usual de arredondar a cotação média da taxa de câmbio USD/BRL observada nos cinco dias úteis encerrados no último dia da semana anterior à da reunião do Copom."
-      }
-    ],
-    "minutes": [
-      {
-        "id": "m257-s0-p0",
-        "section": "A) Atualização da conjuntura econômica e do cenário do Copom1",
-        "text": "1. O ambiente externo mostra-se mais incerto, com a continuidade do processo de desinflação, a despeito de núcleos de inflação ainda elevados e resiliência nos mercados de trabalho de diversos países. Em paralelo, os bancos centrais das principais economias seguem determinados em promover a convergência das taxas de inflação para suas metas, seja dando continuidade a seus ciclos de aperto monetário, seja sinalizando um período prolongado de juros elevados para combater as pressões inflacionárias ou indicando um período de pausa ainda em um ciclo de elevação de juros."
-      },
-      {
-        "id": "m257-s0-p1",
-        "section": "A) Atualização da conjuntura econômica e do cenário do Copom1",
-        "text": "2. O Comitê notou a elevação das taxas de juros de longo prazo dos Estados Unidos e a perspectiva de menor crescimento na China, ambas exigindo maior atenção por parte de países emergentes."
-      },
-      {
-        "id": "m257-s0-p2",
-        "section": "A) Atualização da conjuntura econômica e do cenário do Copom1",
-        "text": "3. No âmbito doméstico, o conjunto de indicadores recentes indica um cenário de maior resiliência da atividade econômica. Os dados referentes à atividade econômica do segundo trimestre, em particular a divulgação do PIB, indicam que setores não cíclicos da economia mantiveram dinamismo, mas também se observou um crescimento no componente da demanda referente ao consumo das famílias. De modo geral, nos indicadores setoriais, observou-se alguma desaceleração no setor de comércio, moderada reaceleração na indústria e estabilidade do crescimento no setor de serviços, após ritmo mais forte nos trimestres anteriores. O mercado de trabalho segue resiliente, mas com alguma moderação na margem."
-      },
-      {
-        "id": "m257-s0-p3",
-        "section": "A) Atualização da conjuntura econômica e do cenário do Copom1",
-        "text": "4. A inflação ao consumidor segue com uma dinâmica corrente mais benigna, exibindo desaceleração tanto na inflação de serviços quanto nos núcleos de inflação. Os indicadores que agregam os componentes mais sensíveis ao ciclo econômico e à política monetária, que possuem maior inércia inflacionária, apresentaram menor inflação, mas mantêm-se acima da meta. As expectativas de inflação para 2023, 2024 e 2025 apuradas pela pesquisa Focus encontram-se em torno de 4,9%, 3,9% e 3,5%, respectivamente."
-      },
-      {
-        "id": "m257-s1-p0",
-        "section": "B) Cenários e análise de riscos",
-        "text": "5. No cenário de referência, a trajetória para a taxa de juros é extraída da pesquisa Focus e a taxa de câmbio parte de USD/BRL 4,902, evoluindo segundo a paridade do poder de compra (PPC). O preço do petróleo segue aproximadamente a curva futura pelos próximos seis meses e passa a aumentar 2% ao ano posteriormente. Além disso, adota-se a hipótese de bandeira tarifária “verde” em dezembro de 2023, de 2024 e de 2025. Nesse cenário, as projeções de inflação do Copom situam-se em 5,0% para 2023, 3,5% para 2024 e 3,1% para 2025. As projeções para a inflação de preços administrados são de 10,5% para 2023, 4,5% para 2024 e 3,6% para 2025."
-      },
-      {
-        "id": "m257-s1-p1",
-        "section": "B) Cenários e análise de riscos",
-        "text": "6. O Comitê avalia que a conjuntura internacional se mostra incerta. Observa-se um processo de desinflação, que refletiu o arrefecimento das pressões sobre commodities após os impactos iniciais da guerra na Ucrânia, os efeitos iniciais do aperto de política monetária global e a normalização das cadeias de produção, porém com recuo lento nos núcleos de inflação. Prospectivamente, restam incertezas sobre a dinâmica da inflação global. Os riscos referentes a fenômenos climáticos, guerra na Ucrânia e política internacional de preços de petróleo sugerem a possibilidade de renovadas pressões inflacionárias de oferta. A isso somam-se a resiliência do mercado de trabalho e um hiato do produto apertado nas economias avançadas, em ambiente de inflação de serviços ainda pressionada em diversas economias. Por outro lado, permanece a determinação dos bancos centrais em controlar a inflação por meio da manutenção do aperto da política monetária por período mais prolongado. As políticas monetárias restritivas dos países avançados têm sido fundamentais para conter a inflação mundial, facilitando o controle inflacionário dos países emergentes. De todo modo, o aperto monetário global pode ter impacto sobre os ativos domésticos, o que levaria a um processo desinflacionário interno mais lento no curto prazo."
-      },
-      {
-        "id": "m257-s1-p2",
-        "section": "B) Cenários e análise de riscos",
-        "text": "7. O cenário de crescimento global tem sido marcado pela resiliência da atividade e do mercado de trabalho nos Estados Unidos, em contraposição a um menor crescimento projetado para a economia chinesa. Nesse contexto, alguns membros atribuem maior probabilidade a uma moderação suave na atividade das principais economias, em particular a norte-americana, ainda que não se descarte uma desaceleração mais brusca. Por outro lado, alguns membros seguiram enfatizando os riscos de uma desaceleração sincronizada. Em sua discussão, o Comitê avalia que parte da redução de crescimento da economia chinesa é estrutural, mas a magnitude das respostas contracíclicas que podem vir a ser implementadas ajudará a definir não só a dinâmica de crescimento, como seus impactos sobre os preços de commodities e sobre a economia brasileira."
-      },
-      {
-        "id": "m257-s1-p3",
-        "section": "B) Cenários e análise de riscos",
-        "text": "8. Com relação à elevação das taxas de juros de longo prazo nos países avançados, o Comitê ponderou se tal movimento pode refletir percepção de elevação da taxa neutra nesses países, aumento do produto potencial, iliquidez sazonal dos mercados ou maior prêmio fiscal em função de déficits nominais persistentes. Em sua discussão, o Comitê deu maior ênfase às perspectivas fiscais, em particular nos Estados Unidos, e como isso impactaria as condições financeiras globais."
-      },
-      {
-        "id": "m257-s1-p4",
-        "section": "B) Cenários e análise de riscos",
-        "text": "9. Ainda no cenário externo, o Comitê debateu as causas para a resiliência observada na atividade econômica de diversas economias, concomitante ao processo desinflacionário, mesmo diante de ciclos de aperto monetário historicamente intensos. Alguns membros notaram impactos latentes de impulsos fiscais ainda elevados em importantes economias. Entretanto, enfatizou-se que a determinação dos bancos centrais em levar a inflação para a meta e a credibilidade conquistada, permitindo uma ancoragem sólida das expectativas de inflação, têm contribuído para a ocorrência de processos de desinflação envolvendo menores sacrifícios em termos de atividade."
-      },
-      {
-        "id": "m257-s1-p5",
-        "section": "B) Cenários e análise de riscos",
-        "text": "10. No que se refere à atividade econômica doméstica, o Comitê travou um amplo debate sobre os motivos de observarmos crescimento mais resiliente nos últimos trimestres. Levantaram-se quatro possibilidades."
-      },
-      {
-        "id": "m257-s1-p6",
-        "section": "B) Cenários e análise de riscos",
-        "text": "11. A primeira possibilidade é que a pujança do setor agropecuário tenha tido efeitos indiretos sobre outros setores na economia, o que é corroborado nos dados, mas não justifica toda a magnitude da surpresa. Outra possibilidade é que a elevação de renda disponível, seja em função do dinamismo do mercado de trabalho, da queda de preços de alimentos ou de programas de transferência de renda, também tenha fornecido algum suporte para o consumo. O Comitê se deteve sobre esse tema, identificado como muito relevante, e destacou que a conjectura de um crescimento sustentado pela elevação da renda é corroborada pela resiliência no consumo de serviços das famílias. Ademais, discutiu-se, consequentemente, o possível impacto que poderia ocorrer sobre a dinâmica da inflação de serviços em caso de um crescimento sustentado pela renda e pelo consumo. Outra possibilidade, ainda que com menor impacto sobre variações de curto prazo, seria uma taxa de juros neutra mais elevada. O Comitê, entretanto, decidiu manter sua avaliação mais recente sobre a taxa neutra publicada no Relatório de Inflação de junho de 2023. Por fim, o Comitê debateu se o crescimento potencial teria se elevado nos últimos trimestres, devido a reformas regulatórias e avanços institucionais. Ainda que julgue nesse momento prematuro reavaliar o crescimento potencial, o Comitê pondera que a persistência de um crescimento resiliente nos próximos trimestres sem impacto inflacionário pode, no futuro, levar a uma reavaliação do crescimento potencial. Notou-se que cada uma dessas quatro possibilidades tem implicações diferentes para a condução da política monetária."
-      },
-      {
-        "id": "m257-s1-p7",
-        "section": "B) Cenários e análise de riscos",
-        "text": "12. O Comitê reforçou a visão de que o esmorecimento no esforço de reformas estruturais, o aumento de crédito direcionado e as incertezas sobre a estabilização da dívida pública têm o potencial de elevar a taxa de juros neutra da economia, com impactos deletérios sobre a potência da política monetária e, consequentemente, sobre o custo de desinflação em termos de atividade."
-      },
-      {
-        "id": "m257-s1-p8",
-        "section": "B) Cenários e análise de riscos",
-        "text": "13. Novamente, debateram-se profundamente os desenvolvimentos no mercado de trabalho. Alguns membros seguem avaliando que há moderação no mercado de trabalho, apontando para a desaceleração no ritmo de contratação no mercado formal e para a queda na taxa de participação. Outros enfatizaram a queda na taxa de desemprego e o ritmo ainda elevado de contratações no emprego formal. O Comitê concordou que não há evidência de pressões salariais elevadas nas negociações trabalhistas."
-      },
-      {
-        "id": "m257-s1-p9",
-        "section": "B) Cenários e análise de riscos",
-        "text": "14. Em função dos dados divulgados no período recente, o Comitê julga que o hiato do produto está mais apertado do que o estimado anteriormente, mas segue antecipando um cenário de desaceleração da economia nos próximos trimestres. O Comitê analisou diferentes medidas de hiato e quais seriam os impactos sobre as projeções das diferentes hipóteses. Em sua discussão, o Comitê julgou que há elementos que elevam a incerteza das estimativas e adicionam um viés para cima nas revisões das estimativas do hiato do produto utilizadas pelo Comitê. Ressaltou-se novamente que o impacto do período da pandemia dificulta a inferência do hiato do produto."
-      },
-      {
-        "id": "m257-s1-p10",
-        "section": "B) Cenários e análise de riscos",
-        "text": "15. O Comitê segue avaliando que a desaceleração na concessão de crédito está em linha com a postura de política monetária. Observou-se uma desaceleração mais acentuada na concessão de crédito à pessoa jurídica, ao passo que a concessão à pessoa física exibiu menor desaceleração, sendo menos acentuada nas modalidades de baixo custo. Em que pese as condições monetárias restritivas, enfatizou-se que já se observa a transmissão do ciclo de política monetária esperado pelo mercado para as taxas correntes de novas concessões, levando também a um maior dinamismo dos mercados de capitais."
-      },
-      {
-        "id": "m257-s1-p11",
-        "section": "B) Cenários e análise de riscos",
-        "text": "16. Por fim, o Comitê avalia que parte da incerteza observada nos mercados, com elevação de prêmios de risco e da inflação implícita, estava anteriormente mais em torno do desenho final do arcabouço fiscal e atualmente se refere mais à execução das medidas de receita e despesas compatíveis com o arcabouço e o atingimento das metas fiscais. Tendo em conta a importância da execução das metas fiscais já estabelecidas para a ancoragem das expectativas de inflação e, consequentemente, para a condução da política monetária, o Comitê reforça a importância da firme persecução dessas metas."
-      },
-      {
-        "id": "m257-s1-p12",
-        "section": "B) Cenários e análise de riscos",
-        "text": "17. O Comitê julgou que há uma evolução benigna do cenário corrente de inflação, em consonância com o que já era esperado. O Comitê avalia que a dinâmica da desinflação segue caracterizada por um processo com dois estágios distintos. O primeiro estágio exibiu uma dinâmica benigna dos preços de alimentos e industriais e do comportamento dos preços no atacado. O segundo estágio, iniciado em período recente, continuou a exibir uma dinâmica benigna dos preços de alimentos e no atacado, além de apresentar desaceleração nos preços de serviços e de serviços subjacentes. O debate em relação à inflação de serviços se concentrou, novamente, em seus determinantes. Os membros discutiram o realinhamento de preços relativos, o papel do mercado de trabalho e o hiato do produto para as perspectivas de inflação. Por outro lado, os componentes relativos a bens industriais e preços administrados podem apresentar um comportamento menos benigno do que era anteriormente esperado, em função do movimento recente da taxa de câmbio e do preço das commodities internacionais. O Comitê segue avaliando que a volatilidade inerente aos componentes ligados a alimentos e bens industriais sugere a possibilidade de reversões abruptas, recomendando cautela. Em tal debate, foram mencionados os riscos, parcialmente incorporados no cenário de referência, referentes ao fenômeno climático do El Niño, assim como os referentes à evolução do preço internacional do petróleo, que, nas projeções, seguiu a governança usual do Comitê em suas hipóteses. Ressaltou-se a incerteza com relação ao El Niño no que tange à sua magnitude, ao período em que o fenômeno teria maior impacto e aos impactos individuais sobre diferentes produtos alimentícios. O Comitê optou por incorporar um impacto relativamente pequeno do El Niño em suas projeções de inflação de alimentos, mas alguns membros enfatizaram os impactos inflacionários no caso de ocorrência de um fenômeno El Niño mais extremo. Ao fim, concluiu-se unanimemente pela necessidade de uma política monetária contracionista e cautelosa, de modo a reforçar a dinâmica desinflacionária."
-      },
-      {
-        "id": "m257-s1-p13",
-        "section": "B) Cenários e análise de riscos",
-        "text": "18. As expectativas de inflação, após apresentarem reancoragem parcial, seguem sendo um fator de preocupação. O Comitê seguiu avaliando que, entre as possibilidades que justificariam observarmos expectativas de inflação acima da meta estariam as preocupações no âmbito fiscal, receios com a desinflação global e a possível percepção, por parte de analistas, de que o Copom, ao longo do tempo, poderia se tornar mais leniente no combate à inflação. Desse modo, o Comitê avalia que a redução das expectativas virá por meio de uma atuação firme, em consonância com o objetivo de fortalecer a credibilidade e a reputação tanto das instituições como dos arcabouços econômicos."
-      },
-      {
-        "id": "m257-s1-p14",
-        "section": "B) Cenários e análise de riscos",
-        "text": "19. O Comitê ressalta que, em seus cenários para a inflação, permanecem fatores de risco em ambas as direções. Entre os riscos de alta para o cenário inflacionário e as expectativas de inflação, destacam-se (i) uma maior persistência das pressões inflacionárias globais; e (ii) uma maior resiliência na inflação de serviços do que a projetada em função de um hiato do produto mais apertado. Entre os riscos de baixa, ressaltam-se (i) uma desaceleração da atividade econômica global mais acentuada do que a projetada; e (ii) os impactos do aperto monetário sincronizado sobre a desinflação global se mostrarem mais fortes do que o esperado."
-      },
-      {
-        "id": "m257-s2-p0",
-        "section": "C) Discussão sobre a condução da política monetária",
-        "text": "20. O Copom passou então à discussão da condução da política monetária, considerando o conjunto de projeções analisado, assim como o balanço de riscos para a inflação prospectiva."
-      },
-      {
-        "id": "m257-s2-p1",
-        "section": "C) Discussão sobre a condução da política monetária",
-        "text": "21. As expectativas de inflação seguem acima da meta e se mantiveram relativamente estáveis recentemente. Alguns membros se mostraram particularmente preocupados com a possibilidade de metas desancoradas por um período longo. Em segundo lugar, prossegue o processo de desinflação, com a inflação de serviços desacelerando na margem. Alguns membros enfatizaram em particular a composição benigna recente da inflação e a queda na inflação de serviços, enquanto outros enfatizaram que os fundamentos subjacentes para a dinâmica da inflação de serviços, em particular a resiliência da atividade econômica e do mercado de trabalho, ainda não permitem extrapolar com convicção o comportamento benigno recente. Com relação ao hiato do produto, notou-se um aperto do hiato do produto na margem, em função da maior resiliência da atividade econômica. Também foram avaliadas as implicações de formas alternativas de mensuração do hiato do produto e seus respectivos impactos nas projeções. Por fim, notou-se que houve uma elevação das projeções no cenário de referência em função principalmente de um hiato do produto mais apertado e da alteração de condicionantes, como a elevação do preço de petróleo, a depreciação cambial e a redução da trajetória Selic da pesquisa Focus. Após a análise do cenário, todos os membros concordaram que era apropriado reduzir a taxa Selic em 0,50 ponto percentual, de forma a ajustar o grau de aperto monetário prospectivo."
-      },
-      {
-        "id": "m257-s2-p2",
-        "section": "C) Discussão sobre a condução da política monetária",
-        "text": "22. Com relação aos próximos passos, os membros do Comitê concordaram unanimemente com a expectativa de cortes de 0,50 ponto percentual nas próximas reuniões e avaliaram que esse é o ritmo apropriado para manter a política monetária contracionista necessária para o processo desinflacionário. Tal ritmo conjuga, de um lado, o firme compromisso com a reancoragem de expectativas e a dinâmica desinflacionária e, de outro, o ajuste no nível de aperto monetário em termos reais diante da dinâmica mais benigna da inflação antecipada nas projeções do cenário de referência. Avaliou-se ainda que não há evidência de que esteja em curso um aperto além do que seria necessário para a convergência da inflação para a meta e que o cenário ainda inspira cautela, reforçando a visão de serenidade e moderação que o Comitê tem expressado. O Comitê julga como pouco provável uma intensificação adicional do ritmo de ajustes, já que isso exigiria surpresas positivas substanciais que elevassem ainda mais a confiança na dinâmica desinflacionária prospectiva. Tal confiança viria apenas com uma alteração significativa dos fundamentos da dinâmica da inflação, tais como uma reancoragem bem mais sólida das expectativas, uma abertura contundente do hiato do produto ou uma dinâmica substancialmente mais benigna do que a esperada da inflação de serviços."
-      },
-      {
-        "id": "m257-s2-p3",
-        "section": "C) Discussão sobre a condução da política monetária",
-        "text": "23. Por fim, o Comitê debateu a extensão do ciclo de ajustes na política monetária. Evidenciou-se, nessa análise, a necessidade de se manter uma política monetária ainda contracionista pelo horizonte relevante para que se consolide a convergência da inflação para a meta e a ancoragem das expectativas. Enfatizou-se que a extensão do ciclo ao longo do tempo dependerá da evolução da dinâmica inflacionária, em especial dos componentes mais sensíveis à política monetária e à atividade econômica, das expectativas de inflação, em particular as de maior prazo, de suas projeções de inflação, do hiato do produto e do balanço de riscos. O Comitê mantém seu firme compromisso com a convergência da inflação para a meta no horizonte relevante e reforça que a extensão do ciclo refletirá o mandato legal do Banco Central."
-      },
-      {
-        "id": "m257-s3-p0",
-        "section": "D) Decisão de política monetária",
-        "text": "24. Considerando a evolução do processo de desinflação, os cenários avaliados, o balanço de riscos e o amplo conjunto de informações disponíveis, o Copom decidiu reduzir a taxa básica de juros em 0,50 ponto percentual, para 12,75% a.a., e entende que essa decisão é compatível com a estratégia de convergência da inflação para o redor da meta ao longo do horizonte relevante, que inclui o ano de 2024 e, em grau menor, o de 2025. Sem prejuízo de seu objetivo fundamental de assegurar a estabilidade de preços, essa decisão também implica suavização das flutuações do nível de atividade econômica e fomento do pleno emprego."
-      },
-      {
-        "id": "m257-s3-p1",
-        "section": "D) Decisão de política monetária",
-        "text": "25. A conjuntura atual, caracterizada por um estágio do processo desinflacionário que tende a ser mais lento e por expectativas de inflação com reancoragem parcial, demanda serenidade e moderação na condução da política monetária. O Comitê reforça a necessidade de perseverar com uma política monetária contracionista até que se consolide não apenas o processo de desinflação como também a ancoragem das expectativas em torno de suas metas."
-      },
-      {
-        "id": "m257-s3-p2",
-        "section": "D) Decisão de política monetária",
-        "text": "26. Em se confirmando o cenário esperado, os membros do Comitê, unanimemente, anteveem redução de mesma magnitude nas próximas reuniões e avaliam que esse é o ritmo apropriado para manter a política monetária contracionista necessária para o processo desinflacionário. O Comitê ressalta ainda que a magnitude total do ciclo de flexibilização ao longo do tempo dependerá da evolução da dinâmica inflacionária, em especial dos componentes mais sensíveis à política monetária e à atividade econômica, das expectativas de inflação, em particular as de maior prazo, de suas projeções de inflação, do hiato do produto e do balanço de riscos."
-      },
-      {
-        "id": "m257-s3-p3",
-        "section": "D) Decisão de política monetária",
-        "text": "27. Votaram por uma redução de 0,50 ponto percentual os seguintes membros do Comitê: Roberto de Oliveira Campos Neto (presidente), Ailton de Aquino Santos, Carolina de Assis Barros, Diogo Abry Guillen, Fernanda Magalhães Rumenos Guardado, Gabriel Muricca Galípolo, Maurício Costa de Moura, Otávio Ribeiro Damaso e Renato Dias de Brito Gomes."
       }
     ]
   }
