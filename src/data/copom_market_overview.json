@@ -1,53 +1,53 @@
 {
   "committee": "copom",
-  "lastUpdated": "21 de Setembro de 2026 (curva de DI1 — B3)",
-  "terminalRate": "13.51%",
+  "lastUpdated": "22 de Setembro de 2026 (curva de DI1 — B3)",
+  "terminalRate": "13.47%",
   "terminalDate": "17 de Março de 2027",
-  "totalCutsOrHikesExpectedBps": -24,
+  "totalCutsOrHikesExpectedBps": -28,
   "meetings": [
     {
       "id": "copom-next-1",
       "meetingDate": "4 de Novembro de 2026",
-      "daysToMeeting": 44,
+      "daysToMeeting": 43,
       "currentRate": "13.75%",
-      "impliedRate": "13.48%",
-      "expectedChangeBps": -27,
+      "impliedRate": "13.46%",
+      "expectedChangeBps": -29,
       "probabilities": [
         {
           "rateLabel": "13.50% — -25bps (corte)",
           "changeBps": -25,
-          "probability": 90.7
+          "probability": 84.3
         },
         {
           "rateLabel": "13.25% — -50bps (corte)",
           "changeBps": -50,
-          "probability": 9.3
+          "probability": 15.7
         }
       ],
       "historicalProbabilities": {
-        "current": 90.7,
-        "oneDayAgo": 92.8,
-        "oneWeekAgo": 94.5,
+        "current": 84.3,
+        "oneDayAgo": 90.7,
+        "oneWeekAgo": 96.6,
         "oneMonthAgo": 52.1
       }
     },
     {
       "id": "copom-next-2",
       "meetingDate": "9 de Dezembro de 2026",
-      "daysToMeeting": 79,
-      "currentRate": "13.48%",
-      "impliedRate": "13.45%",
-      "expectedChangeBps": -2,
+      "daysToMeeting": 78,
+      "currentRate": "13.46%",
+      "impliedRate": "13.43%",
+      "expectedChangeBps": -4,
       "probabilities": [
         {
-          "rateLabel": "13.48% — Mantém",
+          "rateLabel": "13.46% — Mantém",
           "changeBps": 0,
-          "probability": 91.1
+          "probability": 85.7
         },
         {
-          "rateLabel": "13.23% — -25bps (corte)",
+          "rateLabel": "13.21% — -25bps (corte)",
           "changeBps": -25,
-          "probability": 8.9
+          "probability": 14.3
         }
       ],
       "historicalProbabilities": null
@@ -55,20 +55,20 @@
     {
       "id": "copom-next-3",
       "meetingDate": "27 de Janeiro de 2027",
-      "daysToMeeting": 128,
-      "currentRate": "13.45%",
-      "impliedRate": "13.50%",
-      "expectedChangeBps": 4,
+      "daysToMeeting": 127,
+      "currentRate": "13.43%",
+      "impliedRate": "13.48%",
+      "expectedChangeBps": 6,
       "probabilities": [
         {
-          "rateLabel": "13.45% — Mantém",
+          "rateLabel": "13.43% — Mantém",
           "changeBps": 0,
-          "probability": 82.0
+          "probability": 77.5
         },
         {
-          "rateLabel": "13.70% — +25bps (alta)",
+          "rateLabel": "13.68% — +25bps (alta)",
           "changeBps": 25,
-          "probability": 18.0
+          "probability": 22.5
         }
       ],
       "historicalProbabilities": null
@@ -76,20 +76,20 @@
     {
       "id": "copom-next-4",
       "meetingDate": "17 de Março de 2027",
-      "daysToMeeting": 177,
-      "currentRate": "13.50%",
-      "impliedRate": "13.51%",
-      "expectedChangeBps": 1,
+      "daysToMeeting": 176,
+      "currentRate": "13.48%",
+      "impliedRate": "13.47%",
+      "expectedChangeBps": -1,
       "probabilities": [
         {
-          "rateLabel": "13.50% — Mantém",
+          "rateLabel": "13.48% — Mantém",
           "changeBps": 0,
-          "probability": 95.5
+          "probability": 94.8
         },
         {
-          "rateLabel": "13.75% — +25bps (alta)",
-          "changeBps": 25,
-          "probability": 4.5
+          "rateLabel": "13.23% — -25bps (corte)",
+          "changeBps": -25,
+          "probability": 5.2
         }
       ],
       "historicalProbabilities": null
