@@ -1,9 +1,14 @@
 name: Atualiza dados e publica
 
 on:
-  schedule:
-    # 11:00 UTC = 08:00 no horário de Brasília, todo dia
-    - cron: "0 11 * * *"
+  # Atualização diária PAUSADA a pedido, em 13/10/2026, para não gastar
+  # execução com algo que não está sendo acompanhado. O workflow continua
+  # valendo no push para main e na execução manual, então o site segue
+  # publicando normalmente. Para retomar, basta descomentar as duas linhas.
+  #
+  # schedule:
+  #   # 11:00 UTC = 08:00 no horário de Brasília, todo dia
+  #   - cron: "0 11 * * *"
   workflow_dispatch: {}
   push:
     branches: [main]
